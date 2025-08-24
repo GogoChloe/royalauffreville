@@ -3,8 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { CustomIcon } from "@/components/icons";
+import { ChevronLeft, ChevronRight, Microwave, Refrigerator, Utensils, Flame, Wind, Coffee } from "lucide-react";
 
 export function CuisineDetailSection() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -25,12 +24,12 @@ export function CuisineDetailSection() {
 
   // 设备列表
   const equipments = [
-    { name: 'Four moderne', icon: 'cafeGrains' },
-    { name: 'Réfrigérateur grande capacité', icon: 'EauChaude' },
-    { name: 'Lave-vaisselle', icon: 'Serviettes' },
-    { name: 'Plaque de cuisson centrale', icon: 'cafeGrains' },
-    { name: 'Hotte design avec commande à distance', icon: 'Ventilateurs' },
-    { name: 'Four vapeur', icon: 'EauChaude' }
+    { name: 'Four moderne', icon: Microwave },
+    { name: 'Réfrigérateur grande capacité', icon: Refrigerator },
+    { name: 'Lave-vaisselle', icon: Utensils },
+    { name: 'Plaque de cuisson centrale', icon: Flame },
+    { name: 'Hotte design avec commande à distance', icon: Wind },
+    { name: 'Four vapeur', icon: Coffee }
   ];
 
   // 其他房间
@@ -153,14 +152,17 @@ export function CuisineDetailSection() {
           </div>
         </div>
         <div className="self-stretch grid grid-cols-2 gap-4 max-w-4xl">
-          {equipments.map((equipment, index) => (
-            <div key={index} className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
-              <CustomIcon name={equipment.icon} className="w-6 h-6 text-[#D4AF37]" />
-              <span className="text-black text-sm font-normal font-['Playfair_Display']">
-                {equipment.name}
-              </span>
-            </div>
-          ))}
+          {equipments.map((equipment, index) => {
+            const IconComponent = equipment.icon;
+            return (
+              <div key={index} className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                <IconComponent className="w-6 h-6 text-[#D4AF37]" />
+                <span className="text-black text-sm font-normal font-['Playfair_Display']">
+                  {equipment.name}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
 

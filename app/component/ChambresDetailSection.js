@@ -1,9 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Bed, Star, Users } from "lucide-react";
+import { Bed, Star, Users, ArrowRight, ChevronRight } from "lucide-react";
 
 export function ChambresDetailSection() {
   const router = useRouter();
@@ -59,78 +60,93 @@ export function ChambresDetailSection() {
   };
 
   return (
-    <div className="w-full bg-white inline-flex flex-col justify-start items-center gap-16 overflow-hidden">
+    <div className="w-full max-w-[1165px] mx-auto bg-white">
       {/* Breadcrumb */}
-      <div className="w-full px-24 py-8 inline-flex justify-start items-center gap-2.5 overflow-hidden">
-        <div className="justify-start text-neutral-700 text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
+      <div className="px-14 py-4 inline-flex justify-start items-center gap-2.5">
+        <div className="text-neutral-700 text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
           Accueil &gt; Chambres
         </div>
       </div>
 
-      {/* Title Section */}
-      <div className="w-full px-24 py-3 flex flex-col justify-center items-start gap-5 overflow-hidden">
-        <div className="justify-start text-black text-4xl font-bold font-['Playfair_Display_SC'] leading-10 tracking-tight">
-          Les Chambres
+      {/* Main Content Container */}
+      <div className="px-14 py-7 flex flex-col justify-start items-start">
+        {/* Title Section */}
+        <div className="w-[669px] h-28 relative mb-8">
+          <div className="absolute left-[0.50px] top-[58px] text-black text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
+            Les Chambres
+          </div>
         </div>
-        <div className="justify-start text-[#8B5E3C] text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
-          Élégance et confort pour un repos royal
-        </div>
-      </div>
 
-      {/* Chambres Grid */}
-      <div className="w-full px-24 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 overflow-hidden">
-        {chambres.map((chambre) => (
-          <div key={chambre.id} className="group relative">
-            <Button
+        {/* Chambres List */}
+        <div className="w-full space-y-6 mb-12">
+          {chambres.map((chambre, index) => (
+            <Card 
+              key={chambre.id}
+              className="group cursor-pointer border border-gray-200 hover:border-[#D4AF37] transition-all duration-300 hover:shadow-md overflow-hidden"
               onClick={() => handleChambreClick(chambre.id)}
-              variant="secondary"
-              className="w-full h-80 p-0 bg-white hover:bg-gray-50 rounded-lg border border-gray-200 hover:border-[#D4AF37] flex flex-col justify-end items-start transition-all duration-300 overflow-hidden bg-cover bg-center shadow-md hover:shadow-lg"
-              style={{ backgroundImage: `url('${chambre.image}')` }}
             >
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-              
-              {/* Content */}
-              <div className="relative z-10 w-full p-6 text-left">
-                <div className="flex items-center gap-2 mb-2">
-                  <Bed className="w-5 h-5 text-[#D4AF37]" />
-                  <div className="flex items-center gap-1">
-                    <Users className="w-4 h-4 text-[#D4AF37]" />
-                    <span className="text-[#D4AF37] text-xs font-['Playfair_Display']">
-                      {chambre.capacity} personnes
-                    </span>
+              <CardContent className="p-0">
+                <div className="flex items-center justify-between bg-[#8B5E3C]/80 hover:bg-[#8B5E3C] transition-colors duration-300 rounded-lg">
+                  <div className="flex-1 px-6 py-6">
+                    <div className="flex items-center gap-4">
+                      {/* Chambre Image Thumbnail */}
+                      <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                        <img 
+                          src={chambre.image} 
+                          alt={chambre.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      
+                      {/* Chambre Info */}
+                      <div className="flex-1">
+                        <h3 className="text-white text-lg font-normal font-['Playfair_Display'] leading-7 mb-1">
+                          {chambre.name}
+                        </h3>
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-1">
+                            <Bed className="w-4 h-4 text-[#D4AF37]" />
+                            <span className="text-[#D4AF37] text-xs font-['Playfair_Display']">
+                              Chambre double
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Users className="w-4 h-4 text-[#D4AF37]" />
+                            <span className="text-[#D4AF37] text-xs font-['Playfair_Display']">
+                              {chambre.capacity} personnes
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Rating Stars */}
+                      <div className="flex items-center gap-1 mr-4">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-[#D4AF37] text-[#D4AF37]" />
+                        ))}
+                      </div>
+
+                      {/* Arrow Icon */}
+                      <div className="flex-shrink-0 mr-2">
+                        <ChevronRight className="w-6 h-6 text-white group-hover:text-[#D4AF37] transition-colors duration-300" />
+                      </div>
+                    </div>
                   </div>
                 </div>
-                
-                <h3 className="text-white text-xl font-bold font-['Playfair_Display_SC'] mb-2">
-                  {chambre.name}
-                </h3>
-                
-                <p className="text-white/90 text-sm font-['Playfair_Display'] leading-relaxed">
-                  {chambre.description}
-                </p>
-                
-                {/* Rating */}
-                <div className="flex items-center gap-1 mt-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#D4AF37] text-[#D4AF37]" />
-                  ))}
-                </div>
-              </div>
-            </Button>
-          </div>
-        ))}
-      </div>
-
-      {/* Description Section */}
-      <div className="w-full px-24 py-8 flex flex-col justify-start items-start gap-6 overflow-hidden">
-        <div className="self-stretch h-12 py-5 inline-flex justify-start items-center gap-2.5 overflow-hidden">
-          <div className="justify-start text-black text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
-            Description
-          </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-        <div className="self-stretch inline-flex justify-start items-start gap-2.5 overflow-hidden">
-          <div className="flex-1 text-black text-sm font-normal font-['Playfair_Display'] leading-snug tracking-tight">
+
+        {/* Description Section */}
+        <div className="w-full space-y-4">
+          <div className="py-5 inline-flex justify-start items-center gap-2.5">
+            <div className="text-black text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
+              Description
+            </div>
+          </div>
+          
+          <div className="text-black text-sm font-normal font-['Playfair_Display'] leading-snug tracking-tight">
             Nos chambres élégantes sont toutes équipées de literie haut de gamme, soigneusement sélectionnée pour offrir un soutien optimal et une douceur enveloppante. 
             Chaque chambre révèle une atmosphère singulière : du charme rétro à l'élégance contemporaine, du raffinement du marbre à l'authenticité de l'industriel. 
             <br/><br/>
@@ -141,38 +157,56 @@ export function ChambresDetailSection() {
             L'attention portée aux détails garantit un séjour mémorable dans un cadre d'exception.
           </div>
         </div>
-      </div>
 
-      {/* Features Section */}
-      <div className="w-full px-24 py-8 bg-gray-50 flex flex-col justify-start items-start gap-8 overflow-hidden">
-        <div className="justify-start text-black text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
-          Équipements des chambres
+        {/* Features Section */}
+        <div className="w-full mt-12 space-y-6">
+          <div className="text-black text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
+            Équipements des chambres
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card className="p-6 text-center border border-gray-200 hover:border-[#D4AF37] transition-colors duration-300">
+              <CardContent className="p-0">
+                <Bed className="w-12 h-12 text-[#D4AF37] mb-4 mx-auto" />
+                <h4 className="text-lg font-bold font-['Playfair_Display_SC'] mb-2">Literie Premium</h4>
+                <p className="text-sm text-gray-600 font-['Playfair_Display']">
+                  Matelas haut de gamme et linge de maison de luxe
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="p-6 text-center border border-gray-200 hover:border-[#D4AF37] transition-colors duration-300">
+              <CardContent className="p-0">
+                <Star className="w-12 h-12 text-[#D4AF37] mb-4 mx-auto" />
+                <h4 className="text-lg font-bold font-['Playfair_Display_SC'] mb-2">Service 5 étoiles</h4>
+                <p className="text-sm text-gray-600 font-['Playfair_Display']">
+                  Attention personnalisée et service de qualité
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="p-6 text-center border border-gray-200 hover:border-[#D4AF37] transition-colors duration-300">
+              <CardContent className="p-0">
+                <Users className="w-12 h-12 text-[#D4AF37] mb-4 mx-auto" />
+                <h4 className="text-lg font-bold font-['Playfair_Display_SC'] mb-2">Confort optimal</h4>
+                <p className="text-sm text-gray-600 font-['Playfair_Display']">
+                  Espaces pensés pour votre bien-être et détente
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-        
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-sm">
-            <Bed className="w-12 h-12 text-[#D4AF37] mb-4" />
-            <h4 className="text-lg font-bold font-['Playfair_Display_SC'] mb-2">Literie Premium</h4>
-            <p className="text-sm text-gray-600 font-['Playfair_Display']">
-              Matelas haut de gamme et linge de maison de luxe
-            </p>
-          </div>
-          
-          <div className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-sm">
-            <Star className="w-12 h-12 text-[#D4AF37] mb-4" />
-            <h4 className="text-lg font-bold font-['Playfair_Display_SC'] mb-2">Service 5 étoiles</h4>
-            <p className="text-sm text-gray-600 font-['Playfair_Display']">
-              Attention personnalisée et service de qualité
-            </p>
-          </div>
-          
-          <div className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-sm">
-            <Users className="w-12 h-12 text-[#D4AF37] mb-4" />
-            <h4 className="text-lg font-bold font-['Playfair_Display_SC'] mb-2">Confort optimal</h4>
-            <p className="text-sm text-gray-600 font-['Playfair_Display']">
-              Espaces pensés pour votre bien-être et détente
-            </p>
-          </div>
+
+        {/* Call to Action */}
+        <div className="w-full mt-12 text-center">
+          <Button 
+            size="lg"
+            className="bg-[#D4AF37] hover:bg-[#B8941F] text-white px-8 py-3 font-['Playfair_Display']"
+            onClick={() => router.push('/reservation')}
+          >
+            Réserver votre chambre
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
         </div>
       </div>
     </div>

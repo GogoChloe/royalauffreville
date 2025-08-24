@@ -22,11 +22,7 @@ export function RoomsSection() {
   const handleRoomClick = (roomId) => {
     setSelectedRoom(roomId);
     // 导航到具体房间页面
-    if (roomId === 'chambres') {
-      router.push(`/rooms/chambres`);
-    } else {
-      router.push(`/rooms/${roomId}`);
-    }
+    router.push(`/rooms/${roomId}`);
   };
 
   return (
