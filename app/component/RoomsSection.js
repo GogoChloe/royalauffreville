@@ -36,10 +36,10 @@ export function RoomsSection() {
         <div className="justify-start text-neutral-700 text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">Découvrez chaque espace de notre magnifique demeure</div>
       </div>
 
-      {/* Room Buttons Grid - 3x3 */}
-      <div className=" grid grid-cols-3 gap-x-10 gap-y-6 justify-items-center">
+  {/* Room Buttons Grid - 响应式 */}
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-18 justify-items-center w-full max-w-7xl mx-auto">
         {rooms.map((room) => (
-          <div key={room.id} className="w-[15rem] h-[18rem]">
+          <div key={room.id} className="w-[18rem] h-[22rem]">
             <Button
               onClick={() => handleRoomClick(room.id)}
               variant="secondary"

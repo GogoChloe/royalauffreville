@@ -1,9 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, Microwave, Refrigerator, Utensils, Flame, Wind, Coffee } from "lucide-react";
+import { ChevronLeft, ChevronRight, Microwave, Refrigerator, Utensils, Flame, Wind, Coffee, CookingPot } from "lucide-react";
+import LaveVaisselleIcon from "./icons/LaveVaisselleIcon";
+import FourMultifonctionIcon from "./icons/FourMultifonctionIcon";
+import FourVapeurIcon from "./icons/FourVapeurIcon";
 
 export function CuisineDetailSection() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -24,12 +27,22 @@ export function CuisineDetailSection() {
 
   // 设备列表
   const equipments = [
-    { name: 'Four moderne', icon: Microwave },
-    { name: 'Réfrigérateur grande capacité', icon: Refrigerator },
-    { name: 'Lave-vaisselle', icon: Utensils },
-    { name: 'Plaque de cuisson centrale', icon: Flame },
-    { name: 'Hotte design avec commande à distance', icon: Wind },
-    { name: 'Four vapeur', icon: Coffee }
+    { name: 'Réfrigérateur LG', icon: Refrigerator },
+    { name: 'Four à micro-ondes', icon: Microwave },
+    { name: 'Équipements de cuisine de base', icon: CookingPot },
+    { name: 'Vaisselle et couverts', icon: Utensils },
+  { name: 'Lave-vaisselle', icon: LaveVaisselleIcon },
+  { name: 'Four multifonction Dietrich', icon: FourMultifonctionIcon },
+  { name: 'Four vapeur Dietrich', icon: FourVapeurIcon },
+    { name: 'Bouilloire électrique', icon: Coffee },
+    { name: 'Cafetière : machine à expresso', icon: Coffee },
+    { name: 'Verres à vin', icon: Coffee },
+    { name: 'Grille-pain', icon: Coffee },
+    { name: 'Plaque de cuisson', icon: Flame },
+    { name: 'Cuiseur à riz', icon: Coffee },
+    { name: 'Ustensiles de barbecue', icon: Utensils },
+    { name: 'Barbecue, charbon, brochettes en bambou ou en métal, etc.', icon: Utensils },
+    { name: 'Table à manger', icon: Utensils },
   ];
 
   // 其他房间
@@ -54,8 +67,30 @@ export function CuisineDetailSection() {
     setCurrentImageIndex((prev) => (prev - 1 + cuisineImages.length) % cuisineImages.length);
   };
 
+  // 挂载时插入金色滚动条样式
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (!document.head.querySelector('style[data-gold-scrollbar]')) {
+        const style = document.createElement('style');
+        style.innerHTML = `
+          .gold-scrollbar::-webkit-scrollbar {
+            height: 8px;
+          }
+          .gold-scrollbar::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+          }
+          .gold-scrollbar::-webkit-scrollbar-track {
+            background: #F5F0E6;
+          }
+        `;
+        style.setAttribute('data-gold-scrollbar', 'true');
+        document.head.appendChild(style);
+      }
+    }
+  }, []);
   return (
-    <div className="w-full bg-white inline-flex flex-col justify-start items-center gap-16 overflow-hidden">
+  <div className="w-full bg-white flex flex-col justify-start items-center gap-16 overflow-hidden">
       {/* Breadcrumb */}
       <div className="w-full px-24 py-8 inline-flex justify-start items-center gap-2.5 overflow-hidden">
         <div className="justify-start text-neutral-700 text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
@@ -74,27 +109,29 @@ export function CuisineDetailSection() {
       </div>
 
       {/* Main Image with Navigation */}
-      <div className="w-[860px] h-[558px] relative overflow-hidden rounded-lg">
-        <img 
-          src={cuisineImages[currentImageIndex]} 
-          alt="Cuisine" 
-          className="w-full h-full object-cover"
-        />
-        
-        {/* Navigation Buttons */}
+      <div className="w-full flex justify-center items-center gap-2 md:gap-6">
+        {/* 左侧按钮 */}
         <Button
           variant="secondary"
           size="icon"
-          className="absolute left-6 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full"
+          className="w-10 h-10 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full flex-shrink-0"
           onClick={prevImage}
         >
           <ChevronLeft className="w-6 h-6" />
         </Button>
-        
+        {/* 主图 */}
+        <div className="w-[320px] sm:w-[480px] md:w-[700px] lg:w-[860px] h-[200px] sm:h-[320px] md:h-[420px] lg:h-[558px] relative overflow-hidden rounded-lg">
+          <img 
+            src={cuisineImages[currentImageIndex]} 
+            alt="Cuisine" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        {/* 右侧按钮 */}
         <Button
           variant="secondary"
           size="icon"
-          className="absolute right-6 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full"
+          className="w-10 h-10 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full flex-shrink-0"
           onClick={nextImage}
         >
           <ChevronRight className="w-6 h-6" />
@@ -102,13 +139,15 @@ export function CuisineDetailSection() {
       </div>
 
       {/* Thumbnail Images */}
-      <div className="w-full px-24 py-3.5 inline-flex justify-start items-center gap-7 overflow-x-auto overflow-hidden">
+      <div className="gold-scrollbar w-full px-24 py-3.5 inline-flex justify-start items-center gap-7 overflow-x-auto overflow-hidden">
         {cuisineImages.map((image, index) => (
           <button
             key={index}
             onClick={() => setCurrentImageIndex(index)}
-            className={`w-48 h-32 relative rounded-lg overflow-hidden transition-all duration-200 flex-shrink-0 ${
-              index === currentImageIndex ? 'ring-2 ring-[#D4AF37]' : 'hover:opacity-80'
+            className={`w-48 h-32 relative rounded-lg overflow-hidden transition-all duration-200 flex-shrink-0 border-2 ${
+              index === currentImageIndex
+                ? 'border-[#D4AF37] ring-2 ring-[#D4AF37]'
+                : 'border-[#D4AF37]/40 bg-[#F5F0E6] hover:bg-[#D4AF37]/10'
             }`}
           >
             <img 
@@ -144,6 +183,17 @@ export function CuisineDetailSection() {
         </div>
       </div>
 
+      {/* Cuisine et salle à manger Section */}
+      <div className="w-full px-24 flex flex-col justify-start items-start gap-6 overflow-hidden">
+        <div className="w-full flex flex-col md:flex-row md:items-center md:gap-8">
+          <div className="text-black text-3xl font-bold font-['Playfair_Display_SC'] leading-9 mb-2 md:mb-0">
+            Cuisine et salle à manger
+          </div>
+          <div className="text-[#8B5E3C] text-base font-normal font-['Playfair_Display'] leading-tight">
+            Espace où les voyageurs peuvent cuisiner
+          </div>
+        </div>
+      </div>
       {/* Equipment Section */}
       <div className="w-full px-24 flex flex-col justify-start items-start gap-11 overflow-hidden">
         <div className="w-72 h-20 relative overflow-hidden">
@@ -151,12 +201,12 @@ export function CuisineDetailSection() {
             Équipements
           </div>
         </div>
-        <div className="self-stretch grid grid-cols-2 gap-4 max-w-4xl">
+        <div className="w-full self-stretch grid grid-cols-2 lg:grid-cols-4 gap-10 px-4 md:px-8">
           {equipments.map((equipment, index) => {
             const IconComponent = equipment.icon;
             return (
-              <div key={index} className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
-                <IconComponent className="w-6 h-6 text-[#D4AF37]" />
+              <div key={index} className="w-full flex items-center gap-3 p-4 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                <IconComponent className="w-8 h-8 text-[#D4AF37] bg-transparent" />
                 <span className="text-black text-sm font-normal font-['Playfair_Display']">
                   {equipment.name}
                 </span>
