@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, BedDouble, ThermometerSun } from "lucide-react";
 import { CustomIcon } from "@/components/icons";
 
 export function ChambreDetailSection({ chambreId }) {
@@ -22,12 +22,22 @@ Le lit queen-size, paré de linge de maison en soie et coton égyptien, offre un
 
 Chaque détail a été pensé pour créer une expérience unique : mobilier ancien restauré, éclairage d'ambiance, et vue sur le jardin fleuri. Un espace parfait pour une escapade romantique ou un séjour de détente absolue.`,
       equipments: [
-        { name: 'Lit Queen Size', icon: 'babybed' },
-        { name: 'Linge de luxe', icon: 'Serviettes' },
-        { name: 'Vue sur jardin', icon: 'VueSurLeJardin' },
-        { name: 'Éclairage d\'ambiance', icon: 'cheveux' },
-        { name: 'Mobilier antique', icon: 'Cintres' },
-        { name: 'Salle de bain privée', icon: 'ShampooGelDouche' }
+        { name: 'Lit Queen Size', icon: 'BedDouble', tooltip: '180×200cm', isLucide: true },
+        { name: 'Salle de bain privée', icon: 'Bidet' },
+        { name: 'Serviettes, draps, savon', icon: 'Serviettes' },
+        { name: 'Cintres', icon: 'Cintres' },
+        { name: 'Draps', icon: 'linge' },
+        { name: 'Linge de lit en coton', icon: 'linge' },
+        { name: 'Sèche-cheveux', icon: 'cheveux' },
+        { name: 'Produits de nettoyage', icon: 'ShampooGelDouche' },
+        { name: 'Eau chaude', icon: 'EauChaude' },
+        { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
+        { name: 'Lit pour bébé à la demande', icon: 'babybed' },
+        { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
+        { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
+        { name: 'Wifi', icon: 'Alarme' },
+        { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
+        { name: 'Espace de travail dédié', icon: 'Cintres' }
       ]
     },
     'strong-marble': {
@@ -40,12 +50,22 @@ Cette suite spacieuse dispose d'un mobilier design associé à des matériaux no
 
 L'espace a été conçu pour les voyageurs exigeants qui apprécient le raffinement contemporain. Grande fenêtre panoramique, dressing intégré et coin salon font de cette chambre un véritable écrin de confort.`,
       equipments: [
-        { name: 'Marbre Carrare', icon: 'panoramiques' },
-        { name: 'Design contemporain', icon: 'Cintres' },
-        { name: 'Dressing intégré', icon: 'linge' },
-        { name: 'Coin salon', icon: 'Hamac' },
-        { name: 'Vue panoramique', icon: 'VueSurLaPiscine' },
-        { name: 'Salle de bain marbre', icon: 'Bidet' }
+        { name: 'Lit Queen Size', icon: 'BedDouble', tooltip: '180×200cm', isLucide: true },
+        { name: 'Salle de bain privée', icon: 'Bidet' },
+        { name: 'Serviettes, draps, savon', icon: 'Serviettes' },
+        { name: 'Cintres', icon: 'Cintres' },
+        { name: 'Draps', icon: 'linge' },
+        { name: 'Linge de lit en coton', icon: 'linge' },
+        { name: 'Sèche-cheveux', icon: 'cheveux' },
+        { name: 'Produits de nettoyage', icon: 'ShampooGelDouche' },
+        { name: 'Eau chaude', icon: 'EauChaude' },
+        { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
+        { name: 'Lit pour bébé à la demande', icon: 'babybed' },
+        { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
+        { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
+        { name: 'Wifi', icon: 'Alarme' },
+        { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
+        { name: 'Espace de travail dédié', icon: 'Cintres' }
       ]
     },
     'bird-vintage': {
@@ -254,8 +274,22 @@ Les motifs végétaux, les couleurs vives et les accessoires en bois exotique cr
         </div>
         <div className="self-stretch grid grid-cols-2 gap-4 max-w-4xl">
           {currentChambre.equipments.map((equipment, index) => (
-            <div key={index} className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
-              <CustomIcon name={equipment.icon} className="w-6 h-6 text-[#D4AF37]" />
+            <div 
+              key={index} 
+              className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              title={equipment.tooltip || equipment.name}
+            >
+              {equipment.isLucide ? (
+                equipment.icon === 'BedDouble' ? (
+                  <BedDouble className="w-6 h-6 text-[#D4AF37]" />
+                ) : equipment.icon === 'ThermometerSun' ? (
+                  <ThermometerSun className="w-6 h-6 text-[#D4AF37]" />
+                ) : (
+                  <CustomIcon name={equipment.icon} className="w-6 h-6 text-[#D4AF37]" />
+                )
+              ) : (
+                <CustomIcon name={equipment.icon} className="w-6 h-6 text-[#D4AF37]" />
+              )}
               <span className="text-black text-sm font-normal font-['Playfair_Display']">
                 {equipment.name}
               </span>

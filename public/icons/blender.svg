@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Calque_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 24">
+  <!-- Generator: Adobe Illustrator 29.5.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 137)  -->
+  <defs>
+    <style>
+      .st0 {
+        stroke-width: 2px;
+      }
+
+      .st0, .st1, .st2 {
+        fill: none;
+        stroke: #333;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .st2 {
+        stroke-width: 1.5px;
+      }
+    </style>
+  </defs>
+  <path class="st0" d="M4.77,2.33h12.37l-1.85,12.37H6.63l-1.85-12.37Z"/>
+  <line class="st0" x1="4.15" y1="2.33" x2="17.76" y2="2.33"/>
+  <line class="st2" x1="6.01" y1="4.8" x2="9.72" y2="4.8"/>
+  <line class="st2" x1="6.66" y1="7.28" x2="10.99" y2="7.28"/>
+  <line class="st2" x1="7.24" y1="9.75" x2="12.19" y2="9.75"/>
+  <line class="st2" x1="7.24" y1="12.22" x2="12.81" y2="12.22"/>
+  <path class="st1" d="M17.54,5.03l3.26-.13-.2,6.33-2.38.66.43-4.57-1.5.26"/>
+  <path class="st0" d="M4.77,14.7h12.37l2.47,6.8H2.3l2.47-6.8Z"/>
+  <circle class="st0" cx="10.63" cy="18.17" r="1.59"/>
+</svg>

@@ -43,7 +43,7 @@ export function RoomsSection() {
             <Button
               onClick={() => handleRoomClick(room.id)}
               variant="secondary"
-              className="w-full h-full px-4 py-8 rounded-lg flex justify-center items-center font-['Playfair_Display'] relative overflow-hidden bg-cover bg-center hover:scale-105 transition-transform duration-200"
+              className="w-full h-full px-4 py-8 rounded-lg flex justify-center items-center font-['Playfair_Display'] relative overflow-hidden bg-cover bg-center hover:scale-105 transition-transform duration-200 cursor-pointer"
               style={{ backgroundImage: `url('${room.image}')` }}
             >
               <div className="relative z-10 text-white text-lg font-bold leading-7 bg-[#8B5E3C]/90 px-6 py-3 rounded-lg shadow-lg">

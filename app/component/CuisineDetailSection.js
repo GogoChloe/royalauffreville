@@ -7,6 +7,12 @@ import { ChevronLeft, ChevronRight, Microwave, Refrigerator, Utensils, Flame, Wi
 import LaveVaisselleIcon from "./icons/LaveVaisselleIcon";
 import FourMultifonctionIcon from "./icons/FourMultifonctionIcon";
 import FourVapeurIcon from "./icons/FourVapeurIcon";
+import KettleIcon from "./icons/KettleIcon";
+import ToastIcon from "./icons/ToastIcon";
+import InductionIcon from "./icons/InductionIcon";
+import CafeGrainsIcon from "./icons/CafeGrainsIcon";
+import BlenderIcon from "./icons/BlenderIcon";
+import TableMangerIcon from "./icons/TableMangerIcon";
 
 export function CuisineDetailSection() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -31,18 +37,14 @@ export function CuisineDetailSection() {
     { name: 'Four à micro-ondes', icon: Microwave },
     { name: 'Équipements de cuisine de base', icon: CookingPot },
     { name: 'Vaisselle et couverts', icon: Utensils },
-  { name: 'Lave-vaisselle', icon: LaveVaisselleIcon },
-  { name: 'Four multifonction Dietrich', icon: FourMultifonctionIcon },
-  { name: 'Four vapeur Dietrich', icon: FourVapeurIcon },
-    { name: 'Bouilloire électrique', icon: Coffee },
-    { name: 'Cafetière : machine à expresso', icon: Coffee },
-    { name: 'Verres à vin', icon: Coffee },
-    { name: 'Grille-pain', icon: Coffee },
-    { name: 'Plaque de cuisson', icon: Flame },
-    { name: 'Cuiseur à riz', icon: Coffee },
-    { name: 'Ustensiles de barbecue', icon: Utensils },
-    { name: 'Barbecue, charbon, brochettes en bambou ou en métal, etc.', icon: Utensils },
-    { name: 'Table à manger', icon: Utensils },
+    { name: 'Lave-vaisselle', icon: LaveVaisselleIcon },
+    { name: 'Four multifonction Dietrich', icon: FourMultifonctionIcon },
+    { name: 'Four vapeur Dietrich', icon: FourVapeurIcon },
+    { name: 'Bouilloire électrique', icon: KettleIcon },
+    { name: 'Grille-pain', icon: ToastIcon },
+    { name: 'Plaque de cuisson', icon: InductionIcon },
+    { name: 'Blender', icon: BlenderIcon },
+    { name: 'Table à manger', icon: TableMangerIcon },
   ];
 
   // 其他房间
@@ -184,16 +186,7 @@ export function CuisineDetailSection() {
       </div>
 
       {/* Cuisine et salle à manger Section */}
-      <div className="w-full px-24 flex flex-col justify-start items-start gap-6 overflow-hidden">
-        <div className="w-full flex flex-col md:flex-row md:items-center md:gap-8">
-          <div className="text-black text-3xl font-bold font-['Playfair_Display_SC'] leading-9 mb-2 md:mb-0">
-            Cuisine et salle à manger
-          </div>
-          <div className="text-[#8B5E3C] text-base font-normal font-['Playfair_Display'] leading-tight">
-            Espace où les voyageurs peuvent cuisiner
-          </div>
-        </div>
-      </div>
+   
       {/* Equipment Section */}
       <div className="w-full px-24 flex flex-col justify-start items-start gap-11 overflow-hidden">
         <div className="w-72 h-20 relative overflow-hidden">
