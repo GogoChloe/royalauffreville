@@ -2,7 +2,7 @@
 // 这个文件用来统一管理所有的自定义SVG图标
 
 // 导入 Lucide 图标
-import { ShowerHead } from "lucide-react";
+import { ShowerHead, Bath } from "lucide-react";
 
 // 基础图标组件
 export function CustomIcon({ name, className = "w-6 h-6", ...props }) {
@@ -44,8 +44,8 @@ export function KitchenIcon({ type, className = "w-6 h-6" }) {
 export function RoomIcon({ type, className = "w-6 h-6" }) {
   // Lucide 图标映射（带金色样式）
   const lucideIconMap = {
-    'shower-head': () => <ShowerHead className={className} color="#D4AF37" />,
-    'douche': () => <ShowerHead className={className} color="#D4AF37" />, // 法语别名
+    'shower-head': () => <ShowerHead className={className} color="#D4AF37" strokeWidth={1.5} />,
+    'douche': () => <ShowerHead className={className} color="#D4AF37" strokeWidth={1.5} />, // 法语别名
   };
 
   // JSX 组件映射
@@ -70,6 +70,7 @@ export function RoomIcon({ type, className = "w-6 h-6" }) {
     'jeux-societe': '/icons/JeuxSociété.svg',
     'serviettes': '/icons/Serviettes.svg',
     'shampoo': '/icons/ShampooGelDouche.svg',
+    'toilette': '/icons/Toilette.svg',
     'ventilateurs': '/icons/Ventilateurs.svg',
     'vue-piscine': '/icons/VueSurLaPiscine.svg',
     'vue-jardin': '/icons/VueSurLeJardin.svg',
@@ -117,5 +118,6 @@ export const availableIcons = [
   'JeuxSociété', 'Serviettes', 'ShampooGelDouche', 'Ventilateurs',
   'VueSurLaPiscine', 'VueSurLeJardin', 'Yoga', 'babybed', 'boxe',
   'cafeGrains', 'cheveux', 'linge', 'panoramiques', 'pingPong', 'repasser',
+  'Toilette', // 新增 Toilette 图标
   'shower-head' // 新增淋浴头图标
 ];

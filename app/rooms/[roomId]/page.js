@@ -1,9 +1,26 @@
 import { Header } from "../../component/Header";
 import { Footer } from "../../component/Footer";
 import { CuisineDetailSection } from "../../component/CuisineDetailSection";
+import { SalleSportDetailSection } from "../../component/SalleSportDetailSection";
+import { PiscineDetailSection } from "../../component/PiscineDetailSection";
+import { SalonDetailSection } from "../../component/SalonDetailSection";
+import { JardinDetailSection } from "../../component/JardinDetailSection";
 
-export default function RoomDetailPage({ params }) {
+export default async function RoomDetailPage({ params }) {
   const { roomId } = params;
+
+  // 如果是Salon页面，使用专门的组件
+  if (roomId === 'salon') {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main>
+          <SalonDetailSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   // 如果是厨房页面，使用专门的组件
   if (roomId === 'cuisine') {
@@ -12,6 +29,45 @@ export default function RoomDetailPage({ params }) {
         <Header />
         <main>
           <CuisineDetailSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // 如果是健身房页面，使用专门的组件
+  if (roomId === 'salle-sport') {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main>
+          <SalleSportDetailSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // 如果是泳池页面，使用专门的组件
+  if (roomId === 'piscine') {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main>
+          <PiscineDetailSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // 如果是jardin页面，使用专门的组件
+  if (roomId === 'jardin') {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main>
+          <JardinDetailSection />
         </main>
         <Footer />
       </div>

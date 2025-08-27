@@ -1,0 +1,15 @@
+<svg width="24" height="24" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- 顶部横杆 -->
+  <rect x="10" y="10" width="180" height="10" fill="#D4AF37" stroke="#D4AF37" stroke-width="1.5"/>
+  
+  <!-- 遮阳布条 -->
+  <path d="M10 20 
+           Q30 80 50 20 
+           Q70 80 90 20 
+           Q110 80 130 20 
+           Q150 80 170 20 
+           Q190 80 190 20
+           L190 30 
+           L10 30 
+           Z" fill="#D4AF37" stroke="#D4AF37" stroke-width="1.5"/>
+</svg>

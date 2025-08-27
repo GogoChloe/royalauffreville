@@ -1,11 +1,22 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Breadcrumb } from "./Breadcrumb";
 
 export function ChambresDetailSection() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [fromMaison, setFromMaison] = useState(false);
+
+  useEffect(() => {
+    // 检查是否从 La maison 页面来的
+    const from = searchParams.get('from');
+    if (from === 'maison') {
+      setFromMaison(true);
+    }
+  }, [searchParams]);
 
   // 卧室列表
   const chambres = [
@@ -54,14 +65,28 @@ export function ChambresDetailSection() {
   ];
 
   const handleChambreClick = (chambreId) => {
-    router.push(`/rooms/chambres/${chambreId}`);
+    if (fromMaison) {
+      router.push(`/rooms/chambres/${chambreId}?from=maison`);
+    } else {
+      router.push(`/rooms/chambres/${chambreId}`);
+    }
   };
 
+  // 构建面包屑导航数据
+  const breadcrumbItems = fromMaison 
+    ? [
+        { label: "Accueil", path: "/" },
+        { label: "La maison", path: "/rooms" },
+        { label: "Chambres", path: null } // 当前页面不可点击
+      ]
+    : [
+        { label: "Accueil", path: "/" },
+        { label: "Chambres", path: null } // 当前页面不可点击
+      ];
+
   return (
-    <div className="w-full px-24 py-8 pb-32 inline-flex flex-col justify-center items-center gap-24">
-      <div className="self-stretch inline-flex justify-start items-center gap-2.5 overflow-hidden">
-        <div className="justify-start text-neutral-700 text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">Accueil &gt; Chambres</div>
-      </div>
+    <div className="w-full px-24 pt-32 py-8 pb-32 inline-flex flex-col justify-center items-center gap-12">
+      <Breadcrumb items={breadcrumbItems} />
       
       <div className="self-stretch py-3 flex flex-col justify-center items-start gap-5 overflow-hidden">
         <div className="justify-start text-[#8B5E3C] text-3xl font-bold font-['Playfair_Display'] leading-9">Les Chambres</div>

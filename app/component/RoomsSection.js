@@ -3,33 +3,42 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Breadcrumb } from "./Breadcrumb";
 
 export function RoomsSection() {
   const [selectedRoom, setSelectedRoom] = useState(null);
   const router = useRouter();
 
   const rooms = [
+    { id: 'salon', name: 'Salon', image: '/salon1.JPG' },
+    { id: 'piscine', name: 'Piscine', image: '/piscine.JPG' },
     { id: 'cuisine', name: 'Cuisine', image: '/cuisine.JPG' },
     { id: 'chambres', name: 'Chambres', image: '/ChGN.JPG' },
     { id: 'salle-sport', name: 'Salle de Sport', image: '/salleDeSport.jpg' },
-    { id: 'piscine', name: 'Piscine', image: '/piscine.JPG' },
-    { id: 'sous-sol', name: 'sous-sol', image: '/sousSol.jpeg' },
     { id: 'espace-jeux', name: 'Espace jeux', image: '/espaceJeux.JPG' },
-    { id: 'salon', name: 'Salon', image: '/salon1.JPG' },
-    { id: 'jardin', name: 'Jardin', image: '/jardin.png' }
+  { id: 'jardin', name: 'Jardin', image: '/jardin.png' },
+  { id: 'sous-sol', name: 'sous-sol', image: '/sousSol.jpeg' },
   ];
 
   const handleRoomClick = (roomId) => {
     setSelectedRoom(roomId);
     // 导航到具体房间页面
-    router.push(`/rooms/${roomId}`);
+    if (roomId === 'chambres') {
+      router.push(`/rooms/${roomId}?from=maison`);
+    } else {
+      router.push(`/rooms/${roomId}`);
+    }
   };
 
+  // 构建面包屑导航数据
+  const breadcrumbItems = [
+    { label: "Accueil", path: "/" },
+    { label: "La maison", path: null } // 当前页面不可点击
+  ];
+
   return (
-    <div className="w-full px-24 py-8 pb-32 inline-flex flex-col justify-center items-center gap-16">
-      <div className="self-stretch inline-flex justify-start items-center gap-2.5 overflow-hidden">
-        <div className="justify-start text-neutral-700 text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">Accueil &gt; Pièces</div>
-      </div>
+    <div className="w-full px-24 pt-32 py-8 pb-32 inline-flex flex-col justify-center items-center gap-12">
+      <Breadcrumb items={breadcrumbItems} />
       
       <div className="self-stretch py-3 flex flex-col justify-center items-start gap-5 overflow-hidden">
         <div className="justify-start text-[#8B5E3C] text-3xl font-bold font-['Playfair_Display'] leading-9">Les pièces de la maison</div>

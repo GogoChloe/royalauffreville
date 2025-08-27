@@ -13,6 +13,7 @@ import InductionIcon from "./icons/InductionIcon";
 import CafeGrainsIcon from "./icons/CafeGrainsIcon";
 import BlenderIcon from "./icons/BlenderIcon";
 import TableMangerIcon from "./icons/TableMangerIcon";
+import { Breadcrumb } from "./Breadcrumb";
 
 export function CuisineDetailSection() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -91,13 +92,19 @@ export function CuisineDetailSection() {
       }
     }
   }, []);
+
+  // 构建面包屑导航数据
+  const breadcrumbItems = [
+    { label: "Accueil", path: "/" },
+    { label: "La maison", path: "/rooms" },
+    { label: "Cuisine", path: null } // 当前页面不可点击
+  ];
+
   return (
-  <div className="w-full bg-white flex flex-col justify-start items-center gap-16 overflow-hidden">
+  <div className="w-full bg-white flex flex-col justify-start items-center gap-12 overflow-hidden pt-32">
       {/* Breadcrumb */}
       <div className="w-full px-24 py-8 inline-flex justify-start items-center gap-2.5 overflow-hidden">
-        <div className="justify-start text-neutral-700 text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
-          Accueil &gt; Pièces &gt; Cuisine
-        </div>
+        <Breadcrumb items={breadcrumbItems} />
       </div>
 
       {/* Title Section */}
@@ -119,7 +126,7 @@ export function CuisineDetailSection() {
           className="w-10 h-10 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full flex-shrink-0"
           onClick={prevImage}
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-6 h-6" strokeWidth={1.5} />
         </Button>
         {/* 主图 */}
         <div className="w-[320px] sm:w-[480px] md:w-[700px] lg:w-[860px] h-[200px] sm:h-[320px] md:h-[420px] lg:h-[558px] relative overflow-hidden rounded-lg">
@@ -136,7 +143,7 @@ export function CuisineDetailSection() {
           className="w-10 h-10 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full flex-shrink-0"
           onClick={nextImage}
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-6 h-6" strokeWidth={1.5} />
         </Button>
       </div>
 

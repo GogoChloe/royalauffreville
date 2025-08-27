@@ -51,7 +51,7 @@ export function ReservationFormSection() {
                 <div className="self-stretch flex flex-col justify-center items-start">
                   <div className="w-28 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">Date d&apos;arrivée</div>
                   <div className="self-stretch px-3 py-2 bg-white rounded-md border border-[#D4AF37] inline-flex justify-start items-center gap-2">
-                    <Calendar className="w-6 h-6 text-[#D4AF37]" />
+                    <Calendar className="w-6 h-6 text-[#D4AF37]" strokeWidth={1.5} />
                     <input
                       type="date"
                       value={formData.checkIn}
@@ -65,7 +65,7 @@ export function ReservationFormSection() {
                 <div className="flex flex-col justify-start items-start">
                   <div className="w-28 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">Date de départ</div>
                   <div className="w-64 px-3 py-2 bg-white rounded-md border border-[#D4AF37] inline-flex justify-start items-center gap-2">
-                    <Calendar className="w-6 h-6 text-[#D4AF37]" />
+                    <Calendar className="w-6 h-6 text-[#D4AF37]" strokeWidth={1.5} />
                     <input
                       type="date"
                       value={formData.checkOut}

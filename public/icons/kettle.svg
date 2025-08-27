@@ -10,7 +10,7 @@
       }
 
       .st0, .st2 {
-        stroke-width: .5px;
+        stroke-width: 1.5px;
       }
 
       .st1, .st2 {

@@ -1,14 +1,25 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, BedDouble, ThermometerSun, Wifi, LampDesk, TvMinimal, ShowerHead } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ChevronLeft, ChevronRight, BedDouble, ThermometerSun, Wifi, LampDesk, TvMinimal, ShowerHead, Bath, Shirt, Toilet } from "lucide-react";
 import { CustomIcon } from "@/app/component/icons";
+import { Breadcrumb } from "./Breadcrumb";
 
 export function ChambreDetailSection({ chambreId }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [fromMaison, setFromMaison] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // 检查是否从 La maison 页面来的
+    const from = searchParams.get('from');
+    if (from === 'maison') {
+      setFromMaison(true);
+    }
+  }, [searchParams]);
 
   // 根据chambreId获取对应的卧室数据
   const chambreData = {
@@ -16,11 +27,13 @@ export function ChambreDetailSection({ chambreId }) {
       name: 'Princess Rose',
       subtitle: 'Romance et douceur dans les tons rosés',
       images: ['/ChRose.JPG', '/ChRose1.JPG', '/ChRose2.JPG'],
-      description: `La chambre Princess Rose vous transporte dans un univers romantique et raffiné. Décorée dans des tons poudrés et roses délicats, cette chambre évoque la douceur et l'élégance d'un conte de fées.
+  description: `Nichée au cœur de l’aile est, la PRINCESS ROSE séduit par son atmosphère délicate, entre raffinement discret et charme assumé. Les teintes tendres et les lignes épurées évoquent un univers de conte de fées moderne, où chaque détail invite au bien-être.
 
-Le lit queen-size, paré de linge de maison en soie et coton égyptien, offre un confort exceptionnel. Les rideaux en voilage filtrent délicatement la lumière naturelle, créant une atmosphère tamisée et apaisante.
+La chambre est équipée d’un lit king-size haut de gamme, d’une grande télévision à écran plat et d’un large bureau, parfait pour écrire, lire ou simplement savourer un moment à soi. Un placard dissimulé optimise l’espace tout en offrant un rangement généreux.
 
-Chaque détail a été pensé pour créer une expérience unique : mobilier ancien restauré, éclairage d'ambiance, et vue sur le jardin fleuri. Un espace parfait pour une escapade romantique ou un séjour de détente absolue.`,
+La salle de bain attenante surprend par son style industriel contemporain : douche à l’italienne aux lignes nettes, vasque moderne, meubles soigneusement choisis pour leur esthétique et leur fonctionnalité. Une belle dualité entre douceur romantique et caractère affirmé.
+
+Un cocon à la fois poétique et fonctionnel, idéal pour celles et ceux qui aiment allier confort et personnalité.`,
       equipments: [
         { name: 'Lit Queen Size', icon: 'BedDouble', tooltip: '180×200cm', isLucide: true },
         { name: 'Douche', icon: 'ShowerHead', isLucide: true },
@@ -42,11 +55,11 @@ Chaque détail a été pensé pour créer une expérience unique : mobilier anci
       name: 'Strong Marble',
       subtitle: 'Élégance moderne avec touches de marbre',
       images: ['/ChGN.JPG'],
-      description: `La chambre Strong Marble incarne l'alliance parfaite entre modernité et sophistication. Les éléments en marbre véritable créent une atmosphère luxueuse et contemporaine.
+  description: `La Chambre Strong Marble impressionne par son style sobre et raffiné, entièrement pensé autour de la matière noble qu’est le marbre. La salle de bain attenante, entièrement habillée de marbre clair, évoque le luxe sans ostentation : vasque taillée, robinetterie design, douche italienne moderne, chaque élément a été choisi avec une exigence rare par la propriétaire.
 
-Cette suite spacieuse dispose d'un mobilier design associé à des matériaux nobles. Le marbre Carrare orne la tête de lit et la salle de bain attenante, créant un effet visuel saisissant.
+La chambre offre une belle luminosité naturelle grâce à ses deux fenêtres, qui ouvrent la vue sur le jardin et laissent entrer la lumière du matin. Côté tête de lit, un meuble sur mesure, conçu et réalisé par la propriétaire elle-même, intègre des luminaires discrets pour un confort optimal en soirée — parfait pour lire au lit dans une ambiance feutrée.
 
-L'espace a été conçu pour les voyageurs exigeants qui apprécient le raffinement contemporain. Grande fenêtre panoramique, dressing intégré et coin salon font de cette chambre un véritable écrin de confort.`,
+Épure, équilibre, sophistication discrète : Strongmarble est une chambre de caractère, pensée comme une bulle de confort contemporain. `,
       equipments: [
         { name: 'Lit Queen Size', icon: 'BedDouble', tooltip: '180×200cm', isLucide: true },
         { name: 'Douche', icon: 'ShowerHead', isLucide: true },
@@ -61,6 +74,7 @@ L'espace a été conçu pour les voyageurs exigeants qui apprécient le raffinem
         { name: 'Wifi', icon: 'Wifi', isLucide: true },
         { name: 'TV', icon: 'TvMinimal', isLucide: true },
         { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
+        { name: 'Vue sur la piscine', icon: 'VueSurLaPiscine' },
         { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
       ]
     },
@@ -68,72 +82,119 @@ L'espace a été conçu pour les voyageurs exigeants qui apprécient le raffinem
       name: 'Bird Vintage',
       subtitle: 'Charme rétro et authenticité d\'époque',
       images: ['/Chvint1.JPG', '/Chvint2.JPG', '/Chvint3.JPG', '/Chvint4.JPG', '/Chvint5.JPG'],
-      description: `La chambre Bird Vintage vous plonge dans l'atmosphère authentique du début du XXe siècle. Mobilier chiné, papiers peints d'époque et objets de collection créent un décor unique et chaleureux.
+  description: `Dans cette chambre au style vintage délicatement assumé, tout évoque le calme, la nature et une douceur d’antan. 
+Le lit king-size promet un confort irréprochable, accompagné d’une literie haut de gamme pour des nuits pleines de quiétude. Une télévision grand format et un bureau discret viennent parfaire l’espace, idéal pour se détendre ou rêver à plume posée.  
 
-Cette chambre de caractère conserve tout le charme de l'ancien tout en offrant le confort moderne. Parquet d'origine, moulures sculptées et cheminée en marbre témoignent du raffinement d'antan.
+Deux fenêtres dévoilent un tableau vivant : d’un côté, le vallon du jardin, bordé de jasmins dont les effluves s’invitent à l’intérieur dès les beaux jours; de l’autre, un cèdre imposant, gardien silencieux de vos nuits.  
 
-L'esprit vintage se retrouve dans chaque détail : lampes Art Déco, malles anciennes reconverties en rangements, et collection d'oiseaux qui donne son nom à la chambre. Un voyage dans le temps garanti.`,
+Le dressing spacieux donne sur un couloir privatisé, partagé entre trois chambres.
+
+La salle de bain privée, au charme singulier, révèle une baignoire contemporaine, des carreaux anciens ornés d’oiseaux, et des luminaires minutieusement choisis par la propriétaire. 
+
+Les luminaires, en harmonie avec le thème, ont été sélectionnés avec amour, comme un clin d’œil poétique à l’univers ailé de la pièce. `,
       equipments: [
-        { name: 'Mobilier d\'époque', icon: 'Cintres' },
-        { name: 'Parquet ancien', icon: 'linge' },
-        { name: 'Cheminée marbre', icon: 'EauChaude' },
-        { name: 'Collection vintage', icon: 'JeuxSociété' },
-        { name: 'Éclairage Art Déco', icon: 'cheveux' },
-        { name: 'Caractère authentique', icon: 'Étendoir' }
+        { name: 'Lit Queen Size', icon: 'BedDouble', tooltip: '200×200cm', isLucide: true },
+        { name: 'Serviettes et ligne de lit', icon: 'Serviettes' },
+        { name: 'Placard et Cintres', icon: 'Cintres' },
+        { name: 'Sèche-cheveux', icon: 'cheveux' },
+        { name: 'Eau chaude', icon: 'EauChaude' },
+        { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
+        { name: 'Lit pour bébé à la demande', icon: 'babybed' },
+        { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
+        { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
+        { name: 'Wifi', icon: 'Wifi', isLucide: true },
+        { name: 'TV', icon: 'TvMinimal', isLucide: true },
+        { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
+        { name: 'Baignoire et douche', icon: 'Bath', isLucide: true },
+        { name: 'Bidet', icon: 'Bidet' },
+        { name: 'Dressing', icon: 'Shirt', isLucide: true },
+        { name: 'Fer à repasser', icon: 'repasser' },
+        { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
       ]
     },
     'royal-auffreville': {
       name: 'Royal Auffreville',
       subtitle: 'Suite royale avec vue panoramique',
       images: ['/ChRose.JPG'],
-      description: `La suite Royal Auffreville représente le summum du luxe et de l'élégance. Cette chambre d'exception offre une expérience digne des plus grands palaces européens.
+  description: `Spacieuse et baignée de lumière, la chambre Royal Auffreville est une ode au calme et à l’élégance. Deux grandes fenêtres l’ouvrent à la nature : d’un côté, un cèdre séculaire déploie sa majesté silencieuse ; de l’autre, un laurier en fleurs diffuse ses parfums subtils jusque dans la chambre.
 
-Spacieuse et majestueuse, elle dispose d'un mobilier de style royal avec des finitions dorées et des étoffes précieuses. La vue panoramique sur le domaine et les jardins à la française est à couper le souffle.
+Au cœur de cette atmosphère paisible, un lit king-size aux draps soyeux invite au sommeil profond. Allongé, on savoure un film sur un grand écran, bercé par la lumière dorée des fins de journée.
 
-Cette suite comprend un salon privé, un dressing sur mesure et une salle de bain en marbre avec baignoire îlot. Chaque élément évoque l'art de vivre à la française dans sa plus noble expression.`,
+La suite s’étend en un bel espace privé avec salle de bain raffinée — douche à l’italienne, baignoire profonde, toilettes séparées — et un vaste dressing discret. Un véritable refuge, pensé pour le repos du corps et de l’âme.`,
       equipments: [
-        { name: 'Suite avec salon', icon: 'Hamac' },
-        { name: 'Vue panoramique', icon: 'VueSurLaPiscine' },
-        { name: 'Mobilier royal', icon: 'Cintres' },
-        { name: 'Baignoire îlot', icon: 'Bidet' },
-        { name: 'Dressing sur mesure', icon: 'linge' },
-        { name: 'Finitions dorées', icon: 'panoramiques' }
+        { name: 'Lit King Size', icon: 'BedDouble', tooltip: '200×200cm', isLucide: true },
+        { name: 'Douche', icon: 'ShowerHead', isLucide: true },
+        { name: 'Baignoire', icon: 'Bath', isLucide: true },
+        { name: 'Serviettes et ligne de lit', icon: 'Serviettes' },
+        { name: 'Placard et Cintres', icon: 'Cintres' },
+        { name: 'Sèche-cheveux', icon: 'cheveux' },
+        { name: 'Eau chaude', icon: 'EauChaude' },
+        { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
+        { name: 'Lit pour bébé à la demande', icon: 'babybed' },
+        { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
+        { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
+        { name: 'Wifi', icon: 'Wifi', isLucide: true },
+        { name: 'TV', icon: 'TvMinimal', isLucide: true },
+        { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
+        { name: 'Vue sur la piscine', icon: 'VueSurLaPiscine' },
+        { name: 'Toilette séparée', icon: 'Toilet', isLucide: true },
+        { name: 'Fer à repasser', icon: 'repasser' },
+        { name: 'Dressing', icon: 'Shirt', isLucide: true },
+        { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
       ]
     },
     'good-night': {
       name: 'Good Night',
       subtitle: 'Repos optimal et confort absolu',
       images: ['/Chvint2.JPG'],
-      description: `La chambre Good Night a été spécialement conçue pour offrir la meilleure qualité de sommeil possible. Chaque élément contribue à créer un environnement propice au repos et à la régénération.
+  description: `Juste au-dessus de la chambre royale, nichée au cœur du premier étage, la Chambre Good Night veille en silence.
+ Par sa large fenêtre, les rayons du matin filtrent à travers les branches d’un cèdre majestueux, comme une caresse douce sur les draps immaculés.
+Cette chambre est un havre de paix.
+ On y accède par deux portes discrètes — l’une ouvre sur les salons, l’autre mène à la cuisine, comme si l’on pouvait choisir entre le repos ou le partage, entre la rêverie ou la convivialité.
 
-Matelas orthopédique haut de gamme, isolation phonique renforcée et système de ventilation silencieux garantissent des nuits réparatrices. L'obscurité totale est assurée par des rideaux occultants sur mesure.
-
-L'ambiance zen et minimaliste, inspirée des traditions scandinaves, favorise la détente et la sérénité. Cette chambre est parfaite pour les voyageurs en quête de récupération après une journée bien remplie.`,
+Le lit, généreux et noble (200×200), invite aux sommeils profonds et aux réveils sereins.
+ Le calme y est souverain, à tel point que l’on entend parfois le silence respirer.`,
       equipments: [
-        { name: 'Matelas orthopédique', icon: 'babybed' },
-        { name: 'Isolation phonique', icon: 'EauChaude' },
-        { name: 'Rideaux occultants', icon: 'cheveux' },
-        { name: 'Ventilation silencieuse', icon: 'Étendoir' },
-        { name: 'Ambiance zen', icon: 'JeuxSociété' },
-        { name: 'Qualité de sommeil', icon: 'Serviettes' }
+        { name: 'Lit king Size', icon: 'BedDouble', tooltip: '200×200cm', isLucide: true },
+        { name: 'Serviettes et ligne de lit', icon: 'Serviettes' },
+        { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
+        { name: 'Lit pour bébé à la demande', icon: 'babybed' },
+        { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
+        { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
+        { name: 'Wifi', icon: 'Wifi', isLucide: true },
+        { name: 'TV', icon: 'TvMinimal', isLucide: true },
+        { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
+        { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
       ]
     },
     'amazon-fun': {
       name: 'Amazon Fun',
       subtitle: 'Aventure et détente tropicale',
       images: ['/Chvint3.JPG'],
-      description: `La chambre Amazon Fun vous emmène dans une aventure exotique au cœur de la nature tropicale. Décoration inspirée de la forêt amazonienne avec des touches colorées et des matériaux naturels.
+      description: `Nichée sous les toits, la chambre Amazon Fun séduit par sa palette vive et son atmosphère ludique. Les tonalités chaleureuses d’orange, de bleu ciel et de noir dessinent un univers à la fois graphique et accueillant, où chaque détail invite à l’évasion.
 
-Cette chambre familiale spacieuse peut accueillir jusqu'à 4 personnes avec un lit double et des lits superposés design. L'ambiance ludique et chaleureuse en fait le choix idéal pour les familles avec enfants.
+Malgré sa taille plus intime, la chambre ne manque ni de confort ni de style : le bureau noir, choisi pour son élégance sobre, s’intègre parfaitement à l’ensemble. Un grand dressing offre un espace de rangement généreux, pensé pour les séjours prolongés.
 
-Les motifs végétaux, les couleurs vives et les accessoires en bois exotique créent une atmosphère unique et dépaysante. Un espace de jeu intégré permet aux enfants de s'amuser en toute sécurité.`,
+La salle de bain attenante, récemment rénovée, s’inscrit dans l’esprit du lieu : baignoire moderne, meubles choisis avec soin, et touches décoratives en harmonie avec l’univers coloré de la chambre.
+
+Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambiance pleine de caractère, entre confort moderne et fantaisie bien dosée.`,
       equipments: [
-        { name: 'Chambre familiale', icon: 'babybed' },
-        { name: 'Lits superposés design', icon: 'Cintres' },
-        { name: 'Espace de jeu', icon: 'JeuxSociété' },
-        { name: 'Décor tropical', icon: 'VueSurLeJardin' },
-        { name: 'Matériaux naturels', icon: 'linge' },
-        { name: 'Ambiance ludique', icon: 'Hamac' }
+        { name: 'Lit Normal Size', icon: 'BedDouble', tooltip: '160×180cm', isLucide: true },
+        { name: 'Baignoire et douche', icon: 'Bath', isLucide: true },
+        { name: 'Serviettes et ligne de lit', icon: 'Serviettes' },
+        { name: 'Placard et Cintres', icon: 'Cintres' },
+        { name: 'Sèche-cheveux', icon: 'cheveux' },
+        { name: 'Eau chaude', icon: 'EauChaude' },
+        { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
+        { name: 'Lit pour bébé à la demande', icon: 'babybed' },
+        { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
+        { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
+        { name: 'Wifi', icon: 'Wifi', isLucide: true },
+        { name: 'TV', icon: 'TvMinimal', isLucide: true },
+        { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
+        { name: 'Toilette séparée', icon: 'Toilet', isLucide: true },
+        { name: 'Dressing', icon: 'Shirt', isLucide: true },
+        { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
       ]
     }
   };
@@ -156,7 +217,7 @@ Les motifs végétaux, les couleurs vives et les accessoires en bois exotique cr
 
   const handleRoomClick = (roomId) => {
     if (roomId === 'chambres') {
-      router.push(`/rooms/chambres`);
+      router.push(`/rooms/chambres?from=maison`);
     } else {
       router.push(`/rooms/${roomId}`);
     }
@@ -170,21 +231,33 @@ Les motifs végétaux, les couleurs vives et les accessoires en bois exotique cr
     setCurrentImageIndex((prev) => (prev - 1 + currentChambre.images.length) % currentChambre.images.length);
   };
 
-  return (
-    <div className="w-full bg-white inline-flex flex-col justify-start items-center gap-16 overflow-hidden">
+  // 构建面包屑导航数据
+  const breadcrumbItems = fromMaison 
+    ? [
+        { label: "Accueil", path: "/" },
+        { label: "La maison", path: "/rooms" },
+        { label: "Chambres", path: "/rooms/chambres?from=maison" },
+        { label: currentChambre.name, path: null } // 当前页面不可点击
+      ]
+    : [
+        { label: "Accueil", path: "/" },
+        { label: "Pièces", path: "/rooms" },
+        { label: "Chambres", path: "/rooms/chambres" },
+        { label: currentChambre.name, path: null } // 当前页面不可点击
+      ];
+
+  return 
+  (
+    <div className="w-full px-24 pt-32 py-8 pb-32 bg-white inline-flex flex-col justify-start items-center gap-12 overflow-hidden">
       {/* Breadcrumb */}
-      <div className="w-full px-24 py-8 inline-flex justify-start items-center gap-2.5 overflow-hidden">
-        <div className="justify-start text-neutral-700 text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
-          Accueil &gt; Pièces &gt; Chambres &gt; {currentChambre.name}
-        </div>
-      </div>
+      <Breadcrumb items={breadcrumbItems} />
 
       {/* Title Section */}
       <div className="w-full px-24 py-3 flex flex-col justify-center items-start gap-5 overflow-hidden">
-        <div className="justify-start text-black text-4xl font-bold font-['Playfair_Display_SC'] leading-10 tracking-tight">
+        <div className="justify-start text-[#8B5E3C] text-4xl font-bold font-['Playfair_Display_SC'] leading-10 tracking-tight">
           {currentChambre.name}
         </div>
-        <div className="justify-start text-[#8B5E3C] text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
+        <div className="justify-start text-black text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
           {currentChambre.subtitle}
         </div>
       </div>
@@ -272,31 +345,37 @@ Les motifs végétaux, les couleurs vives et les accessoires en bois exotique cr
             Équipements
           </div>
         </div>
-        <div className="self-stretch grid grid-cols-2 gap-4 max-w-4xl">
+        <div className="w-full self-stretch grid grid-cols-2 lg:grid-cols-4 gap-10 px-4 md:px-8">
           {currentChambre.equipments.map((equipment, index) => (
             <div 
               key={index} 
-              className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              className="w-full flex items-center gap-3 p-4 rounded-lg hover:bg-gray-100 transition-colors duration-200"
               title={equipment.tooltip || equipment.name}
             >
               {equipment.isLucide ? (
                 equipment.icon === 'BedDouble' ? (
-                  <BedDouble className="w-6 h-6 text-[#D4AF37]" />
+                  <BedDouble className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
                 ) : equipment.icon === 'ThermometerSun' ? (
-                  <ThermometerSun className="w-6 h-6 text-[#D4AF37]" />
+                  <ThermometerSun className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
                 ) : equipment.icon === 'Wifi' ? (
-                  <Wifi className="w-6 h-6 text-[#D4AF37]" />
+                  <Wifi className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
                 ) : equipment.icon === 'LampDesk' ? (
-                  <LampDesk className="w-6 h-6 text-[#D4AF37]" />
+                  <LampDesk className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
                 ) : equipment.icon === 'TvMinimal' ? (
-                  <TvMinimal className="w-6 h-6 text-[#D4AF37]" />
+                  <TvMinimal className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
                 ) : equipment.icon === 'ShowerHead' ? (
-                  <ShowerHead className="w-6 h-6 text-[#D4AF37]" />
+                  <ShowerHead className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
+                ) : equipment.icon === 'Bath' ? (
+                  <Bath className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
+                ) : equipment.icon === 'Shirt' ? (
+                  <Shirt className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
+                ) : equipment.icon === 'Toilet' ? (
+                  <Toilet className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
                 ) : (
-                  <CustomIcon name={equipment.icon} className="w-6 h-6 text-[#D4AF37]" />
+                  <CustomIcon name={equipment.icon} className="w-8 h-8 text-[#D4AF37]" />
                 )
               ) : (
-                <CustomIcon name={equipment.icon} className="w-6 h-6 text-[#D4AF37]" />
+                <CustomIcon name={equipment.icon} className="w-8 h-8 text-[#D4AF37]" />
               )}
               <span className="text-black text-sm font-normal font-['Playfair_Display']">
                 {equipment.name}
