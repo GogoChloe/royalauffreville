@@ -1,6 +1,6 @@
 "use client";
 
-import { CustomIcon, availableIcons } from "@/components/icons";
+import { CustomIcon, availableIcons } from "@/app/component/icons";
 
 export function IconShowcase() {
   return (

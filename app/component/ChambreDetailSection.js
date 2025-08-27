@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, BedDouble, ThermometerSun } from "lucide-react";
-import { CustomIcon } from "@/components/icons";
+import { ChevronLeft, ChevronRight, BedDouble, ThermometerSun, Wifi, LampDesk, TvMinimal, ShowerHead } from "lucide-react";
+import { CustomIcon } from "@/app/component/icons";
 
 export function ChambreDetailSection({ chambreId }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -23,21 +23,19 @@ Le lit queen-size, paré de linge de maison en soie et coton égyptien, offre un
 Chaque détail a été pensé pour créer une expérience unique : mobilier ancien restauré, éclairage d'ambiance, et vue sur le jardin fleuri. Un espace parfait pour une escapade romantique ou un séjour de détente absolue.`,
       equipments: [
         { name: 'Lit Queen Size', icon: 'BedDouble', tooltip: '180×200cm', isLucide: true },
-        { name: 'Salle de bain privée', icon: 'Bidet' },
-        { name: 'Serviettes, draps, savon', icon: 'Serviettes' },
-        { name: 'Cintres', icon: 'Cintres' },
-        { name: 'Draps', icon: 'linge' },
-        { name: 'Linge de lit en coton', icon: 'linge' },
+        { name: 'Douche', icon: 'ShowerHead', isLucide: true },
+        { name: 'Serviettes et ligne de lit', icon: 'Serviettes' },
+        { name: 'Placard et Cintres', icon: 'Cintres' },
         { name: 'Sèche-cheveux', icon: 'cheveux' },
-        { name: 'Produits de nettoyage', icon: 'ShampooGelDouche' },
         { name: 'Eau chaude', icon: 'EauChaude' },
         { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
         { name: 'Lit pour bébé à la demande', icon: 'babybed' },
         { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
         { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
-        { name: 'Wifi', icon: 'Alarme' },
+        { name: 'Wifi', icon: 'Wifi', isLucide: true },
+        { name: 'TV', icon: 'TvMinimal', isLucide: true },
         { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
-        { name: 'Espace de travail dédié', icon: 'Cintres' }
+        { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
       ]
     },
     'strong-marble': {
@@ -51,21 +49,19 @@ Cette suite spacieuse dispose d'un mobilier design associé à des matériaux no
 L'espace a été conçu pour les voyageurs exigeants qui apprécient le raffinement contemporain. Grande fenêtre panoramique, dressing intégré et coin salon font de cette chambre un véritable écrin de confort.`,
       equipments: [
         { name: 'Lit Queen Size', icon: 'BedDouble', tooltip: '180×200cm', isLucide: true },
-        { name: 'Salle de bain privée', icon: 'Bidet' },
-        { name: 'Serviettes, draps, savon', icon: 'Serviettes' },
-        { name: 'Cintres', icon: 'Cintres' },
-        { name: 'Draps', icon: 'linge' },
-        { name: 'Linge de lit en coton', icon: 'linge' },
+        { name: 'Douche', icon: 'ShowerHead', isLucide: true },
+        { name: 'Serviettes et ligne de lit', icon: 'Serviettes' },
+        { name: 'Placard et Cintres', icon: 'Cintres' },
         { name: 'Sèche-cheveux', icon: 'cheveux' },
-        { name: 'Produits de nettoyage', icon: 'ShampooGelDouche' },
         { name: 'Eau chaude', icon: 'EauChaude' },
         { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
         { name: 'Lit pour bébé à la demande', icon: 'babybed' },
         { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
         { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
-        { name: 'Wifi', icon: 'Alarme' },
+        { name: 'Wifi', icon: 'Wifi', isLucide: true },
+        { name: 'TV', icon: 'TvMinimal', isLucide: true },
         { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
-        { name: 'Espace de travail dédié', icon: 'Cintres' }
+        { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
       ]
     },
     'bird-vintage': {
@@ -193,35 +189,39 @@ Les motifs végétaux, les couleurs vives et les accessoires en bois exotique cr
         </div>
       </div>
 
-      {/* Main Image with Navigation */}
-      <div className="w-[860px] h-[558px] relative overflow-hidden rounded-lg">
-        <img 
-          src={currentChambre.images[currentImageIndex]} 
-          alt={currentChambre.name} 
-          className="w-full h-full object-cover"
-        />
-        
-        {/* Navigation Buttons - only show if more than 1 image */}
+      {/* Main Image with External Navigation */}
+      <div className="w-full px-24 flex items-center justify-center gap-6">
+        {/* Left Navigation Button */}
         {currentChambre.images.length > 1 && (
-          <>
-            <Button
-              variant="secondary"
-              size="icon"
-              className="absolute left-6 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full"
-              onClick={prevImage}
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </Button>
-            
-            <Button
-              variant="secondary"
-              size="icon"
-              className="absolute right-6 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full"
-              onClick={nextImage}
-            >
-              <ChevronRight className="w-6 h-6" />
-            </Button>
-          </>
+          <Button
+            variant="secondary"
+            size="icon"
+            className="w-12 h-12 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full flex-shrink-0"
+            onClick={prevImage}
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </Button>
+        )}
+        
+        {/* Main Image */}
+        <div className="w-[860px] h-[558px] relative overflow-hidden rounded-lg">
+          <img 
+            src={currentChambre.images[currentImageIndex]} 
+            alt={currentChambre.name} 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
+        {/* Right Navigation Button */}
+        {currentChambre.images.length > 1 && (
+          <Button
+            variant="secondary"
+            size="icon"
+            className="w-12 h-12 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full flex-shrink-0"
+            onClick={nextImage}
+          >
+            <ChevronRight className="w-6 h-6" />
+          </Button>
         )}
       </div>
 
@@ -284,11 +284,19 @@ Les motifs végétaux, les couleurs vives et les accessoires en bois exotique cr
                   <BedDouble className="w-6 h-6 text-[#D4AF37]" />
                 ) : equipment.icon === 'ThermometerSun' ? (
                   <ThermometerSun className="w-6 h-6 text-[#D4AF37]" />
+                ) : equipment.icon === 'Wifi' ? (
+                  <Wifi className="w-6 h-6 text-[#D4AF37]" />
+                ) : equipment.icon === 'LampDesk' ? (
+                  <LampDesk className="w-6 h-6 text-[#D4AF37]" />
+                ) : equipment.icon === 'TvMinimal' ? (
+                  <TvMinimal className="w-6 h-6 text-[#D4AF37]" />
+                ) : equipment.icon === 'ShowerHead' ? (
+                  <ShowerHead className="w-6 h-6 text-[#D4AF37]" />
                 ) : (
-                  <CustomIcon name={equipment.icon} className="w-6 h-6 text-[#D4AF37]" />
+                  <CustomIcon name={equipment.icon} className="w-6 h-6" color="#D4AF37" />
                 )
               ) : (
-                <CustomIcon name={equipment.icon} className="w-6 h-6 text-[#D4AF37]" />
+                <CustomIcon name={equipment.icon} className="w-6 h-6" color="#D4AF37" />
               )}
               <span className="text-black text-sm font-normal font-['Playfair_Display']">
                 {equipment.name}

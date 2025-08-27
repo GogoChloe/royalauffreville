@@ -2,11 +2,13 @@ import { Header } from "@/app/component/Header";
 import { Footer } from "@/app/component/Footer";
 import { ChambreDetailSection } from "@/app/component/ChambreDetailSection";
 
-export default function ChambrePage({ params }) {
+export default async function ChambrePage({ params }) {
+  const resolvedParams = await params;
+  
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      <ChambreDetailSection chambreId={params.chambreId} />
+      <ChambreDetailSection chambreId={resolvedParams.chambreId} />
       <Footer />
     </div>
   );

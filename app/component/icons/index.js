@@ -1,6 +1,9 @@
 // 图标组件管理文件
 // 这个文件用来统一管理所有的自定义SVG图标
 
+// 导入 Lucide 图标
+import { ShowerHead } from "lucide-react";
+
 // 基础图标组件
 export function CustomIcon({ name, className = "w-6 h-6", ...props }) {
   const iconPath = `/icons/${name}.svg`;
@@ -39,6 +42,18 @@ export function KitchenIcon({ type, className = "w-6 h-6" }) {
 
 // 房间设施图标组件
 export function RoomIcon({ type, className = "w-6 h-6" }) {
+  // Lucide 图标映射（带金色样式）
+  const lucideIconMap = {
+    'shower-head': () => <ShowerHead className={className} color="#D4AF37" />,
+    'douche': () => <ShowerHead className={className} color="#D4AF37" />, // 法语别名
+  };
+
+  // JSX 组件映射
+  const jsxIconMap = {
+    // 保留自定义 JSX 组件以备将来使用
+  };
+
+  // SVG 文件映射
   const iconMap = {
     'alarme': '/icons/Alarme.svg',
     'bidet': '/icons/Bidet.svg',
@@ -69,8 +84,20 @@ export function RoomIcon({ type, className = "w-6 h-6" }) {
     'repasser': '/icons/repasser.svg'
   };
 
-  const iconPath = iconMap[type];
+  // 优先检查 Lucide 图标
+  const LucideComponent = lucideIconMap[type];
+  if (LucideComponent) {
+    return LucideComponent();
+  }
 
+  // 然后检查 JSX 组件
+  const JsxComponent = jsxIconMap[type];
+  if (JsxComponent) {
+    return <JsxComponent className={className} />;
+  }
+
+  // 最后回退到 SVG 文件
+  const iconPath = iconMap[type];
   return iconPath ? (
     <img 
       src={iconPath} 
@@ -80,11 +107,15 @@ export function RoomIcon({ type, className = "w-6 h-6" }) {
   ) : null;
 }
 
+// 导出所有图标组件
+export { ShowerHead };
+
 // 图标列表（方便引用）
 export const availableIcons = [
   'Alarme', 'Bidet', 'Billard', 'Cendrier', 'ChaiseHaute', 'ChaisesLongues',
   'Cintres', 'Corde', 'EauChaude', 'Échecs', 'Étendoir', 'Hamac',
   'JeuxSociété', 'Serviettes', 'ShampooGelDouche', 'Ventilateurs',
   'VueSurLaPiscine', 'VueSurLeJardin', 'Yoga', 'babybed', 'boxe',
-  'cafeGrains', 'cheveux', 'linge', 'panoramiques', 'pingPong', 'repasser'
+  'cafeGrains', 'cheveux', 'linge', 'panoramiques', 'pingPong', 'repasser',
+  'shower-head' // 新增淋浴头图标
 ];
