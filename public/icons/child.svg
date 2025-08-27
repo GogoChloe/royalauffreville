@@ -4,8 +4,8 @@
     <style>
       .st0 { stroke-width: .5px; }
       .st0, .st1, .st2, .st3, .st4 { fill: none; stroke-miterlimit: 10; }
-      .st0, .st2, .st4 { stroke: #050505; }
-      .st1, .st3 { stroke: #000; }
+      .st0, .st2, .st4 { stroke: #D4AF37; }
+      .st1, .st3 { stroke: #D4AF37; }
       .st2, .st3 { stroke-width: .8px; }
       .st3 { stroke-linecap: round; }
       .st4 { stroke-width: .6px; }

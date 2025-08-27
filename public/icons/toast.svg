@@ -9,7 +9,7 @@
 
       .st0, .st1, .st2, .st3, .st4 {
         fill: none;
-        stroke: #000;
+        stroke: #D4AF37;
       }
 
       .st0, .st1, .st3 {

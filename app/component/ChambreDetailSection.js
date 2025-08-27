@@ -293,10 +293,10 @@ Les motifs végétaux, les couleurs vives et les accessoires en bois exotique cr
                 ) : equipment.icon === 'ShowerHead' ? (
                   <ShowerHead className="w-6 h-6 text-[#D4AF37]" />
                 ) : (
-                  <CustomIcon name={equipment.icon} className="w-6 h-6" color="#D4AF37" />
+                  <CustomIcon name={equipment.icon} className="w-6 h-6 text-[#D4AF37]" />
                 )
               ) : (
-                <CustomIcon name={equipment.icon} className="w-6 h-6" color="#D4AF37" />
+                <CustomIcon name={equipment.icon} className="w-6 h-6 text-[#D4AF37]" />
               )}
               <span className="text-black text-sm font-normal font-['Playfair_Display']">
                 {equipment.name}
