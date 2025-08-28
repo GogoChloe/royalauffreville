@@ -2,11 +2,50 @@
 // 这个文件用来统一管理所有的自定义SVG图标
 
 // 导入 Lucide 图标
-import { ShowerHead, Bath } from "lucide-react";
+import { ShowerHead, Bath, Cctv, Trees, Flower, WashingMachine, SoapDispenserDroplet, Bike, CircleParking, BrushCleaning } from "lucide-react";
+import BarbecueIcon from "./BarbecueIcon";
 
 // 基础图标组件
-export function CustomIcon({ name, className = "w-6 h-6", ...props }) {
-  const iconPath = `/icons/${name}.svg`;
+export function CustomIcon({ name, className = "w-6 h-6", isLucide = false, ...props }) {
+  // Lucide 图标映射
+  const lucideIconMap = {
+    'CameraSurveillance': () => <Cctv className={className} color="#D4AF37" strokeWidth={1.5} />,
+    'Trees': () => <Trees className={className} color="#D4AF37" strokeWidth={1.5} />,
+    'Flower': () => <Flower className={className} color="#D4AF37" strokeWidth={1.5} />,
+    'WashingMachine': () => <WashingMachine className={className} color="#D4AF37" strokeWidth={1.5} />,
+    'SoapDispenser': () => <SoapDispenserDroplet className={className} color="#D4AF37" strokeWidth={1.5} />,
+    'Bike': () => <Bike className={className} color="#D4AF37" strokeWidth={1.5} />,
+    'CircleParking': () => <CircleParking className={className} color="#D4AF37" strokeWidth={1.5} />,
+    'BrushCleaning': () => <BrushCleaning className={className} color="#D4AF37" strokeWidth={1.5} />,
+  };
+
+  // JSX 组件映射
+  const jsxIconMap = {
+    'Barbecue': () => <BarbecueIcon className={className} {...props} />,
+  };
+
+  // 如果是 Lucide 图标
+  if (isLucide && lucideIconMap[name]) {
+    return lucideIconMap[name]();
+  }
+
+  // 如果是 JSX 组件
+  if (jsxIconMap[name]) {
+    return jsxIconMap[name]();
+  }
+
+  // SVG 文件映射
+  const iconFileMap = {
+    'Hamac': 'Hamac.svg',
+    'SalonDetenteExterieur': 'SalonDetenteExterieur.svg',
+    'PingPong': 'pingPong.svg',
+    'VuePanoramique': 'VuePano.svg',
+    'Petanque': 'petanque.svg',
+    'TableManger': 'tableManger.svg',
+  };
+
+  const fileName = iconFileMap[name] || `${name}.svg`;
+  const iconPath = `/icons/${fileName}`;
   
   return (
     <img 

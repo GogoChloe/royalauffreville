@@ -3,41 +3,35 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, Sofa, TvMinimal, LampDesk, Users, BookOpen, Wine } from "lucide-react";
 import { CustomIcon } from "@/app/component/icons";
 import { Breadcrumb } from "./Breadcrumb";
 
-export function SalonDetailSection() {
+export function SousSolDetailSection() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const router = useRouter();
 
-  // Salon 数据
-  const salonData = {
-    name: 'Salon',
-    subtitle: 'Espace convivial pour se détendre et partager',
-    images: ['/salon1.JPG'],
-    description: `Notre salon incarne l’élégance du style campagne chic à la française. Surplombé d’un majestueux lustre vintage, il s’harmonise parfaitement avec les boiseries d’époque transmises dans notre famille. 
+  const sousSolData = {
+    name: 'Sous-sol',
+    subtitle: 'Espace fonctionnel et de loisirs',
+    images: ['/sousSol.jpeg', '/sousSol1.jpg'],
+    description: `Le sous-sol de la maison constitue un espace multifonctionnel pensé pour allier praticité et détente.
 
-La hauteur sous plafond et les volumes généreux offrent une sensation d’espace et de liberté rare.
-Au centre, une grande table à manger effet marbre invite à partager des repas conviviaux sous la lumière douce du lustre. Le sol est habillé d’un tapis signé Roche Bobois, qui ajoute une touche de raffinement et de confort.
+Cet espace comprend tout d'abord une buanderie complète avec lave-linge et sèche-linge, ainsi qu'un rangement pour tous les produits de nettoyage nécessaires à l'entretien de la maison.
 
-Un bar discret permet de préparer un café le matin ou de savourer un cocktail en soirée. Le coin salon, véritable cocon de détente, est aménagé autour d’un canapé en cuir Roche Bobois posé sur un vaste tapis de 3 m². Face à une télévision de 2 mètres, encadrée par une élégante cheminée, cet espace devient le cœur chaleureux de la maison, parfait pour se retrouver en famille ou entre amis lors des soirées d’hiver.`,
+Pour les loisirs, une table de ping-pong est installée, offrant un espace de jeu idéal pour tous les âges. Les joueurs peuvent s'adonner à leur passion même par mauvais temps.
+
+Un vélo est disponible sur demande pour les hôtes souhaitant explorer les environs à leur rythme.
+
+Le sous-sol dispose également d'un parking sécurisé, très pratique pour stationner en toute tranquillité.
+
+Enfin, un aspirateur et tout le matériel de nettoyage sont à disposition pour maintenir la propreté des lieux durant le séjour.`,
     equipments: [
-  { name: 'Grand canapé en cuir Roche Bobois', icon: 'Sofa', isLucide: true },
-  { name: 'Télévision', icon: 'TvMinimal', isLucide: true },
-  { name: 'Piano', icon: 'Piano' },
-  { name: 'Système audio Bluetooth Devialet', icon: 'Speaker' },
-  { name: 'Livres', icon: 'Livres' },
-      { name: 'Jeux de société', icon: 'JeuxSociété' },
-      { name: 'Table à manger', icon: 'tableManger' },
-      { name: 'Chaise haute pour bébé', icon: 'ChaiseHaute' },
-  { name: 'Cheminée', icon: 'Cheminee' },
-      { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
-    { name: 'Chauffage central', icon: 'ChauffageCentral' },
-  { name: 'Détecteur de fumée', icon: 'DetecteurFumee' },
-  { name: 'Wifi', icon: 'Wifi' },
-  { name: 'Espace bar à cocktails', icon: 'Martini' },
-      { name: 'Machine à café à grain', icon: 'cafeGrains' }
+      { name: 'Lave-linge et Sèche-linge', icon: 'WashingMachine', isLucide: true },
+      { name: 'Produits de nettoyage', icon: 'SoapDispenser', isLucide: true },
+      { name: 'Ping-pong', icon: 'PingPong' },
+      { name: 'Vélo à la demande', icon: 'Bike', isLucide: true },
+      { name: 'Parking', icon: 'CircleParking', isLucide: true },
+      { name: 'Aspirateur', icon: 'BrushCleaning', isLucide: true },
     ]
   };
 
@@ -45,10 +39,11 @@ Un bar discret permet de préparer un café le matin ou de savourer un cocktail 
   const otherRooms = [
     { id: 'cuisine', name: 'Cuisine', image: '/cuisine.JPG' },
     { id: 'chambres', name: 'Chambres', image: '/ChRose.JPG' },
-    { id: 'piscine', name: 'Piscine', image: '/piscine.JPG' },
+    { id: 'salon', name: 'Salon', image: '/salon1.JPG' },
     { id: 'salle-sport', name: 'Salle de Sport', image: '/salleDeSport.jpg' },
-    { id: 'sous-sol', name: 'Sous-sol', image: '/sousSol.jpeg' },
-    { id: 'espace-jeux', name: 'Espace jeux', image: '/espaceJeux.JPG' }
+    { id: 'jardin', name: 'Jardin', image: '/jardin.png' },
+    { id: 'espace-jeux', name: 'Espace jeux', image: '/espaceJeux.JPG' },
+    { id: 'piscine', name: 'Piscine', image: '/piscine.JPG' }
   ];
 
   const handleRoomClick = (roomId) => {
@@ -59,11 +54,10 @@ Un bar discret permet de préparer un café le matin ou de savourer un cocktail 
     }
   };
 
-  // 构建面包屑导航数据
   const breadcrumbItems = [
     { label: "Accueil", path: "/" },
     { label: "La maison", path: "/rooms" },
-    { label: salonData.name, path: null }
+    { label: sousSolData.name, path: null }
   ];
 
   return (
@@ -74,22 +68,41 @@ Un bar discret permet de préparer un café le matin ou de savourer un cocktail 
       {/* Title Section */}
       <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 py-3 flex flex-col justify-center items-start gap-5 overflow-hidden">
         <div className="justify-start text-[#8B5E3C] text-2xl sm:text-3xl md:text-4xl font-bold font-['Playfair_Display_SC'] leading-tight tracking-tight">
-          {salonData.name}
+          {sousSolData.name}
         </div>
         <div className="justify-start text-black text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
-          {salonData.subtitle}
+          {sousSolData.subtitle}
         </div>
       </div>
 
       {/* Main Image */}
-      <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 flex items-center justify-center gap-6">
+      <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 flex flex-col items-center justify-center gap-6">
         <div className="w-full max-w-[320px] h-[200px] sm:max-w-[480px] sm:h-[300px] md:max-w-[700px] md:h-[420px] lg:max-w-[860px] lg:h-[558px] relative overflow-hidden rounded-lg">
           <img 
-            src={salonData.images[currentImageIndex]} 
-            alt={salonData.name} 
+            src={sousSolData.images[currentImageIndex]} 
+            alt={sousSolData.name} 
             className="w-full h-full object-cover"
           />
         </div>
+        {sousSolData.images.length > 1 && (
+          <div className="flex gap-4">
+            {sousSolData.images.map((image, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentImageIndex(index)}
+                className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
+                  currentImageIndex === index ? 'border-[#8B5E3C]' : 'border-gray-300'
+                }`}
+              >
+                <img 
+                  src={image} 
+                  alt={`${sousSolData.name} ${index + 1}`} 
+                  className="w-full h-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Description Section */}
@@ -101,10 +114,10 @@ Un bar discret permet de préparer un café le matin ou de savourer un cocktail 
         </div>
         <div className="self-stretch inline-flex justify-start items-start gap-2.5 overflow-hidden">
           <div className="flex-1 text-black text-sm font-normal font-['Playfair_Display'] leading-snug tracking-tight">
-            {salonData.description.split('\n\n').map((paragraph, index) => (
+            {sousSolData.description.split('\n\n').map((paragraph, index) => (
               <span key={index}>
                 {paragraph}
-                {index < salonData.description.split('\n\n').length - 1 && <><br/><br/></>}
+                {index < sousSolData.description.split('\n\n').length - 1 && <><br/><br/></>}
               </span>
             ))}
           </div>
@@ -118,29 +131,14 @@ Un bar discret permet de préparer un café le matin ou de savourer un cocktail 
             Équipements
           </div>
         </div>
-        <div className="w-full self-stretch grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-10 px-4 md:px-8">
-          {salonData.equipments.map((equipment, index) => (
+        <div className="w-full self-stretch grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 px-4 md:px-8">
+          {sousSolData.equipments.map((equipment, index) => (
             <div 
               key={index} 
               className="w-full flex items-center gap-3 p-4 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-              title={equipment.tooltip || equipment.name}
             >
               {equipment.isLucide ? (
-                equipment.icon === 'Sofa' ? (
-                  <Sofa className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
-                ) : equipment.icon === 'TvMinimal' ? (
-                  <TvMinimal className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
-                ) : equipment.icon === 'LampDesk' ? (
-                  <LampDesk className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
-                ) : equipment.icon === 'BookOpen' ? (
-                  <BookOpen className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
-                ) : equipment.icon === 'Wine' ? (
-                  <Wine className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
-                ) : equipment.icon === 'Users' ? (
-                  <Users className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
-                ) : (
-                  <CustomIcon name={equipment.icon} className="w-8 h-8 text-[#D4AF37]" />
-                )
+                <CustomIcon name={equipment.icon} className="w-8 h-8 text-[#D4AF37]" isLucide={true} />
               ) : (
                 <CustomIcon name={equipment.icon} className="w-8 h-8 text-[#D4AF37]" />
               )}

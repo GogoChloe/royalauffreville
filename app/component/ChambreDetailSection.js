@@ -248,13 +248,13 @@ Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambia
 
   return 
   (
-    <div className="w-full px-24 pt-32 py-8 pb-32 bg-white inline-flex flex-col justify-start items-center gap-12 overflow-hidden">
+    <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 pt-32 py-8 pb-32 bg-white inline-flex flex-col justify-start items-center gap-12 overflow-hidden">
       {/* Breadcrumb */}
       <Breadcrumb items={breadcrumbItems} />
 
       {/* Title Section */}
-      <div className="w-full px-24 py-3 flex flex-col justify-center items-start gap-5 overflow-hidden">
-        <div className="justify-start text-[#8B5E3C] text-4xl font-bold font-['Playfair_Display_SC'] leading-10 tracking-tight">
+      <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 py-3 flex flex-col justify-center items-start gap-5 overflow-hidden">
+        <div className="justify-start text-[#8B5E3C] text-2xl sm:text-3xl md:text-4xl font-bold font-['Playfair_Display_SC'] leading-tight tracking-tight">
           {currentChambre.name}
         </div>
         <div className="justify-start text-black text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
@@ -263,21 +263,21 @@ Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambia
       </div>
 
       {/* Main Image with External Navigation */}
-      <div className="w-full px-24 flex items-center justify-center gap-6">
+      <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 flex items-center justify-center gap-2 md:gap-6">
         {/* Left Navigation Button */}
         {currentChambre.images.length > 1 && (
           <Button
             variant="secondary"
             size="icon"
-            className="w-12 h-12 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full flex-shrink-0"
+            className="w-10 h-10 md:w-12 md:h-12 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full flex-shrink-0"
             onClick={prevImage}
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-4 h-4 md:w-6 md:h-6" />
           </Button>
         )}
         
         {/* Main Image */}
-        <div className="w-[860px] h-[558px] relative overflow-hidden rounded-lg">
+        <div className="w-full max-w-[320px] h-[200px] sm:max-w-[480px] sm:h-[300px] md:max-w-[700px] md:h-[420px] lg:max-w-[860px] lg:h-[558px] relative overflow-hidden rounded-lg">
           <img 
             src={currentChambre.images[currentImageIndex]} 
             alt={currentChambre.name} 
@@ -290,22 +290,22 @@ Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambia
           <Button
             variant="secondary"
             size="icon"
-            className="w-12 h-12 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full flex-shrink-0"
+            className="w-10 h-10 md:w-12 md:h-12 bg-[#D4AF37] hover:bg-[#B8941F] text-white rounded-full flex-shrink-0"
             onClick={nextImage}
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-4 h-4 md:w-6 md:h-6" />
           </Button>
         )}
       </div>
 
       {/* Thumbnail Images - only show if more than 1 image */}
       {currentChambre.images.length > 1 && (
-        <div className="w-full px-24 py-3.5 inline-flex justify-start items-center gap-7 overflow-x-auto overflow-hidden">
+        <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 py-3.5 inline-flex justify-start items-center gap-4 md:gap-7 overflow-x-auto overflow-hidden">
           {currentChambre.images.map((image, index) => (
             <button
               key={index}
               onClick={() => setCurrentImageIndex(index)}
-              className={`w-48 h-32 relative rounded-lg overflow-hidden transition-all duration-200 flex-shrink-0 ${
+              className={`w-32 h-20 md:w-48 md:h-32 relative rounded-lg overflow-hidden transition-all duration-200 flex-shrink-0 ${
                 index === currentImageIndex ? 'ring-2 ring-[#D4AF37]' : 'hover:opacity-80'
               }`}
             >
@@ -320,9 +320,9 @@ Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambia
       )}
 
       {/* Description Section */}
-      <div className="w-full px-24 py-2.5 flex flex-col justify-start items-start gap-6 overflow-hidden">
+      <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 py-2.5 flex flex-col justify-start items-start gap-6 overflow-hidden">
         <div className="self-stretch h-12 py-5 inline-flex justify-start items-center gap-2.5 overflow-hidden">
-          <div className="justify-start text-black text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
+          <div className="justify-start text-black text-xl sm:text-2xl md:text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
             Description
           </div>
         </div>
@@ -339,13 +339,13 @@ Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambia
       </div>
 
       {/* Equipment Section */}
-      <div className="w-full px-24 flex flex-col justify-start items-start gap-11 overflow-hidden">
-        <div className="w-72 h-20 relative overflow-hidden">
-          <div className="absolute left-8 top-7 justify-start text-black text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
+      <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 flex flex-col justify-start items-start gap-11 overflow-hidden">
+        <div className="w-full relative overflow-hidden">
+          <div className="justify-start text-black text-xl sm:text-2xl md:text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
             Équipements
           </div>
         </div>
-        <div className="w-full self-stretch grid grid-cols-2 lg:grid-cols-4 gap-10 px-4 md:px-8">
+        <div className="w-full self-stretch grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-10 px-4 md:px-8">
           {currentChambre.equipments.map((equipment, index) => (
             <div 
               key={index} 
@@ -386,22 +386,22 @@ Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambia
       </div>
 
       {/* Other Rooms Section */}
-      <div className="w-full px-24 py-7 inline-flex flex-col justify-start items-start gap-8 overflow-hidden">
+      <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 py-7 inline-flex flex-col justify-start items-start gap-8 overflow-hidden">
         <div className="w-full relative overflow-hidden">
-          <div className="justify-start text-black text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
+          <div className="justify-start text-black text-xl sm:text-2xl md:text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
             Autres pièces de la maison
           </div>
         </div>
-        <div className="w-full grid grid-cols-3 gap-6 justify-items-center">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 justify-items-center">
           {otherRooms.map((room) => (
-            <div key={room.id} className="w-60 h-40">
+            <div key={room.id} className="w-full max-w-60 h-32 sm:h-40">
               <Button
                 onClick={() => handleRoomClick(room.id)}
                 variant="secondary"
                 className="w-full h-full px-4 py-8 bg-[#8B5E3C]/80 hover:bg-[#8B5E3C] rounded-lg flex justify-center items-center transition-colors duration-200 font-['Playfair_Display'] relative overflow-hidden bg-cover bg-center"
                 style={{ backgroundImage: `url('${room.image}')` }}
               >
-                <div className="relative z-10 text-white text-lg font-normal leading-7 bg-[#8B5E3C]/90 px-4 py-2 rounded-lg">
+                <div className="relative z-10 text-white text-sm sm:text-lg font-normal leading-7 bg-[#8B5E3C]/90 px-4 py-2 rounded-lg">
                   {room.name}
                 </div>
               </Button>
