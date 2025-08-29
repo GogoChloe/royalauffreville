@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 // 数据源：体验卡片
 const experiences = [
   { key: "famille", title: "Moments en Famille", image: "/famille.JPG" },
@@ -9,6 +11,12 @@ const experiences = [
 ];
 
 export function Experience() {
+  const router = useRouter();
+
+  const handleViewAllExperiences = () => {
+    router.push('/experiences');
+  };
+
   return (
     <div className="w-full bg-[#F5F0E6] py-12 md:py-20 px-4 md:px-8 lg:px-16">
       {/* Header */}
@@ -40,6 +48,16 @@ export function Experience() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Call-to-action button */}
+        <div className="flex justify-center items-center mt-12">
+          <button
+            onClick={handleViewAllExperiences}
+            className="px-8 py-4 bg-[#8B5E3C] hover:bg-[#8B5E3C]/90 text-white text-lg font-normal font-['Playfair_Display'] leading-normal rounded-md transition-colors shadow-lg hover:shadow-xl"
+          >
+            Découvrir toutes nos expériences
+          </button>
         </div>
       </div>
     </div>

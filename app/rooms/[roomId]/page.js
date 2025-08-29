@@ -5,6 +5,9 @@ import { SalleSportDetailSection } from "../../component/SalleSportDetailSection
 import { PiscineDetailSection } from "../../component/PiscineDetailSection";
 import { SalonDetailSection } from "../../component/SalonDetailSection";
 import { JardinDetailSection } from "../../component/JardinDetailSection";
+import { ChambresDetailSection } from "../../component/ChambresDetailSection";
+import { SousSolDetailSection } from "../../component/SousSolDetailSection";
+import { EspaceJeuxDetailSection } from "../../component/EspaceJeuxDetailSection";
 
 export default async function RoomDetailPage({ params }) {
   const { roomId } = params;
@@ -68,6 +71,45 @@ export default async function RoomDetailPage({ params }) {
         <Header />
         <main>
           <JardinDetailSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // 如果是chambres页面，使用专门的组件
+  if (roomId === 'chambres') {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main>
+          <ChambresDetailSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // 如果是sous-sol页面，使用专门的组件
+  if (roomId === 'sous-sol') {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main>
+          <SousSolDetailSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // 如果是espace-jeux页面，使用专门的组件
+  if (roomId === 'espace-jeux') {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main>
+          <EspaceJeuxDetailSection />
         </main>
         <Footer />
       </div>

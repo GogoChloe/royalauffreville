@@ -3,48 +3,72 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 // 房间数据
 const rooms = [
   {
-    id: 1,
+    id: "salon",
     name: "Salon",
     description: "Un espace de vie spacieux et élégant, parfait pour se détendre en famille ou entre amis. Décoré avec goût dans un style contemporain, le salon offre un cadre idéal pour des moments de convivialité.",
     image: "/salon.jpg",
     isActive: true
   },
   {
-    id: 2,
+    id: "chambres",
     name: "Chambres",
     description: "Nos chambres allient confort et raffinement. Chacune dispose d'une salle de bain privative et d'une décoration soignée pour vous garantir un repos optimal.",
     image: "/chambre.jpg",
     isActive: false
   },
   {
-    id: 3,
-    name: "Piscines",
+    id: "piscine",
+    name: "Piscine",
     description: "Profitez de notre magnifique piscine chauffée entourée d'un espace détente. L'endroit parfait pour se rafraîchir et profiter du soleil dans un cadre exceptionnel.",
     image: "/piscine.JPG",
     isActive: false
   },
   {
-    id: 4,
+    id: "cuisine",
     name: "Cuisine",
     description: "Une cuisine moderne et entièrement équipée avec des appareils haut de gamme. L'espace parfait pour préparer vos repas dans un environnement convivial et fonctionnel.",
     image: "/cuisine.jpg",
     isActive: false
   },
   {
-    id: 5,
+    id: "salle-sport",
     name: "Salle de sport",
     description: "Maintenez votre forme physique dans notre salle de sport privée équipée d'appareils modernes. Un espace dédié au bien-être et à la remise en forme.",
     image: "/salleDeSport.jpg",
+    isActive: false
+  },
+  {
+    id: "jardin",
+    name: "Jardin",
+    description: "Un magnifique jardin paysager avec terrasse et espace barbecue. Profitez de la nature dans un cadre verdoyant et apaisant.",
+    image: "/jardin.png",
+    isActive: false
+  },
+  {
+    id: "espace-jeux",
+    name: "Espace jeux",
+    description: "Un espace ludique pour toute la famille avec billard, baby-foot et jeux de société. L'endroit idéal pour se divertir et créer des souvenirs.",
+    image: "/espaceJeux.JPG",
+    isActive: false
+  },
+  {
+    id: "sous-sol",
+    name: "Sous-sol",
+    description: "Un espace polyvalent au sous-sol avec cave à vin, buanderie et espace de rangement. Fonctionnel et bien aménagé.",
+    image: "/sousSol.jpeg",
     isActive: false
   }
 ];
 
 export function Pieces() {
   const [activeRoom, setActiveRoom] = useState(0);
+  const router = useRouter();
 
   // Auto-scroll effect
   useEffect(() => {
@@ -111,7 +135,13 @@ export function Pieces() {
 
             {/* Lien "En savoir plus" */}
             <div className="w-full px-4 lg:px-10 py-4 flex justify-end">
-              <button className="text-[#3E3E3E] text-lg font-normal font-playfair leading-7 hover:text-[#8B5E3C] transition-colors cursor-pointer">
+              <button
+                onClick={() => {
+                  console.log('En savoir plus clicked, navigating to:', `/rooms/${currentRoom.id}`);
+                  window.location.href = `/rooms/${currentRoom.id}`;
+                }}
+                className="relative z-50 text-[#3E3E3E] text-lg font-normal font-playfair leading-7 hover:text-[#8B5E3C] transition-colors cursor-pointer"
+              >
                 En savoir plus
               </button>
             </div>
@@ -173,9 +203,15 @@ export function Pieces() {
 
       {/* Bouton d'action */}
       <div className="flex justify-center items-center">
-        <Button className="px-6 py-3 bg-[#8B5E3C] hover:bg-[#8B5E3C]/90 text-white text-base font-normal font-playfair leading-normal rounded-md transition-colors">
+        <button
+          onClick={() => {
+            console.log('Voir toutes les pieces clicked');
+            window.location.href = '/rooms';
+          }}
+          className="relative z-50 px-6 py-3 bg-[#8B5E3C] hover:bg-[#8B5E3C]/90 text-white text-base font-normal font-playfair leading-normal rounded-md transition-colors cursor-pointer"
+        >
           Voir toutes les pièces sur le plan
-        </Button>
+        </button>
       </div>
     </div>
   );

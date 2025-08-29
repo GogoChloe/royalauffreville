@@ -12,7 +12,7 @@ import { AuthModal } from "./AuthModal";
 
 const navigationItems = [
   { label: "La Maison", href: "/rooms" },
-  { label: "Expériences", href: "/#experiences" },
+  { label: "Expériences", href: "/experiences" },
   { label: "Activité", href: "/#activite" },
   { label: "Proximité", href: "/#proximite" },
   { label: "Contact", href: "/#contact" },
