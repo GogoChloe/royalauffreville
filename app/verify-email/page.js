@@ -1,10 +1,10 @@
 "use client";
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { Check, X, Mail, ArrowLeft } from 'lucide-react';
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [verificationStatus, setVerificationStatus] = useState('loading'); // 'loading', 'success', 'failed'
@@ -128,5 +128,26 @@ export default function VerifyEmailPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-[#F5F0E6] flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#8B5E3C] mx-auto mb-6"></div>
+        <h2 className="text-xl font-['Playfair_Display'] text-[#8B5E3C] mb-4">
+          Chargement...
+        </h2>
+      </div>
+    </div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }

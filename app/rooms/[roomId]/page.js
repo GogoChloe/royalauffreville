@@ -8,6 +8,15 @@ import { JardinDetailSection } from "../../component/JardinDetailSection";
 import { ChambresDetailSection } from "../../component/ChambresDetailSection";
 import { SousSolDetailSection } from "../../component/SousSolDetailSection";
 import { EspaceJeuxDetailSection } from "../../component/EspaceJeuxDetailSection";
+import { Suspense } from "react";
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#8B5E3C]"></div>
+    </div>
+  );
+}
 
 export default async function RoomDetailPage({ params }) {
   const { roomId } = params;
@@ -83,7 +92,9 @@ export default async function RoomDetailPage({ params }) {
       <div className="min-h-screen bg-white">
         <Header />
         <main>
-          <ChambresDetailSection />
+          <Suspense fallback={<LoadingFallback />}>
+            <ChambresDetailSection />
+          </Suspense>
         </main>
         <Footer />
       </div>

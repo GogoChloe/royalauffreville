@@ -1,10 +1,10 @@
 "use client";
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { Check, Sparkles } from 'lucide-react';
 
-export default function GoogleLoginSuccessPage() {
+function GoogleLoginSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [userName, setUserName] = useState('');
@@ -104,5 +104,26 @@ export default function GoogleLoginSuccessPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-[#F5F0E6] flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#8B5E3C] mx-auto mb-6"></div>
+        <h2 className="text-lg font-['Playfair_Display'] text-[#8B5E3C] mb-4">
+          Connexion en cours...
+        </h2>
+      </div>
+    </div>
+  );
+}
+
+export default function GoogleLoginSuccessPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <GoogleLoginSuccessContent />
+    </Suspense>
   );
 }
