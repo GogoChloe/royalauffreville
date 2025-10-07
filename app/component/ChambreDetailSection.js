@@ -246,8 +246,7 @@ Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambia
         { label: currentChambre.name, path: null } // 当前页面不可点击
       ];
 
-  return 
-  (
+  return (
     <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 pt-32 py-8 pb-32 bg-white inline-flex flex-col justify-start items-center gap-12 overflow-hidden">
       {/* Breadcrumb */}
       <Breadcrumb items={breadcrumbItems} />

@@ -72,9 +72,44 @@ royal-auffreville/
 └── lib/                   # Utilities
 ```
 
-## Deploy on Vercel
+## 🚀 Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Method 1: One-Click Deploy
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/cloclochu/royalAuffreville)
+
+### Method 2: Manual Deploy
+1. **Install Vercel CLI**:
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Login to Vercel**:
+   ```bash
+   vercel login
+   ```
+
+3. **Deploy the project**:
+   ```bash
+   vercel --prod
+   ```
+
+### Method 3: GitHub Integration
+1. Push your code to GitHub
+2. Visit [vercel.com](https://vercel.com)
+3. Import your GitHub repository
+4. Vercel will automatically detect Next.js and deploy
+
+### Environment Variables
+If you have environment variables, add them in your Vercel dashboard:
+- Go to your project settings
+- Navigate to "Environment Variables"
+- Add your variables for Production, Preview, and Development
+
+### Custom Domain
+1. Go to your Vercel project dashboard
+2. Click on "Domains"
+3. Add your custom domain
+4. Configure DNS settings as instructed
 
 ---
 
