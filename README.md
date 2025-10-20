@@ -114,3 +114,4 @@ If you have environment variables, add them in your Vercel dashboard:
 ---
 
 *Built with ❤️ for luxury hospitality*
+# Halloween2025
