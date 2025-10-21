@@ -1,20 +1,102 @@
+"use client";
+
 import { Instagram, Mail, MapPin, Phone } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 export function Footer() {
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterError, setNewsletterError] = useState('');
+  const { language } = useLanguage();
+  const t = translations[language];
+
   const navigationItems = [
-    "La maison",
-    "Témoignage",
-    "L'expérience",
-    "Activité",
-    "A proximité",
-    "Contact",
+    t.nav.house,
+    t.testimonials.title,
+    t.nav.experiences,
+    t.nav.activities,
+    t.nav.proximity,
+    t.nav.contact,
   ];
 
-  const legalItems = ["Conditions générales", "Politique de confidentialité"];
+  const legalItems = [
+    t.footer.legalItems.terms,
+    t.footer.legalItems.privacy
+  ];
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateEmail(newsletterEmail)) {
+      setNewsletterError(t.contact.errors.emailInvalid);
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: newsletterEmail,
+          type: 'newsletter'
+        }),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setNewsletterEmail('');
+        setNewsletterError('');
+        alert(t.footer.newsletterSuccess);
+      } else {
+        alert('Une erreur s\'est produite. Veuillez réessayer.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Une erreur s\'est produite. Veuillez réessayer.');
+    }
+  };
 
   return (
     <div className="w-full border-t border-[#D4AF37] inline-flex flex-col justify-start items-start overflow-hidden">
+      {/* Newsletter Section */}
+      <div className="self-stretch px-7 py-8 bg-[#8B5E3C]/70 border-b border-[#D4AF37] inline-flex justify-center items-center">
+        <div className="w-full max-w-md flex flex-col gap-3">
+          <div className="text-center text-white text-lg font-normal font-['Playfair_Display'] leading-normal">
+            {t.footer.newsletter}
+          </div>
+          <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+            <input
+              type="email"
+              value={newsletterEmail}
+              onChange={(e) => {
+                setNewsletterEmail(e.target.value);
+                setNewsletterError('');
+              }}
+              placeholder={t.footer.newsletterPlaceholder}
+              className={`flex-1 px-4 py-2 bg-white border ${newsletterError ? 'border-red-500' : 'border-[#D4AF37]'} rounded-md text-sm font-['Lato'] focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50`}
+              required
+            />
+            <Button 
+              type="submit"
+              className="bg-[#D4AF37] hover:bg-[#D4AF37]/80 text-[#8B5E3C] font-['Playfair_Display'] px-6 py-2"
+            >
+              {t.footer.subscribe}
+            </Button>
+          </form>
+          {newsletterError && <p className="text-red-300 text-xs text-center">{newsletterError}</p>}
+        </div>
+      </div>
+      
       <div className="self-stretch h-80 px-7 py-12 bg-[#8B5E3C]/80 inline-flex justify-center items-start gap-11 overflow-hidden">
         {/* Logo and Contact Info Section */}
         <div className="w-80 self-stretch inline-flex flex-col justify-start items-center overflow-hidden">
@@ -52,7 +134,7 @@ export function Footer() {
         <div className="flex-1 self-stretch inline-flex flex-col justify-start items-start gap-3 overflow-hidden">
           <div className="px-7 py-2 inline-flex justify-center items-center gap-2.5 overflow-hidden">
             <div className="justify-start text-white text-base font-normal font-['Playfair_Display'] leading-normal">
-              Navigation
+              {t.footer.navigation}
             </div>
           </div>
           
@@ -71,7 +153,7 @@ export function Footer() {
         <div className="flex-1 self-stretch inline-flex flex-col justify-start items-start gap-3 overflow-hidden">
           <div className="px-7 py-2 inline-flex justify-center items-center overflow-hidden">
             <div className="justify-start text-white text-base font-normal font-['Playfair_Display'] leading-normal">
-              Mention Légale
+              {t.footer.legal}
             </div>
           </div>
           
@@ -90,7 +172,7 @@ export function Footer() {
         <div className="flex-1 self-stretch inline-flex flex-col justify-start items-center gap-3 overflow-hidden">
           <div className="px-7 py-2 inline-flex justify-center items-center gap-2.5 overflow-hidden">
             <div className="justify-start text-white text-base font-normal font-['Playfair_Display'] leading-normal">
-              Suivez-nous
+              {t.footer.follow}
             </div>
           </div>
           
@@ -105,7 +187,7 @@ export function Footer() {
       {/* Copyright Section */}
       <div className="self-stretch h-16 px-[553px] py-1.5 bg-[#8B5E3C]/80 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.10)] border-t border-[#D4AF37] inline-flex justify-center items-center gap-2.5 overflow-hidden">
         <div className="justify-start text-white text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
-          © 2025 Royal Auffreville. Tous droits réservés.
+          {t.footer.copyright}
         </div>
       </div>
     </div>

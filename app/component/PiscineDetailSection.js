@@ -6,41 +6,44 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, Waves, Sun, Thermometer, ShowerHead, Users, Umbrella, LampDesk } from "lucide-react";
 import { CustomIcon } from "@/app/component/icons";
 import { Breadcrumb } from "./Breadcrumb";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 export function PiscineDetailSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const router = useRouter();
 
   // Piscine 数据
   const piscineData = {
-    name: 'Piscine',
+    name: t.pieces.piscine.name,
     subtitle: 'Oasis de détente et de rafraîchissement',
     images: ['/piscine.JPG'], // 唯一的照片
-    description: `Notre grande piscine extérieure, chauffée de mai à septembre, vous promet des instants de détente inoubliables.
- Avec ses dimensions généreuses (jusqu’à 2,2 mètres de profondeur), elle invite à la nage comme à la relaxation.
- Autour du bassin, des transats et des tables sont à votre disposition pour profiter pleinement du soleil. Le tout est entouré d’un vaste jardin verdoyant, parfait pour se reconnecter à la nature en toute tranquillité.`,
+    description: t.pieces.piscine.description,
     equipments: [
-      { name: 'Piscine chauffée', icon: 'WavesLadder', tooltip: 'Chauffée de début mai à fin septembre' },
-      { name: 'Éclairage subaquatique',icon: 'Cone', isLucide: true },
-      { name: 'Transats et chaises longues', icon: 'ChaisesLongues' },
-      { name: 'Store banne', icon: 'StoreBanne' },
-      { name: 'Alerte piscine', icon: 'Alarme' },
-      { name: 'Salon de détente extérieur', icon: 'SalonDetenteExterieur' },
-  { name: 'Vue panoramique sur la nature', icon: 'panoramiques' },
-      { name: "Éclairage d'ambiance panosolaire", icon: 'LampPanosolaire' },
-      { name: 'Zone ensoleillée', icon: 'Sun', isLucide: true },
-      { name: "Jeux d'eau", icon: 'JeuxEau' }
+      { name: t.equipments.heatedPool, icon: 'WavesLadder', tooltip: 'Chauffée de début mai à fin septembre' },
+      { name: t.equipments.underwaterLighting,icon: 'Cone', isLucide: true },
+      { name: t.equipments.sunLoungesChairs, icon: 'ChaisesLongues' },
+      { name: t.equipments.awning, icon: 'StoreBanne' },
+      { name: t.equipments.poolAlarm, icon: 'Alarme' },
+      { name: t.equipments.outdoorLounge, icon: 'SalonDetenteExterieur' },
+  { name: t.equipments.panoramicView, icon: 'panoramiques' },
+      { name: t.equipments.solarLighting, icon: 'LampPanosolaire' },
+      { name: t.equipments.sunnyArea, icon: 'Sun', isLucide: true },
+      { name: t.equipments.waterGames, icon: 'JeuxEau' }
     ]
   };
 
   // 其他房间
   const otherRooms = [
-    { id: 'cuisine', name: 'Cuisine', image: '/cuisine.JPG' },
-    { id: 'chambres', name: 'Chambres', image: '/ChRose.JPG' },
-    { id: 'salon', name: 'Salon', image: '/salon1.JPG' },
-    { id: 'salle-sport', name: 'Salle de Sport', image: '/salleDeSport.jpg' },
-    { id: 'sous-sol', name: 'Sous-sol', image: '/sousSol.jpeg' },
-    { id: 'espace-jeux', name: 'Espace jeux', image: '/espaceJeux.JPG' }
+    { id: 'cuisine', name: t.pieces.cuisine.name, image: '/cuisine.JPG' },
+    { id: 'chambres', name: t.pieces.chambres.name, image: '/ChRose.JPG' },
+    { id: 'salon', name: t.pieces.salon.name, image: '/salon1.JPG' },
+    { id: 'salle-sport', name: t.pieces.gym.name, image: '/salleDeSport.jpg' },
+    { id: 'sous-sol', name: t.pieces.basement.name, image: '/sousSol.jpeg' },
+    { id: 'espace-jeux', name: t.pieces.gameRoom.name, image: '/espaceJeux.JPG' }
   ];
 
   const handleRoomClick = (roomId) => {
@@ -53,8 +56,8 @@ export function PiscineDetailSection() {
 
   // 构建面包屑导航数据
   const breadcrumbItems = [
-    { label: "Accueil", path: "/" },
-    { label: "La maison", path: "/rooms" },
+    { label: t.roomDetail.breadcrumbHome, path: "/" },
+    { label: t.roomDetail.breadcrumbHouse, path: "/rooms" },
     { label: piscineData.name, path: null } // 当前页面不可点击
   ];
 

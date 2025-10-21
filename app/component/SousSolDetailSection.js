@@ -5,45 +5,40 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CustomIcon } from "@/app/component/icons";
 import { Breadcrumb } from "./Breadcrumb";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 export function SousSolDetailSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const router = useRouter();
 
   const sousSolData = {
-    name: 'Sous-sol',
+    name: t.pieces.basement.name,
     subtitle: 'Espace fonctionnel et de loisirs',
     images: ['/sousSol.jpeg', '/sousSol1.jpg'],
-    description: `Le sous-sol de la maison constitue un espace multifonctionnel pensé pour allier praticité et détente.
-
-Cet espace comprend tout d'abord une buanderie complète avec lave-linge et sèche-linge, ainsi qu'un rangement pour tous les produits de nettoyage nécessaires à l'entretien de la maison.
-
-Pour les loisirs, une table de ping-pong est installée, offrant un espace de jeu idéal pour tous les âges. Les joueurs peuvent s'adonner à leur passion même par mauvais temps.
-
-Un vélo est disponible sur demande pour les hôtes souhaitant explorer les environs à leur rythme.
-
-Le sous-sol dispose également d'un parking sécurisé, très pratique pour stationner en toute tranquillité.
-
-Enfin, un aspirateur et tout le matériel de nettoyage sont à disposition pour maintenir la propreté des lieux durant le séjour.`,
+    description: t.pieces.basement.description,
     equipments: [
-      { name: 'Lave-linge et Sèche-linge', icon: 'WashingMachine', isLucide: true },
-      { name: 'Produits de nettoyage', icon: 'SoapDispenser', isLucide: true },
-      { name: 'Ping-pong', icon: 'PingPong' },
-      { name: 'Vélo à la demande', icon: 'Bike', isLucide: true },
-      { name: 'Parking', icon: 'CircleParking', isLucide: true },
-      { name: 'Aspirateur', icon: 'BrushCleaning', isLucide: true },
+      { name: t.equipments.washingDryingMachine, icon: 'WashingMachine', isLucide: true },
+      { name: t.equipments.cleaningProducts, icon: 'SoapDispenser', isLucide: true },
+      { name: t.equipments.pingPong, icon: 'PingPong' },
+      { name: t.equipments.bikeOnDemand, icon: 'Bike', isLucide: true },
+      { name: t.equipments.parking, icon: 'CircleParking', isLucide: true },
+      { name: t.equipments.vacuumCleaner, icon: 'BrushCleaning', isLucide: true },
     ]
   };
 
   // 其他房间
   const otherRooms = [
-    { id: 'cuisine', name: 'Cuisine', image: '/cuisine.JPG' },
-    { id: 'chambres', name: 'Chambres', image: '/ChRose.JPG' },
-    { id: 'salon', name: 'Salon', image: '/salon1.JPG' },
-    { id: 'salle-sport', name: 'Salle de Sport', image: '/salleDeSport.jpg' },
-    { id: 'jardin', name: 'Jardin', image: '/jardin.png' },
-    { id: 'espace-jeux', name: 'Espace jeux', image: '/espaceJeux.JPG' },
-    { id: 'piscine', name: 'Piscine', image: '/piscine.JPG' }
+    { id: 'cuisine', name: t.pieces.cuisine.name, image: '/cuisine.JPG' },
+    { id: 'chambres', name: t.pieces.chambres.name, image: '/ChRose.JPG' },
+    { id: 'salon', name: t.pieces.salon.name, image: '/salon1.JPG' },
+    { id: 'salle-sport', name: t.pieces.gym.name, image: '/salleDeSport.jpg' },
+    { id: 'jardin', name: t.pieces.garden.name, image: '/jardin.png' },
+    { id: 'espace-jeux', name: t.pieces.gameRoom.name, image: '/espaceJeux.JPG' },
+    { id: 'piscine', name: t.pieces.piscine.name, image: '/piscine.JPG' }
   ];
 
   const handleRoomClick = (roomId) => {
@@ -55,8 +50,8 @@ Enfin, un aspirateur et tout le matériel de nettoyage sont à disposition pour 
   };
 
   const breadcrumbItems = [
-    { label: "Accueil", path: "/" },
-    { label: "La maison", path: "/rooms" },
+    { label: t.roomDetail.breadcrumbHome, path: "/" },
+    { label: t.roomDetail.breadcrumbHouse, path: "/rooms" },
     { label: sousSolData.name, path: null }
   ];
 

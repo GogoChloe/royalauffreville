@@ -3,8 +3,10 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
 import { Check, Sparkles } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 function GoogleLoginSuccessContent() {
+  const { language, t } = useLanguage();
   const searchParams = useSearchParams();
   const router = useRouter();
   const [userName, setUserName] = useState('');
@@ -13,7 +15,7 @@ function GoogleLoginSuccessContent() {
 
   useEffect(() => {
     // 从URL参数获取用户信息
-    const name = searchParams.get('name') || searchParams.get('given_name') || 'Cher client';
+    const name = searchParams.get('name') || searchParams.get('given_name') || t.googleLoginSuccess.dearClient;
     const email = searchParams.get('email');
     
     setUserName(name);
@@ -32,7 +34,7 @@ function GoogleLoginSuccessContent() {
     }, 1000);
 
     return () => clearInterval(countdownInterval);
-  }, [searchParams, router]);
+  }, [searchParams, router, t]);
 
   const handleAccessAccount = () => {
     router.push('/espace-client'); // 立即跳转到账户首页
@@ -44,7 +46,7 @@ function GoogleLoginSuccessContent() {
         <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#8B5E3C] mx-auto mb-6"></div>
           <h2 className="text-lg font-['Playfair_Display'] text-[#8B5E3C] mb-4">
-            Connexion en cours...
+            {t.googleLoginSuccess.connectingInProgress}
           </h2>
         </div>
       </div>
@@ -60,22 +62,22 @@ function GoogleLoginSuccessContent() {
         
         
         <h2 className="text-lg font-['Playfair_Display'] text-[#8B5E3C] mb-6 leading-relaxed">
-          Bonjour {userName}, bienvenue chez Royal Auffreville 
+          {t.googleLoginSuccess.hello} {userName}, {t.googleLoginSuccess.welcomeToRoyal}
         </h2>
         
         <p className="text-stone-600 font-['Lato'] text-sm mb-8 leading-relaxed">
-          Votre connexion avec Google a été réussie. Vous allez être redirigé vers votre espace client dans quelques secondes...
+          {t.googleLoginSuccess.connectionSuccess}
         </p>
         
         <button
           onClick={handleAccessAccount}
           className="w-full py-3 bg-[#8B5E3C] hover:bg-[#8B5E3C]/90 text-white rounded-md font-['Playfair_Display'] transition-colors cursor-pointer text-sm mb-4"
         >
-          Accéder à mon espace maintenant
+          {t.googleLoginSuccess.accessMySpace}
         </button>
         
         <div className="text-xs text-stone-500 font-['Lato']">
-          Redirection automatique dans {countdown} seconde{countdown > 1 ? 's' : ''}...
+          {t.googleLoginSuccess.automaticRedirect} {countdown} {countdown > 1 ? t.googleLoginSuccess.seconds : t.googleLoginSuccess.second}...
         </div>
         
         {/* Progress bar */}

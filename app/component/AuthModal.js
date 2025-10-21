@@ -2,8 +2,10 @@
 
 import { X, Eye, EyeOff } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useLanguage } from "../context/LanguageContext";
 
 export function AuthModal({ isOpen, onClose }) {
+  const { language, t } = useLanguage();
   const [currentPage, setCurrentPage] = useState('initial'); // 'initial', 'login', 'register'
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -41,7 +43,7 @@ export function AuthModal({ isOpen, onClose }) {
   // 密码验证
   const validatePassword = (password) => {
     if (password.length < 6) {
-      return 'Le mot de passe doit contenir au moins 6 caractères';
+      return t.authModal.passwordMinLength;
     }
     return '';
   };
@@ -58,11 +60,11 @@ export function AuthModal({ isOpen, onClose }) {
   // 验证确认密码
   useEffect(() => {
     if (confirmPassword && password && confirmPassword !== password) {
-      setConfirmPasswordError('Les mots de passe ne correspondent pas');
+      setConfirmPasswordError(t.authModal.passwordsMismatch);
     } else {
       setConfirmPasswordError('');
     }
-  }, [password, confirmPassword]);
+  }, [password, confirmPassword, t]);
 
   // 阻止背景滚动
   useEffect(() => {
@@ -122,7 +124,7 @@ export function AuthModal({ isOpen, onClose }) {
 
   const handleRegister = async () => {
     if (password !== confirmPassword) {
-      setConfirmPasswordError('Les mots de passe ne correspondent pas');
+      setConfirmPasswordError(t.authModal.passwordsMismatch);
       return;
     }
 
@@ -138,15 +140,17 @@ export function AuthModal({ isOpen, onClose }) {
       console.log('Register with:', { email, password });
       
       // 显示成功消息
-      alert(`Compte créé avec succès ! Veuillez vérifier votre e-mail pour activer votre compte.
+      alert(`${t.authModal.accountCreatedSuccess}
       
-Pour tester la vérification, vous pouvez utiliser ce lien :
+${t.authModal.checkEmailForActivation}
+
+${t.authModal.testVerificationLink}
 ${window.location.origin}/verify-email?token=verify_test_token_${Date.now()}`);
       
       onClose();
     } catch (error) {
       console.error('Error sending email:', error);
-      alert('Erreur lors de l\'envoi de l\'e-mail de confirmation. Veuillez réessayer.');
+      alert(t.authModal.emailSendError);
     }
   };
 
@@ -246,12 +250,12 @@ Vérifiez votre e-mail: ${verificationUrl}
       <div className="self-stretch flex flex-col justify-start items-start gap-6 overflow-hidden">
         <div className="w-72 flex flex-col justify-start items-start gap-11">
           <div className="self-stretch text-center justify-start text-[#8B5E3C] text-base font-normal font-['Playfair_Display'] leading-normal">
-            Connectez-vous ou créez votre compte
+            {t.authModal.loginOrCreateAccount}
           </div>
         </div>
         <div className="self-stretch inline-flex justify-center items-center gap-2.5 overflow-hidden">
           <div className="flex-1 justify-start text-[#8B5E3C] text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
-            Parce que chaque moment compte, gardez précieusement votre réservation dans votre espace.
+            {t.authModal.keepReservationSafe}
           </div>
         </div>
       </div>
@@ -261,7 +265,7 @@ Vérifiez votre e-mail: ${verificationUrl}
         <div className="self-stretch flex flex-col justify-start items-start gap-2">
           <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
             <div className="justify-start text-stone-600 text-sm font-normal font-['Lato'] leading-tight">
-              E-mail
+              {t.authModal.email}
             </div>
             <div className="self-stretch inline-flex justify-start items-start gap-2">
               <div className="flex-1 inline-flex flex-col justify-start items-start gap-1.5">
@@ -286,7 +290,7 @@ Vérifiez votre e-mail: ${verificationUrl}
           }`}
         >
           <div className="justify-start text-white text-sm font-medium font-['Playfair_Display'] leading-normal">
-            Continuer
+            {t.authModal.continue}
           </div>
         </button>
       </div>
@@ -296,7 +300,7 @@ Vérifiez votre e-mail: ${verificationUrl}
         <div className="w-72 h-5 inline-flex justify-center items-center">
           <div className="w-16 h-0 border-t border-stone-600" />
           <div className="w-11 text-center justify-start text-stone-600 text-sm font-normal font-['Lato'] leading-tight">
-            Ou
+            {t.authModal.or}
           </div>
           <div className="w-16 h-0 border-t border-stone-600" />
         </div>
@@ -313,7 +317,7 @@ Vérifiez votre e-mail: ${verificationUrl}
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
           </svg>
           <div className="flex-1 text-center justify-start text-stone-600 text-sm font-normal font-['Lato'] leading-tight">
-            Continuer avec Google
+            {t.authModal.continueWithGoogle}
           </div>
         </button>
       </div>
@@ -337,12 +341,12 @@ Vérifiez votre e-mail: ${verificationUrl}
       <div className="self-stretch flex flex-col justify-start items-start gap-6 overflow-hidden">
         <div className="w-72 flex flex-col justify-start items-start gap-11">
           <div className="self-stretch justify-start text-[#8B5E3C] text-base font-normal font-['Playfair_Display'] leading-normal">
-            Déjà venu ?
+            {t.authModal.alreadyVisited}
           </div>
         </div>
         <div className="self-stretch inline-flex justify-center items-center gap-2.5 overflow-hidden">
           <div className="flex-1 justify-start text-[#8B5E3C] text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
-            Retrouvez votre réservation à tout moment depuis votre espace — juste avant de boucler vos valises et de laisser le quotidien derrière vous.
+            {t.authModal.findReservationAnytime}
           </div>
         </div>
       </div>
@@ -354,7 +358,7 @@ Vérifiez votre e-mail: ${verificationUrl}
           <div className="self-stretch flex flex-col justify-start items-start gap-2">
             <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
               <div className="justify-start text-stone-600 text-sm font-normal font-['Playfair_Display'] leading-tight tracking-tight">
-                E-mail
+                {t.authModal.email}
               </div>
               <div className="self-stretch inline-flex justify-start items-start gap-2">
                 <div className="flex-1 inline-flex flex-col justify-start items-start gap-1.5">
@@ -371,13 +375,13 @@ Vérifiez votre e-mail: ${verificationUrl}
           {/* Password Field */}
           <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
             <div className="justify-start text-stone-600 text-sm font-normal font-['Playfair_Display'] leading-tight tracking-tight">
-              Mot de passe
+              {t.authModal.password}
             </div>
             <div className="self-stretch inline-flex justify-start items-start gap-2">
               <div className="flex-1 bg-white rounded-md border border-slate-300 inline-flex flex-col justify-start items-start gap-1.5 relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="saisir votre mot de passe"
+                  placeholder={t.authModal.enterPassword}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="self-stretch pl-3 pr-10 py-2 rounded-md text-[#8B5E3C] text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight border-none focus:outline-none"
@@ -392,7 +396,7 @@ Vérifiez votre e-mail: ${verificationUrl}
               </div>
             </div>
             <div className="self-stretch text-right justify-start text-[#8B5E3C] text-xs font-normal font-['Playfair_Display'] underline leading-tight tracking-tight cursor-pointer hover:opacity-70">
-              Réinitialiser mon mot de passe
+              {t.authModal.resetPassword}
             </div>
           </div>
         </div>
@@ -402,7 +406,7 @@ Vérifiez votre e-mail: ${verificationUrl}
           className="self-stretch py-2 bg-[#8B5E3C]/80 hover:bg-[#8B5E3C] rounded-md inline-flex justify-center items-center gap-2.5 transition-colors"
         >
           <div className="justify-start text-white text-sm font-normal font-['Playfair_Display'] leading-tight tracking-tight">
-            Continuer
+            {t.authModal.continue}
           </div>
         </button>
       </div>
@@ -412,7 +416,7 @@ Vérifiez votre e-mail: ${verificationUrl}
         <div className="w-72 h-5 inline-flex justify-center items-center">
           <div className="w-16 h-0 border-t border-stone-600" />
           <div className="w-11 text-center justify-start text-stone-600 text-sm font-normal font-['Lato'] leading-tight">
-            Ou
+            {t.authModal.or}
           </div>
           <div className="w-16 h-0 border-t border-stone-600" />
         </div>
@@ -428,7 +432,7 @@ Vérifiez votre e-mail: ${verificationUrl}
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
           </svg>
           <div className="flex-1 text-center justify-start text-stone-600 text-sm font-normal font-['Lato'] leading-tight">
-            Continuer avec Google
+            {t.authModal.continueWithGoogle}
           </div>
         </button>
       </div>
@@ -452,12 +456,12 @@ Vérifiez votre e-mail: ${verificationUrl}
       <div className="self-stretch flex flex-col justify-start items-start gap-6 overflow-hidden">
         <div className="w-72 flex flex-col justify-start items-start gap-11">
           <div className="self-stretch justify-start text-[#8B5E3C] text-base font-normal font-['Playfair_Display'] leading-normal">
-            Première visite ?
+            {t.authModal.firstVisit}
           </div>
         </div>
         <div className="self-stretch inline-flex justify-center items-center gap-2.5 overflow-hidden">
           <div className="flex-1 justify-start text-[#8B5E3C] text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">
-            Créez votre compte et commencez votre voyage vers l'exceptionnel.
+            {t.authModal.createAccountJourney}
           </div>
         </div>
       </div>
@@ -469,7 +473,7 @@ Vérifiez votre e-mail: ${verificationUrl}
           <div className="self-stretch flex flex-col justify-start items-start gap-2">
             <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
               <div className="justify-start text-stone-600 text-sm font-normal font-['Playfair_Display'] leading-tight tracking-tight">
-                E-mail
+                {t.authModal.email}
               </div>
               <div className="self-stretch inline-flex justify-start items-start gap-2">
                 <div className="flex-1 inline-flex flex-col justify-start items-start gap-1.5">
@@ -486,13 +490,13 @@ Vérifiez votre e-mail: ${verificationUrl}
           {/* Password Field */}
           <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
             <div className="justify-start text-stone-600 text-sm font-normal font-['Playfair_Display'] leading-tight tracking-tight">
-              Mot de passe
+              {t.authModal.password}
             </div>
             <div className="self-stretch inline-flex justify-start items-start gap-2">
               <div className="flex-1 bg-white rounded-md border border-slate-300 inline-flex flex-col justify-start items-start gap-1.5 relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="Créer votre mot de passe"
+                  placeholder={t.authModal.createPassword}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="self-stretch pl-3 pr-10 py-2 rounded-md text-[#8B5E3C] text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight border-none focus:outline-none"
@@ -516,13 +520,13 @@ Vérifiez votre e-mail: ${verificationUrl}
           {/* Confirm Password Field */}
           <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
             <div className="justify-start text-stone-600 text-sm font-normal font-['Playfair_Display'] leading-tight tracking-tight">
-              Confirmer le mot de passe
+              {t.authModal.confirmPassword}
             </div>
             <div className="self-stretch inline-flex justify-start items-start gap-2">
               <div className="flex-1 bg-white rounded-md border border-slate-300 inline-flex flex-col justify-start items-start gap-1.5 relative">
                 <input
                   type={showConfirmPassword ? "text" : "password"}
-                  placeholder="Confirmer votre mot de passe"
+                  placeholder={t.authModal.confirmPasswordPlaceholder}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="self-stretch pl-3 pr-10 py-2 rounded-md text-[#8B5E3C] text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight border-none focus:outline-none"
@@ -554,7 +558,7 @@ Vérifiez votre e-mail: ${verificationUrl}
           }`}
         >
           <div className="justify-start text-white text-sm font-normal font-['Playfair_Display'] leading-tight tracking-tight">
-            Créer le compte
+            {t.authModal.createAccount}
           </div>
         </button>
       </div>
@@ -564,7 +568,7 @@ Vérifiez votre e-mail: ${verificationUrl}
         <div className="w-72 h-5 inline-flex justify-center items-center">
           <div className="w-16 h-0 border-t border-stone-600" />
           <div className="w-11 text-center justify-start text-stone-600 text-sm font-normal font-['Lato'] leading-tight">
-            Ou
+            {t.authModal.or}
           </div>
           <div className="w-16 h-0 border-t border-stone-600" />
         </div>
@@ -580,7 +584,7 @@ Vérifiez votre e-mail: ${verificationUrl}
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
           </svg>
           <div className="flex-1 text-center justify-start text-stone-600 text-sm font-normal font-['Lato'] leading-tight">
-            Continuer avec Google
+            {t.authModal.continueWithGoogle}
           </div>
         </button>
       </div>

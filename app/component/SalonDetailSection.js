@@ -6,49 +6,48 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, Sofa, TvMinimal, LampDesk, Users, BookOpen, Wine } from "lucide-react";
 import { CustomIcon } from "@/app/component/icons";
 import { Breadcrumb } from "./Breadcrumb";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 export function SalonDetailSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const router = useRouter();
 
   // Salon 数据
   const salonData = {
-    name: 'Salon',
+    name: t.pieces.salon.name,
     subtitle: 'Espace convivial pour se détendre et partager',
     images: ['/salon1.JPG'],
-    description: `Notre salon incarne l’élégance du style campagne chic à la française. Surplombé d’un majestueux lustre vintage, il s’harmonise parfaitement avec les boiseries d’époque transmises dans notre famille. 
-
-La hauteur sous plafond et les volumes généreux offrent une sensation d’espace et de liberté rare.
-Au centre, une grande table à manger effet marbre invite à partager des repas conviviaux sous la lumière douce du lustre. Le sol est habillé d’un tapis signé Roche Bobois, qui ajoute une touche de raffinement et de confort.
-
-Un bar discret permet de préparer un café le matin ou de savourer un cocktail en soirée. Le coin salon, véritable cocon de détente, est aménagé autour d’un canapé en cuir Roche Bobois posé sur un vaste tapis de 3 m². Face à une télévision de 2 mètres, encadrée par une élégante cheminée, cet espace devient le cœur chaleureux de la maison, parfait pour se retrouver en famille ou entre amis lors des soirées d’hiver.`,
+    description: t.pieces.salon.description,
     equipments: [
-  { name: 'Grand canapé en cuir Roche Bobois', icon: 'Sofa', isLucide: true },
-  { name: 'Télévision', icon: 'TvMinimal', isLucide: true },
-  { name: 'Piano', icon: 'Piano' },
-  { name: 'Système audio Bluetooth Devialet', icon: 'Speaker' },
-  { name: 'Livres', icon: 'Livres' },
-      { name: 'Jeux de société', icon: 'JeuxSociété' },
-      { name: 'Table à manger', icon: 'tableManger' },
-      { name: 'Chaise haute pour bébé', icon: 'ChaiseHaute' },
-  { name: 'Cheminée', icon: 'Cheminee' },
-      { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
-    { name: 'Chauffage central', icon: 'ChauffageCentral' },
-  { name: 'Détecteur de fumée', icon: 'DetecteurFumee' },
-  { name: 'Wifi', icon: 'Wifi' },
-  { name: 'Espace bar à cocktails', icon: 'Martini' },
-      { name: 'Machine à café à grain', icon: 'cafeGrains' }
+  { name: t.equipments.sofa, icon: 'Sofa', isLucide: true },
+  { name: t.equipments.tv, icon: 'TvMinimal', isLucide: true },
+  { name: t.equipments.piano, icon: 'Piano' },
+  { name: t.equipments.speaker, icon: 'Speaker' },
+  { name: t.equipments.books, icon: 'Livres' },
+      { name: t.equipments.boardGames, icon: 'JeuxSociété' },
+      { name: t.equipments.diningTable, icon: 'tableManger' },
+      { name: t.equipments.highChair, icon: 'ChaiseHaute' },
+  { name: t.equipments.fireplace, icon: 'Cheminee' },
+      { name: t.equipments.fans, icon: 'Ventilateurs' },
+    { name: t.equipments.heating, icon: 'ChauffageCentral' },
+  { name: t.equipments.smokeDetector, icon: 'DetecteurFumee' },
+  { name: t.equipments.wifi, icon: 'Wifi' },
+  { name: t.equipments.bar, icon: 'Martini' },
+      { name: t.equipments.coffeeMachine, icon: 'cafeGrains' }
     ]
   };
 
   // 其他房间
   const otherRooms = [
-    { id: 'cuisine', name: 'Cuisine', image: '/cuisine.JPG' },
-    { id: 'chambres', name: 'Chambres', image: '/ChRose.JPG' },
-    { id: 'piscine', name: 'Piscine', image: '/piscine.JPG' },
-    { id: 'salle-sport', name: 'Salle de Sport', image: '/salleDeSport.jpg' },
-    { id: 'sous-sol', name: 'Sous-sol', image: '/sousSol.jpeg' },
-    { id: 'espace-jeux', name: 'Espace jeux', image: '/espaceJeux.JPG' }
+    { id: 'cuisine', name: t.pieces.cuisine.name, image: '/cuisine.JPG' },
+    { id: 'chambres', name: t.pieces.chambres.name, image: '/ChRose.JPG' },
+    { id: 'piscine', name: t.pieces.piscine.name, image: '/piscine.JPG' },
+    { id: 'salle-sport', name: t.pieces.gym.name, image: '/salleDeSport.jpg' },
+    { id: 'sous-sol', name: t.pieces.basement.name, image: '/sousSol.jpeg' },
+    { id: 'espace-jeux', name: t.pieces.gameRoom.name, image: '/espaceJeux.JPG' }
   ];
 
   const handleRoomClick = (roomId) => {
@@ -61,8 +60,8 @@ Un bar discret permet de préparer un café le matin ou de savourer un cocktail 
 
   // 构建面包屑导航数据
   const breadcrumbItems = [
-    { label: "Accueil", path: "/" },
-    { label: "La maison", path: "/rooms" },
+    { label: t.roomDetail.breadcrumbHome, path: "/" },
+    { label: t.roomDetail.breadcrumbHouse, path: "/rooms" },
     { label: salonData.name, path: null }
   ];
 
@@ -96,7 +95,7 @@ Un bar discret permet de préparer un café le matin ou de savourer un cocktail 
       <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 py-2.5 flex flex-col justify-start items-start gap-6 overflow-hidden">
         <div className="self-stretch h-12 py-5 inline-flex justify-start items-center gap-2.5 overflow-hidden">
           <div className="justify-start text-black text-xl sm:text-2xl md:text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
-            Description
+            {t.roomDetail.description}
           </div>
         </div>
         <div className="self-stretch inline-flex justify-start items-start gap-2.5 overflow-hidden">
@@ -115,7 +114,7 @@ Un bar discret permet de préparer un café le matin ou de savourer un cocktail 
       <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 flex flex-col justify-start items-start gap-11 overflow-hidden">
         <div className="w-full relative overflow-hidden">
           <div className="justify-start text-black text-xl sm:text-2xl md:text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
-            Équipements
+            {t.roomDetail.equipment}
           </div>
         </div>
         <div className="w-full self-stretch grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-10 px-4 md:px-8">
@@ -156,7 +155,7 @@ Un bar discret permet de préparer un café le matin ou de savourer un cocktail 
       <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 py-7 inline-flex flex-col justify-start items-start gap-8 overflow-hidden">
         <div className="w-full relative overflow-hidden">
           <div className="justify-start text-black text-xl sm:text-2xl md:text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
-            Autres pièces de la maison
+            {t.roomDetail.otherRooms}
           </div>
         </div>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 justify-items-center">

@@ -5,8 +5,10 @@ import { useRouter } from 'next/navigation';
 import { User, Calendar, Mail, Phone, MapPin, Settings, LogOut } from 'lucide-react';
 import { Header } from '../component/Header';
 import { Footer } from '../component/Footer';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function EspaceClientPage() {
+  const { language, t } = useLanguage();
   const router = useRouter();
   const [userInfo] = useState({
     name: 'Jean Dupont',
@@ -19,6 +21,16 @@ export default function EspaceClientPage() {
     router.push('/reservation');
   };
 
+  const handleEditProfile = () => {
+    router.push('/profile-settings');
+  };
+
+  const handleLogout = () => {
+    // 这里可以添加登出逻辑，比如清除token等
+    console.log('User logged out');
+    router.push('/');
+  };
+
   return (
     <div className="min-h-screen bg-[#F5F0E6]">
       <Header />
@@ -29,10 +41,10 @@ export default function EspaceClientPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-['Playfair_Display'] text-[#8B5E3C]">
-                Mon Espace Client
+                {t.espaceClient.mySpace}
               </h1>
               <p className="text-stone-600 font-['Lato'] text-sm mt-1">
-                Gérez vos réservations et préférences
+                {t.espaceClient.manageReservations}
               </p>
             </div>
           </div>
@@ -52,7 +64,7 @@ export default function EspaceClientPage() {
                   {userInfo.name}
                 </h2>
                 <p className="text-stone-600 font-['Lato'] text-sm">
-                  Membre depuis août 2025
+                  {t.espaceClient.memberSince}
                 </p>
               </div>
               
@@ -71,14 +83,20 @@ export default function EspaceClientPage() {
                 </div>
               </div>
               
-              <button className="w-full mt-6 py-2 bg-[#8B5E3C] hover:bg-[#8B5E3C]/90 text-white rounded-md font-['Playfair_Display'] transition-colors cursor-pointer text-sm flex items-center justify-center gap-2">
+              <button 
+                onClick={handleEditProfile}
+                className="w-full mt-6 py-2 bg-[#8B5E3C] hover:bg-[#8B5E3C]/90 text-white rounded-md font-['Playfair_Display'] transition-colors cursor-pointer text-sm flex items-center justify-center gap-2"
+              >
                 <Settings className="w-4 h-4" />
-                Modifier mes informations
+                {t.espaceClient.editInfo}
               </button>
               
-              <button className="w-full mt-3 py-2 bg-white hover:bg-gray-50 text-stone-600 border border-stone-300 rounded-md font-['Playfair_Display'] transition-colors cursor-pointer text-sm flex items-center justify-center gap-2">
+              <button 
+                onClick={handleLogout}
+                className="w-full mt-3 py-2 bg-white hover:bg-gray-50 text-stone-600 border border-stone-300 rounded-md font-['Playfair_Display'] transition-colors cursor-pointer text-sm flex items-center justify-center gap-2"
+              >
                 <LogOut className="w-4 h-4" />
-                Déconnexion
+                {t.espaceClient.logout}
               </button>
             </div>
           </div>
@@ -87,19 +105,19 @@ export default function EspaceClientPage() {
           <div className="md:col-span-2">
             <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
               <h3 className="text-lg font-['Playfair_Display'] text-[#8B5E3C] mb-4">
-                Mes Réservations
+                {t.espaceClient.myReservations}
               </h3>
               
               <div className="text-center py-8">
                 <Calendar className="w-12 h-12 text-stone-300 mx-auto mb-4" />
                 <p className="text-stone-600 font-['Lato'] text-sm">
-                  Aucune réservation pour le moment
+                  {t.espaceClient.noReservations}
                 </p>
                 <button 
                   onClick={handleReservation}
                   className="mt-4 px-6 py-2 bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-white rounded-md font-['Playfair_Display'] transition-colors cursor-pointer text-sm"
                 >
-                  Faire une réservation
+                  {t.espaceClient.makeReservation}
                 </button>
               </div>
             </div>
@@ -107,7 +125,7 @@ export default function EspaceClientPage() {
             {/* Quick Actions */}
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h3 className="text-lg font-['Playfair_Display'] text-[#8B5E3C] mb-4">
-                Actions Rapides
+                {t.espaceClient.quickActions}
               </h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -115,23 +133,23 @@ export default function EspaceClientPage() {
                   onClick={handleReservation}
                   className="p-4 border border-[#8B5E3C] rounded-md hover:bg-[#8B5E3C]/5 transition-colors text-left"
                 >
-                  <h4 className="font-['Playfair_Display'] text-[#8B5E3C] mb-2">Nouvelle Réservation</h4>
-                  <p className="font-['Lato'] text-sm text-stone-600">Réserver votre prochaine expérience</p>
+                  <h4 className="font-['Playfair_Display'] text-[#8B5E3C] mb-2">{t.espaceClient.newReservation}</h4>
+                  <p className="font-['Lato'] text-sm text-stone-600">{t.espaceClient.bookNextExperience}</p>
                 </button>
                 
                 <button className="p-4 border border-[#8B5E3C] rounded-md hover:bg-[#8B5E3C]/5 transition-colors text-left">
-                  <h4 className="font-['Playfair_Display'] text-[#8B5E3C] mb-2">Mes Favoris</h4>
-                  <p className="font-['Lato'] text-sm text-stone-600">Gérer vos expériences favorites</p>
+                  <h4 className="font-['Playfair_Display'] text-[#8B5E3C] mb-2">{t.espaceClient.myFavorites}</h4>
+                  <p className="font-['Lato'] text-sm text-stone-600">{t.espaceClient.manageFavorites}</p>
                 </button>
                 
                 <button className="p-4 border border-[#8B5E3C] rounded-md hover:bg-[#8B5E3C]/5 transition-colors text-left">
-                  <h4 className="font-['Playfair_Display'] text-[#8B5E3C] mb-2">Historique</h4>
-                  <p className="font-['Lato'] text-sm text-stone-600">Consulter vos anciennes réservations</p>
+                  <h4 className="font-['Playfair_Display'] text-[#8B5E3C] mb-2">{t.espaceClient.history}</h4>
+                  <p className="font-['Lato'] text-sm text-stone-600">{t.espaceClient.viewHistory}</p>
                 </button>
                 
                 <button className="p-4 border border-[#8B5E3C] rounded-md hover:bg-[#8B5E3C]/5 transition-colors text-left">
-                  <h4 className="font-['Playfair_Display'] text-[#8B5E3C] mb-2">Support</h4>
-                  <p className="font-['Lato'] text-sm text-stone-600">Contactez notre équipe</p>
+                  <h4 className="font-['Playfair_Display'] text-[#8B5E3C] mb-2">{t.espaceClient.support}</h4>
+                  <p className="font-['Lato'] text-sm text-stone-600">{t.espaceClient.contactTeam}</p>
                 </button>
               </div>
             </div>

@@ -1,17 +1,22 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 // 数据源：体验卡片
-const experiences = [
-  { key: "famille", title: "Moments en Famille", image: "/famille.JPG" },
-  { key: "amis", title: "Retrouvailles Entre Amis", image: "/amis.JPG" },
-  { key: "team", title: "Team Building", image: "/team.png" },
-  { key: "wellness", title: "Retraite et Bien-être", image: "/stage.png" },
+const getExperiencesData = (t) => [
+  { key: "famille", title: t.experiencesComp.family, image: "/famille.JPG" },
+  { key: "amis", title: t.experiencesComp.friends, image: "/amis.JPG" },
+  { key: "team", title: t.experiencesComp.teamBuilding, image: "/team.png" },
+  { key: "wellness", title: t.experiencesComp.wellness, image: "/stage.png" },
 ];
 
 export function Experience() {
   const router = useRouter();
+  const { language } = useLanguage();
+  const t = translations[language];
+  const experiences = getExperiencesData(t);
 
   const handleViewAllExperiences = () => {
     router.push('/experiences');
@@ -22,10 +27,10 @@ export function Experience() {
       {/* Header */}
       <div className="max-w-7xl mx-auto text-center mb-12 md:mb-16">
         <h2 className="text-[#D4AF37] text-3xl md:text-4xl lg:text-5xl font-black font-['Playfair_Display_SC'] leading-tight mb-4">
-          Une maison, mille expériences
+          {t.experiencesComp.title}
         </h2>
         <p className="text-[#8B5E3C] text-base md:text-lg font-normal font-['Playfair_Display']">
-          Des moments pour tous les goûts
+          {t.experiencesComp.subtitle}
         </p>
       </div>
 
@@ -56,7 +61,7 @@ export function Experience() {
             onClick={handleViewAllExperiences}
             className="px-8 py-4 bg-[#8B5E3C] hover:bg-[#8B5E3C]/90 text-white text-lg font-normal font-['Playfair_Display'] leading-normal rounded-md transition-colors shadow-lg hover:shadow-xl"
           >
-            Découvrir toutes nos expériences
+            {t.experiencesComp.discoverAll}
           </button>
         </div>
       </div>

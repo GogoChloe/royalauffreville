@@ -5,47 +5,44 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CustomIcon } from "@/app/component/icons";
 import { Breadcrumb } from "./Breadcrumb";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 export function JardinDetailSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const router = useRouter();
 
   const jardinData = {
-    name: 'Jardin',
+    name: t.pieces.garden.name,
     subtitle: 'Nature, détente et espace pour tous',
     images: ['/jardin.png'],
-    description: `La maison offre plusieurs espaces de jeu, pensés pour le plaisir et la convivialité.
-
-À l’étage, une grande table de billard américain attire les amateurs comme les curieux. Son format généreux s’inspire des standards internationaux, et son bois noble fait écho à celui des rambardes anciennes qui bordent l’étage. Juste à côté, un coin cosy permet de savourer un thé, de jouer aux échecs ou simplement de se détendre pendant que d'autres jouent.
-
-Au rez-de-chaussée, un piano invite à improviser quelques notes, accompagné d’une bibliothèque bien garnie pour les moments de calme, ainsi que de jeux de société à partager en famille ou entre amis.
-
-Au sous-sol, une table de ping-pong attend les joueurs les plus dynamiques. Par beau temps, elle peut même être déplacée à l’extérieur pour profiter de l’air frais en jouant.
-
-Enfin, au sommet du terrain, un espace de pétanque vous attend, niché dans un coin paisible avec vue dégagée – un lieu parfait pour partager un moment de détente à la provençale. Un peu plus loin, un hamac vous tend les bras pour une sieste au soleil ou une lecture suspendue.`,
+    description: t.pieces.garden.description,
     equipments: [
-      { name: 'Hamac', icon: 'Hamac' },
-      { name: 'Salon de détente extérieur', icon: 'SalonDetenteExterieur' },
-      { name: 'Barbecue', icon: 'Barbecue' },
-      { name: 'Ping-pong', icon: 'PingPong' },
-      { name: 'Vue panoramique', icon: 'VuePano' },
-      { name: 'Caméra de surveillance', icon: 'CameraSurveillance', isLucide: true },
-      { name: 'Pétanque', icon: 'Petanque' },
-      { name: 'Table à manger avec parasol', icon: 'TableManger' },
-      { name: 'Parking', icon: 'CircleParking', isLucide: true },
-      { name: 'Grands arbres pour faire de l\'ombre', icon: 'Trees', isLucide: true },
-      { name: 'Fleurs à admirer', icon: 'Flower', isLucide: true },
+      { name: t.equipments.hammock, icon: 'Hamac' },
+      { name: t.equipments.outdoorLounge, icon: 'SalonDetenteExterieur' },
+      { name: t.equipments.bbq, icon: 'Barbecue' },
+      { name: t.equipments.pingPong, icon: 'PingPong' },
+      { name: t.equipments.panoramicView, icon: 'VuePano' },
+      { name: t.equipments.securityCamera, icon: 'CameraSurveillance', isLucide: true },
+      { name: t.equipments.petanque, icon: 'Petanque' },
+      { name: t.equipments.diningTableWithUmbrella, icon: 'TableManger' },
+      { name: t.equipments.parking, icon: 'CircleParking', isLucide: true },
+      { name: t.equipments.shadeTrees, icon: 'Trees', isLucide: true },
+      { name: t.equipments.flowers, icon: 'Flower', isLucide: true },
     ]
   };
 
   // 其他房间
   const otherRooms = [
-    { id: 'cuisine', name: 'Cuisine', image: '/cuisine.JPG' },
-    { id: 'chambres', name: 'Chambres', image: '/ChRose.JPG' },
-    { id: 'salon', name: 'Salon', image: '/salon1.JPG' },
-    { id: 'salle-sport', name: 'Salle de Sport', image: '/salleDeSport.jpg' },
-    { id: 'sous-sol', name: 'Sous-sol', image: '/sousSol.jpeg' },
-    { id: 'espace-jeux', name: 'Espace jeux', image: '/espaceJeux.JPG' }
+    { id: 'cuisine', name: t.pieces.cuisine.name, image: '/cuisine.JPG' },
+    { id: 'chambres', name: t.pieces.chambres.name, image: '/ChRose.JPG' },
+    { id: 'salon', name: t.pieces.salon.name, image: '/salon1.JPG' },
+    { id: 'salle-sport', name: t.pieces.gym.name, image: '/salleDeSport.jpg' },
+    { id: 'sous-sol', name: t.pieces.basement.name, image: '/sousSol.jpeg' },
+    { id: 'espace-jeux', name: t.pieces.gameRoom.name, image: '/espaceJeux.JPG' }
   ];
 
   const handleRoomClick = (roomId) => {
@@ -57,8 +54,8 @@ Enfin, au sommet du terrain, un espace de pétanque vous attend, niché dans un 
   };
 
   const breadcrumbItems = [
-    { label: "Accueil", path: "/" },
-    { label: "La maison", path: "/rooms" },
+    { label: t.roomDetail.breadcrumbHome, path: "/" },
+    { label: t.roomDetail.breadcrumbHouse, path: "/rooms" },
     { label: jardinData.name, path: null }
   ];
 

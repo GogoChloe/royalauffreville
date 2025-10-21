@@ -14,8 +14,13 @@ import CafeGrainsIcon from "./icons/CafeGrainsIcon";
 import BlenderIcon from "./icons/BlenderIcon";
 import TableMangerIcon from "./icons/TableMangerIcon";
 import { Breadcrumb } from "./Breadcrumb";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 export function CuisineDetailSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const router = useRouter();
 
@@ -34,28 +39,28 @@ export function CuisineDetailSection() {
 
   // 设备列表
   const equipments = [
-    { name: 'Réfrigérateur LG', icon: Refrigerator },
-    { name: 'Four à micro-ondes', icon: Microwave },
-    { name: 'Équipements de cuisine de base', icon: CookingPot },
-    { name: 'Vaisselle et couverts', icon: Utensils },
-    { name: 'Lave-vaisselle', icon: LaveVaisselleIcon },
-    { name: 'Four multifonction Dietrich', icon: FourMultifonctionIcon },
-    { name: 'Four vapeur Dietrich', icon: FourVapeurIcon },
-    { name: 'Bouilloire électrique', icon: KettleIcon },
-    { name: 'Grille-pain', icon: ToastIcon },
-    { name: 'Plaque de cuisson', icon: InductionIcon },
-    { name: 'Blender', icon: BlenderIcon },
-    { name: 'Table à manger', icon: TableMangerIcon },
+    { name: t.equipments.lgRefrigerator, icon: Refrigerator },
+    { name: t.equipments.microwave, icon: Microwave },
+    { name: t.equipments.basicKitchenEquipment, icon: CookingPot },
+    { name: t.equipments.dishesAndCutlery, icon: Utensils },
+    { name: t.equipments.dishwasher, icon: LaveVaisselleIcon },
+    { name: t.equipments.multifunctionOven, icon: FourMultifonctionIcon },
+    { name: t.equipments.steamOven, icon: FourVapeurIcon },
+    { name: t.equipments.electricKettle, icon: KettleIcon },
+    { name: t.equipments.toaster, icon: ToastIcon },
+    { name: t.equipments.cooktop, icon: InductionIcon },
+    { name: t.equipments.blender, icon: BlenderIcon },
+    { name: t.equipments.diningTable, icon: TableMangerIcon },
   ];
 
   // 其他房间
   const otherRooms = [
-    { id: 'salon', name: 'Salon', image: '/salon1.JPG' },
-    { id: 'chambres', name: 'Chambres', image: '/ChGN.JPG' },
-    { id: 'salle-sport', name: 'Salle de Sport', image: '/salleDeSport.jpg' },
-    { id: 'piscine', name: 'Piscine', image: '/piscine.JPG' },
+    { id: 'salon', name: t.pieces.salon.name, image: '/salon1.JPG' },
+    { id: 'chambres', name: t.pieces.chambres.name, image: '/ChGN.JPG' },
+    { id: 'salle-sport', name: t.pieces.gym.name, image: '/salleDeSport.jpg' },
+    { id: 'piscine', name: t.pieces.piscine.name, image: '/piscine.JPG' },
     { id: 'sous-sol', name: 'sous-sol', image: '/sousSol.jpeg' },
-    { id: 'espace-jeux', name: 'Espace jeux', image: '/espaceJeux.JPG' }
+    { id: 'espace-jeux', name: t.pieces.gameRoom.name, image: '/espaceJeux.JPG' }
   ];
 
   const handleRoomClick = (roomId) => {
@@ -95,8 +100,8 @@ export function CuisineDetailSection() {
 
   // 构建面包屑导航数据
   const breadcrumbItems = [
-    { label: "Accueil", path: "/" },
-    { label: "La maison", path: "/rooms" },
+    { label: t.roomDetail.breadcrumbHome, path: "/" },
+    { label: t.roomDetail.breadcrumbHouse, path: "/rooms" },
     { label: "Cuisine", path: null } // 当前页面不可点击
   ];
 

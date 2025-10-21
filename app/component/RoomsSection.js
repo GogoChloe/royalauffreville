@@ -4,20 +4,24 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Breadcrumb } from "./Breadcrumb";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 export function RoomsSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
   const [selectedRoom, setSelectedRoom] = useState(null);
   const router = useRouter();
 
   const rooms = [
-    { id: 'salon', name: 'Salon', image: '/salon1.JPG' },
-    { id: 'piscine', name: 'Piscine', image: '/piscine.JPG' },
-    { id: 'cuisine', name: 'Cuisine', image: '/cuisine.JPG' },
-    { id: 'chambres', name: 'Chambres', image: '/ChGN.JPG' },
-    { id: 'salle-sport', name: 'Salle de Sport', image: '/salleDeSport.jpg' },
-    { id: 'espace-jeux', name: 'Espace jeux', image: '/espaceJeux.JPG' },
-  { id: 'jardin', name: 'Jardin', image: '/jardin.png' },
-  { id: 'sous-sol', name: 'sous-sol', image: '/sousSol.jpeg' },
+    { id: 'salon', name: t.pieces.salon.name, image: '/salon1.JPG' },
+    { id: 'piscine', name: t.pieces.piscine.name, image: '/piscine.JPG' },
+    { id: 'cuisine', name: t.pieces.cuisine.name, image: '/cuisine.JPG' },
+    { id: 'chambres', name: t.pieces.chambres.name, image: '/ChGN.JPG' },
+    { id: 'salle-sport', name: t.pieces.gym.name, image: '/salleDeSport.jpg' },
+    { id: 'espace-jeux', name: t.pieces.gameRoom.name, image: '/espaceJeux.JPG' },
+    { id: 'jardin', name: t.pieces.garden.name, image: '/jardin.png' },
+    { id: 'sous-sol', name: t.pieces.basement.name, image: '/sousSol.jpeg' },
   ];
 
   const handleRoomClick = (roomId) => {
@@ -32,8 +36,8 @@ export function RoomsSection() {
 
   // 构建面包屑导航数据
   const breadcrumbItems = [
-    { label: "Accueil", path: "/" },
-    { label: "La maison", path: null } // 当前页面不可点击
+    { label: t.roomsSection.breadcrumbHome, path: "/" },
+    { label: t.roomsSection.breadcrumbHouse, path: null } // 当前页面不可点击
   ];
 
   return (
@@ -41,8 +45,8 @@ export function RoomsSection() {
       <Breadcrumb items={breadcrumbItems} />
       
       <div className="self-stretch py-3 flex flex-col justify-center items-start gap-5 overflow-hidden">
-        <div className="justify-start text-[#8B5E3C] text-3xl font-bold font-['Playfair_Display'] leading-9">Les pièces de la maison</div>
-        <div className="justify-start text-neutral-700 text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">Découvrez chaque espace de notre magnifique demeure</div>
+        <div className="justify-start text-[#8B5E3C] text-3xl font-bold font-['Playfair_Display'] leading-9">{t.roomsSection.title}</div>
+        <div className="justify-start text-neutral-700 text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">{t.roomsSection.subtitle}</div>
       </div>
 
   {/* Room Buttons Grid - 响应式 */}

@@ -5,62 +5,64 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 // 房间数据
-const rooms = [
+const getRoomsData = (t) => [
   {
     id: "salon",
-    name: "Salon",
-    description: "Un espace de vie spacieux et élégant, parfait pour se détendre en famille ou entre amis. Décoré avec goût dans un style contemporain, le salon offre un cadre idéal pour des moments de convivialité.",
+    name: t.pieces.salon.name,
+    description: t.pieces.salon.description,
     image: "/salon.jpg",
     isActive: true
   },
   {
     id: "chambres",
-    name: "Chambres",
-    description: "Nos chambres allient confort et raffinement. Chacune dispose d'une salle de bain privative et d'une décoration soignée pour vous garantir un repos optimal.",
+    name: t.pieces.chambres.name,
+    description: t.pieces.chambres.description,
     image: "/chambre.jpg",
     isActive: false
   },
   {
     id: "piscine",
-    name: "Piscine",
-    description: "Profitez de notre magnifique piscine chauffée entourée d'un espace détente. L'endroit parfait pour se rafraîchir et profiter du soleil dans un cadre exceptionnel.",
+    name: t.pieces.piscine.name,
+    description: t.pieces.piscine.description,
     image: "/piscine.JPG",
     isActive: false
   },
   {
     id: "cuisine",
-    name: "Cuisine",
-    description: "Une cuisine moderne et entièrement équipée avec des appareils haut de gamme. L'espace parfait pour préparer vos repas dans un environnement convivial et fonctionnel.",
+    name: t.pieces.cuisine.name,
+    description: t.pieces.cuisine.description,
     image: "/cuisine.jpg",
     isActive: false
   },
   {
     id: "salle-sport",
-    name: "Salle de sport",
-    description: "Maintenez votre forme physique dans notre salle de sport privée équipée d'appareils modernes. Un espace dédié au bien-être et à la remise en forme.",
+    name: t.pieces.gym.name,
+    description: t.pieces.gym.description,
     image: "/salleDeSport.jpg",
     isActive: false
   },
   {
     id: "jardin",
-    name: "Jardin",
-    description: "Un magnifique jardin paysager avec terrasse et espace barbecue. Profitez de la nature dans un cadre verdoyant et apaisant.",
+    name: t.pieces.garden.name,
+    description: t.pieces.garden.description,
     image: "/jardin.png",
     isActive: false
   },
   {
     id: "espace-jeux",
-    name: "Espace jeux",
-    description: "Un espace ludique pour toute la famille avec billard, baby-foot et jeux de société. L'endroit idéal pour se divertir et créer des souvenirs.",
+    name: t.pieces.gameRoom.name,
+    description: t.pieces.gameRoom.description,
     image: "/espaceJeux.JPG",
     isActive: false
   },
   {
     id: "sous-sol",
-    name: "Sous-sol",
-    description: "Un espace polyvalent au sous-sol avec cave à vin, buanderie et espace de rangement. Fonctionnel et bien aménagé.",
+    name: t.pieces.basement.name,
+    description: t.pieces.basement.description,
     image: "/sousSol.jpeg",
     isActive: false
   }
@@ -69,6 +71,9 @@ const rooms = [
 export function Pieces() {
   const [activeRoom, setActiveRoom] = useState(0);
   const router = useRouter();
+  const { language } = useLanguage();
+  const t = translations[language];
+  const rooms = getRoomsData(t);
 
   // Auto-scroll effect
   useEffect(() => {
@@ -94,10 +99,10 @@ export function Pieces() {
       {/* En-tête */}
       <div className="w-full max-w-6xl flex flex-col justify-center items-center gap-6 text-center">
         <h2 className="w-full text-[#8B5E3C] text-3xl md:text-4xl lg:text-5xl font-black font-playfair leading-tight">
-          Explorez les différentes pièces de la maison
+          {t.pieces.title}
         </h2>
         <p className="w-full max-w-2xl text-[#3E3E3E] text-base md:text-lg font-normal font-playfair leading-7">
-          Faites le tour de notre maison pièce par pièce, comme si vous y étiez.
+          {t.pieces.subtitle}
         </p>
       </div>
 
@@ -142,7 +147,7 @@ export function Pieces() {
                 }}
                 className="relative z-50 text-[#3E3E3E] text-lg font-normal font-playfair leading-7 hover:text-[#8B5E3C] transition-colors cursor-pointer"
               >
-                En savoir plus
+                {t.pieces.learnMore}
               </button>
             </div>
           </div>
@@ -210,7 +215,7 @@ export function Pieces() {
           }}
           className="relative z-50 px-6 py-3 bg-[#8B5E3C] hover:bg-[#8B5E3C]/90 text-white text-base font-normal font-playfair leading-normal rounded-md transition-colors cursor-pointer"
         >
-          Voir toutes les pièces sur le plan
+          {t.pieces.viewAll}
         </button>
       </div>
     </div>

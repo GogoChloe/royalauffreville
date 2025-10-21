@@ -9,18 +9,22 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Menu } from "lucide-react";
 import { AuthModal } from "./AuthModal";
-
-const navigationItems = [
-  { label: "La Maison", href: "/rooms" },
-  { label: "Expériences", href: "/experiences" },
-  { label: "Activité", href: "/#activite" },
-  { label: "Proximité", href: "/#proximite" },
-  { label: "Contact", href: "/#contact" },
-];
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 export function Header() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { language, changeLanguage } = useLanguage();
+  const t = translations[language];
+
+  const navigationItems = [
+    { label: t.nav.house, href: "/rooms" },
+    { label: t.nav.experiences, href: "/experiences" },
+    { label: t.nav.activities, href: "/activites" },
+    { label: t.nav.proximity, href: "/proximite" },
+    { label: t.nav.contact, href: "/contact" },
+  ];
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -72,11 +76,11 @@ export function Header() {
         </div>
         <Link href="/reservation">
           <Button className="px-4 py-2 bg-[#D4AF37] hover:bg-[#D4AF37]/80 rounded-md flex justify-center items-center gap-2.5 text-[#FFFFFF] text-base font-normal font-['Playfair_Display'] leading-normal pointer-events-auto">
-            Réserver
+            {t.nav.reserve}
           </Button>
         </Link>
         <div className="inline-flex flex-col justify-start items-start gap-1.5">
-          <Select defaultValue="fr">
+          <Select value={language} onValueChange={changeLanguage}>
             <SelectTrigger className="w-fit px-3 py-2 bg-orange-50 rounded-md inline-flex justify-start items-center gap-2.5 border-none font-['Playfair_Display'] focus:!ring-0 focus:!ring-offset-0 focus-visible:!ring-0 focus-visible:!border-none outline-none !pointer-events-auto">
               <SelectValue className="justify-start text-[#3E3E3E] text-base font-normal font-['Playfair_Display'] leading-normal !pointer-events-auto" />
             </SelectTrigger>
@@ -110,10 +114,10 @@ export function Header() {
             </nav>
             <div className="flex flex-col gap-4 mt-auto">
               <Button className="px-4 py-2 bg-[#D4AF37] hover:bg-[#D4AF37]/80 rounded-md text-[#FFFFFF] text-base font-normal font-['Playfair_Display'] leading-normal" onClick={() => { setMobileMenuOpen(false); window.location.href='/reservation'; }}>
-                Réserver
+                {t.nav.reserve}
               </Button>
               <div className="inline-flex flex-col justify-start items-start gap-1.5">
-                <Select defaultValue="fr">
+                <Select value={language} onValueChange={changeLanguage}>
                   <SelectTrigger className="w-fit px-3 py-2 bg-orange-50 rounded-md inline-flex justify-start items-center gap-2.5 border-none font-['Playfair_Display'] focus:!ring-0 focus:!ring-offset-0 focus-visible:!ring-0 focus-visible:!border-none outline-none !pointer-events-auto">
                     <SelectValue className="justify-start text-[#3E3E3E] text-base font-normal font-['Playfair_Display'] leading-normal !pointer-events-auto" />
                   </SelectTrigger>

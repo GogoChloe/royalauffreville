@@ -6,8 +6,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ChevronLeft, ChevronRight, BedDouble, ThermometerSun, Wifi, LampDesk, TvMinimal, ShowerHead, Bath, Shirt, Toilet } from "lucide-react";
 import { CustomIcon } from "@/app/component/icons";
 import { Breadcrumb } from "./Breadcrumb";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 export function ChambreDetailSection({ chambreId }) {
+  const { language } = useLanguage();
+  const t = translations[language];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fromMaison, setFromMaison] = useState(false);
   const router = useRouter();
@@ -21,180 +25,145 @@ export function ChambreDetailSection({ chambreId }) {
     }
   }, [searchParams]);
 
-  // 根据chambreId获取对应的卧室数据
+    // 根据chambreId获取对应的卧室数据
   const chambreData = {
     'princess-rose': {
       name: 'Princess Rose',
-      subtitle: 'Romance et douceur dans les tons rosés',
+      subtitle: t.chambreDetails.princessRose.subtitle,
       images: ['/ChRose.JPG', '/ChRose1.JPG', '/ChRose2.JPG'],
-  description: `Nichée au cœur de l’aile est, la PRINCESS ROSE séduit par son atmosphère délicate, entre raffinement discret et charme assumé. Les teintes tendres et les lignes épurées évoquent un univers de conte de fées moderne, où chaque détail invite au bien-être.
-
-La chambre est équipée d’un lit king-size haut de gamme, d’une grande télévision à écran plat et d’un large bureau, parfait pour écrire, lire ou simplement savourer un moment à soi. Un placard dissimulé optimise l’espace tout en offrant un rangement généreux.
-
-La salle de bain attenante surprend par son style industriel contemporain : douche à l’italienne aux lignes nettes, vasque moderne, meubles soigneusement choisis pour leur esthétique et leur fonctionnalité. Une belle dualité entre douceur romantique et caractère affirmé.
-
-Un cocon à la fois poétique et fonctionnel, idéal pour celles et ceux qui aiment allier confort et personnalité.`,
+      description: t.chambreDetails.princessRose.description,
       equipments: [
-        { name: 'Lit Queen Size', icon: 'BedDouble', tooltip: '180×200cm', isLucide: true },
-        { name: 'Douche', icon: 'ShowerHead', isLucide: true },
-        { name: 'Serviettes et ligne de lit', icon: 'Serviettes' },
-        { name: 'Placard et Cintres', icon: 'Cintres' },
-        { name: 'Sèche-cheveux', icon: 'cheveux' },
-        { name: 'Eau chaude', icon: 'EauChaude' },
-        { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
-        { name: 'Lit pour bébé à la demande', icon: 'babybed' },
-        { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
-        { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
-        { name: 'Wifi', icon: 'Wifi', isLucide: true },
-        { name: 'TV', icon: 'TvMinimal', isLucide: true },
-        { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
-        { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
+        { name: t.equipments.queenBed, icon: 'BedDouble', tooltip: '180×200cm', isLucide: true },
+        { name: t.equipments.shower, icon: 'ShowerHead', isLucide: true },
+        { name: t.equipments.towelsAndBedLinens, icon: 'Serviettes' },
+        { name: t.equipments.closetAndHangers, icon: 'Cintres' },
+        { name: t.equipments.hairDryer, icon: 'cheveux' },
+        { name: t.equipments.hotWater, icon: 'EauChaude' },
+        { name: t.equipments.showerGelAndShampoo, icon: 'ShampooGelDouche' },
+        { name: t.equipments.babyBedOnDemand, icon: 'babybed' },
+        { name: t.equipments.fans, icon: 'Ventilateurs' },
+        { name: t.equipments.heating, icon: 'ThermometerSun', isLucide: true },
+        { name: t.equipments.wifi, icon: 'Wifi', isLucide: true },
+        { name: t.equipments.television, icon: 'TvMinimal', isLucide: true },
+        { name: t.equipments.gardenView, icon: 'VueSurLeJardin' },
+        { name: t.equipments.dedicatedWorkspace, icon: 'LampDesk', isLucide: true }
       ]
     },
     'strong-marble': {
       name: 'Strong Marble',
-      subtitle: 'Élégance moderne avec touches de marbre',
+      subtitle: t.chambreDetails.strongMarble.subtitle,
       images: ['/ChGN.JPG'],
-  description: `La Chambre Strong Marble impressionne par son style sobre et raffiné, entièrement pensé autour de la matière noble qu’est le marbre. La salle de bain attenante, entièrement habillée de marbre clair, évoque le luxe sans ostentation : vasque taillée, robinetterie design, douche italienne moderne, chaque élément a été choisi avec une exigence rare par la propriétaire.
-
-La chambre offre une belle luminosité naturelle grâce à ses deux fenêtres, qui ouvrent la vue sur le jardin et laissent entrer la lumière du matin. Côté tête de lit, un meuble sur mesure, conçu et réalisé par la propriétaire elle-même, intègre des luminaires discrets pour un confort optimal en soirée — parfait pour lire au lit dans une ambiance feutrée.
-
-Épure, équilibre, sophistication discrète : Strongmarble est une chambre de caractère, pensée comme une bulle de confort contemporain. `,
+  description: t.chambreDetails.strongMarble.description,
       equipments: [
-        { name: 'Lit Queen Size', icon: 'BedDouble', tooltip: '180×200cm', isLucide: true },
-        { name: 'Douche', icon: 'ShowerHead', isLucide: true },
-        { name: 'Serviettes et ligne de lit', icon: 'Serviettes' },
-        { name: 'Placard et Cintres', icon: 'Cintres' },
-        { name: 'Sèche-cheveux', icon: 'cheveux' },
-        { name: 'Eau chaude', icon: 'EauChaude' },
-        { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
-        { name: 'Lit pour bébé à la demande', icon: 'babybed' },
-        { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
-        { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
-        { name: 'Wifi', icon: 'Wifi', isLucide: true },
-        { name: 'TV', icon: 'TvMinimal', isLucide: true },
-        { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
-        { name: 'Vue sur la piscine', icon: 'VueSurLaPiscine' },
-        { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
+        { name: t.equipments.queenBed, icon: 'BedDouble', tooltip: '180×200cm', isLucide: true },
+        { name: t.equipments.shower, icon: 'ShowerHead', isLucide: true },
+        { name: t.equipments.towelsAndBedLinens, icon: 'Serviettes' },
+        { name: t.equipments.closetAndHangers, icon: 'Cintres' },
+        { name: t.equipments.hairDryer, icon: 'cheveux' },
+        { name: t.equipments.hotWater, icon: 'EauChaude' },
+        { name: t.equipments.showerGelAndShampoo, icon: 'ShampooGelDouche' },
+        { name: t.equipments.babyBedOnDemand, icon: 'babybed' },
+        { name: t.equipments.fans, icon: 'Ventilateurs' },
+        { name: t.equipments.heating, icon: 'ThermometerSun', isLucide: true },
+        { name: t.equipments.wifi, icon: 'Wifi', isLucide: true },
+        { name: t.equipments.television, icon: 'TvMinimal', isLucide: true },
+        { name: t.equipments.gardenView, icon: 'VueSurLeJardin' },
+        { name: t.equipments.poolView, icon: 'VueSurLaPiscine' },
+        { name: t.equipments.dedicatedWorkspace, icon: 'LampDesk', isLucide: true }
       ]
     },
     'bird-vintage': {
       name: 'Bird Vintage',
-      subtitle: 'Charme rétro et authenticité d\'époque',
+      subtitle: t.chambreDetails.birdVintage.subtitle,
       images: ['/Chvint1.JPG', '/Chvint2.JPG', '/Chvint3.JPG', '/Chvint4.JPG', '/Chvint5.JPG'],
-  description: `Dans cette chambre au style vintage délicatement assumé, tout évoque le calme, la nature et une douceur d’antan. 
-Le lit king-size promet un confort irréprochable, accompagné d’une literie haut de gamme pour des nuits pleines de quiétude. Une télévision grand format et un bureau discret viennent parfaire l’espace, idéal pour se détendre ou rêver à plume posée.  
-
-Deux fenêtres dévoilent un tableau vivant : d’un côté, le vallon du jardin, bordé de jasmins dont les effluves s’invitent à l’intérieur dès les beaux jours; de l’autre, un cèdre imposant, gardien silencieux de vos nuits.  
-
-Le dressing spacieux donne sur un couloir privatisé, partagé entre trois chambres.
-
-La salle de bain privée, au charme singulier, révèle une baignoire contemporaine, des carreaux anciens ornés d’oiseaux, et des luminaires minutieusement choisis par la propriétaire. 
-
-Les luminaires, en harmonie avec le thème, ont été sélectionnés avec amour, comme un clin d’œil poétique à l’univers ailé de la pièce. `,
+  description: t.chambreDetails.birdVintage.description,
       equipments: [
-        { name: 'Lit Queen Size', icon: 'BedDouble', tooltip: '200×200cm', isLucide: true },
-        { name: 'Serviettes et ligne de lit', icon: 'Serviettes' },
-        { name: 'Placard et Cintres', icon: 'Cintres' },
-        { name: 'Sèche-cheveux', icon: 'cheveux' },
-        { name: 'Eau chaude', icon: 'EauChaude' },
-        { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
-        { name: 'Lit pour bébé à la demande', icon: 'babybed' },
-        { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
-        { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
-        { name: 'Wifi', icon: 'Wifi', isLucide: true },
-        { name: 'TV', icon: 'TvMinimal', isLucide: true },
-        { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
-        { name: 'Baignoire et douche', icon: 'Bath', isLucide: true },
-        { name: 'Bidet', icon: 'Bidet' },
-        { name: 'Dressing', icon: 'Shirt', isLucide: true },
-        { name: 'Fer à repasser', icon: 'repasser' },
-        { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
+        { name: t.equipments.queenBed, icon: 'BedDouble', tooltip: '200×200cm', isLucide: true },
+        { name: t.equipments.towelsAndBedLinens, icon: 'Serviettes' },
+        { name: t.equipments.closetAndHangers, icon: 'Cintres' },
+        { name: t.equipments.hairDryer, icon: 'cheveux' },
+        { name: t.equipments.hotWater, icon: 'EauChaude' },
+        { name: t.equipments.showerGelAndShampoo, icon: 'ShampooGelDouche' },
+        { name: t.equipments.babyBedOnDemand, icon: 'babybed' },
+        { name: t.equipments.fans, icon: 'Ventilateurs' },
+        { name: t.equipments.heating, icon: 'ThermometerSun', isLucide: true },
+        { name: t.equipments.wifi, icon: 'Wifi', isLucide: true },
+        { name: t.equipments.television, icon: 'TvMinimal', isLucide: true },
+        { name: t.equipments.gardenView, icon: 'VueSurLeJardin' },
+        { name: t.equipments.bathtubAndShower, icon: 'Bath', isLucide: true },
+        { name: t.equipments.bidet, icon: 'Bidet' },
+        { name: t.equipments.dressingRoom, icon: 'Shirt', isLucide: true },
+        { name: t.equipments.iron, icon: 'repasser' },
+        { name: t.equipments.dedicatedWorkspace, icon: 'LampDesk', isLucide: true }
       ]
     },
     'royal-auffreville': {
       name: 'Royal Auffreville',
-      subtitle: 'Suite royale avec vue panoramique',
+      subtitle: t.chambreDetails.royalAuffreville.subtitle,
       images: ['/ChRose.JPG'],
-  description: `Spacieuse et baignée de lumière, la chambre Royal Auffreville est une ode au calme et à l’élégance. Deux grandes fenêtres l’ouvrent à la nature : d’un côté, un cèdre séculaire déploie sa majesté silencieuse ; de l’autre, un laurier en fleurs diffuse ses parfums subtils jusque dans la chambre.
-
-Au cœur de cette atmosphère paisible, un lit king-size aux draps soyeux invite au sommeil profond. Allongé, on savoure un film sur un grand écran, bercé par la lumière dorée des fins de journée.
-
-La suite s’étend en un bel espace privé avec salle de bain raffinée — douche à l’italienne, baignoire profonde, toilettes séparées — et un vaste dressing discret. Un véritable refuge, pensé pour le repos du corps et de l’âme.`,
+  description: t.chambreDetails.royalAuffreville.description,
       equipments: [
-        { name: 'Lit King Size', icon: 'BedDouble', tooltip: '200×200cm', isLucide: true },
-        { name: 'Douche', icon: 'ShowerHead', isLucide: true },
-        { name: 'Baignoire', icon: 'Bath', isLucide: true },
-        { name: 'Serviettes et ligne de lit', icon: 'Serviettes' },
-        { name: 'Placard et Cintres', icon: 'Cintres' },
-        { name: 'Sèche-cheveux', icon: 'cheveux' },
-        { name: 'Eau chaude', icon: 'EauChaude' },
-        { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
-        { name: 'Lit pour bébé à la demande', icon: 'babybed' },
-        { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
-        { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
-        { name: 'Wifi', icon: 'Wifi', isLucide: true },
-        { name: 'TV', icon: 'TvMinimal', isLucide: true },
-        { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
-        { name: 'Vue sur la piscine', icon: 'VueSurLaPiscine' },
-        { name: 'Toilette séparée', icon: 'Toilet', isLucide: true },
-        { name: 'Fer à repasser', icon: 'repasser' },
-        { name: 'Dressing', icon: 'Shirt', isLucide: true },
-        { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
+        { name: t.equipments.kingBed, icon: 'BedDouble', tooltip: '200×200cm', isLucide: true },
+        { name: t.equipments.shower, icon: 'ShowerHead', isLucide: true },
+        { name: t.equipments.bathtub, icon: 'Bath', isLucide: true },
+        { name: t.equipments.towelsAndBedLinens, icon: 'Serviettes' },
+        { name: t.equipments.closetAndHangers, icon: 'Cintres' },
+        { name: t.equipments.hairDryer, icon: 'cheveux' },
+        { name: t.equipments.hotWater, icon: 'EauChaude' },
+        { name: t.equipments.showerGelAndShampoo, icon: 'ShampooGelDouche' },
+        { name: t.equipments.babyBedOnDemand, icon: 'babybed' },
+        { name: t.equipments.fans, icon: 'Ventilateurs' },
+        { name: t.equipments.heating, icon: 'ThermometerSun', isLucide: true },
+        { name: t.equipments.wifi, icon: 'Wifi', isLucide: true },
+        { name: t.equipments.television, icon: 'TvMinimal', isLucide: true },
+        { name: t.equipments.gardenView, icon: 'VueSurLeJardin' },
+        { name: t.equipments.poolView, icon: 'VueSurLaPiscine' },
+        { name: t.equipments.separateToilet, icon: 'Toilet', isLucide: true },
+        { name: t.equipments.iron, icon: 'repasser' },
+        { name: t.equipments.dressingRoom, icon: 'Shirt', isLucide: true },
+        { name: t.equipments.dedicatedWorkspace, icon: 'LampDesk', isLucide: true }
       ]
     },
     'good-night': {
       name: 'Good Night',
-      subtitle: 'Repos optimal et confort absolu',
+      subtitle: t.chambreDetails.goodNight.subtitle,
       images: ['/Chvint2.JPG'],
-  description: `Juste au-dessus de la chambre royale, nichée au cœur du premier étage, la Chambre Good Night veille en silence.
- Par sa large fenêtre, les rayons du matin filtrent à travers les branches d’un cèdre majestueux, comme une caresse douce sur les draps immaculés.
-Cette chambre est un havre de paix.
- On y accède par deux portes discrètes — l’une ouvre sur les salons, l’autre mène à la cuisine, comme si l’on pouvait choisir entre le repos ou le partage, entre la rêverie ou la convivialité.
-
-Le lit, généreux et noble (200×200), invite aux sommeils profonds et aux réveils sereins.
- Le calme y est souverain, à tel point que l’on entend parfois le silence respirer.`,
+  description: t.chambreDetails.goodNight.description,
       equipments: [
-        { name: 'Lit king Size', icon: 'BedDouble', tooltip: '200×200cm', isLucide: true },
-        { name: 'Serviettes et ligne de lit', icon: 'Serviettes' },
-        { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
-        { name: 'Lit pour bébé à la demande', icon: 'babybed' },
-        { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
-        { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
-        { name: 'Wifi', icon: 'Wifi', isLucide: true },
-        { name: 'TV', icon: 'TvMinimal', isLucide: true },
-        { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
-        { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
+        { name: t.equipments.kingBed, icon: 'BedDouble', tooltip: '200×200cm', isLucide: true },
+        { name: t.equipments.towelsAndBedLinens, icon: 'Serviettes' },
+        { name: t.equipments.showerGelAndShampoo, icon: 'ShampooGelDouche' },
+        { name: t.equipments.babyBedOnDemand, icon: 'babybed' },
+        { name: t.equipments.fans, icon: 'Ventilateurs' },
+        { name: t.equipments.heating, icon: 'ThermometerSun', isLucide: true },
+        { name: t.equipments.wifi, icon: 'Wifi', isLucide: true },
+        { name: t.equipments.television, icon: 'TvMinimal', isLucide: true },
+        { name: t.equipments.gardenView, icon: 'VueSurLeJardin' },
+        { name: t.equipments.dedicatedWorkspace, icon: 'LampDesk', isLucide: true }
       ]
     },
     'amazon-fun': {
       name: 'Amazon Fun',
-      subtitle: 'Aventure et détente tropicale',
+      subtitle: t.chambreDetails.amazonFun.subtitle,
       images: ['/Chvint3.JPG'],
-      description: `Nichée sous les toits, la chambre Amazon Fun séduit par sa palette vive et son atmosphère ludique. Les tonalités chaleureuses d’orange, de bleu ciel et de noir dessinent un univers à la fois graphique et accueillant, où chaque détail invite à l’évasion.
-
-Malgré sa taille plus intime, la chambre ne manque ni de confort ni de style : le bureau noir, choisi pour son élégance sobre, s’intègre parfaitement à l’ensemble. Un grand dressing offre un espace de rangement généreux, pensé pour les séjours prolongés.
-
-La salle de bain attenante, récemment rénovée, s’inscrit dans l’esprit du lieu : baignoire moderne, meubles choisis avec soin, et touches décoratives en harmonie avec l’univers coloré de la chambre.
-
-Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambiance pleine de caractère, entre confort moderne et fantaisie bien dosée.`,
+      description: t.chambreDetails.amazonFun.description,
       equipments: [
-        { name: 'Lit Normal Size', icon: 'BedDouble', tooltip: '160×180cm', isLucide: true },
-        { name: 'Baignoire et douche', icon: 'Bath', isLucide: true },
-        { name: 'Serviettes et ligne de lit', icon: 'Serviettes' },
-        { name: 'Placard et Cintres', icon: 'Cintres' },
-        { name: 'Sèche-cheveux', icon: 'cheveux' },
-        { name: 'Eau chaude', icon: 'EauChaude' },
-        { name: 'Gel douche et Shampooing', icon: 'ShampooGelDouche' },
-        { name: 'Lit pour bébé à la demande', icon: 'babybed' },
-        { name: 'Ventilateurs portables', icon: 'Ventilateurs' },
-        { name: 'Chauffage central', icon: 'ThermometerSun', isLucide: true },
-        { name: 'Wifi', icon: 'Wifi', isLucide: true },
-        { name: 'TV', icon: 'TvMinimal', isLucide: true },
-        { name: 'Vue sur le jardin', icon: 'VueSurLeJardin' },
-        { name: 'Toilette séparée', icon: 'Toilet', isLucide: true },
-        { name: 'Dressing', icon: 'Shirt', isLucide: true },
-        { name: 'Espace de travail dédié', icon: 'LampDesk', isLucide: true }
+        { name: t.equipments.normalBed, icon: 'BedDouble', tooltip: '160×180cm', isLucide: true },
+        { name: t.equipments.bathtubAndShower, icon: 'Bath', isLucide: true },
+        { name: t.equipments.towelsAndBedLinens, icon: 'Serviettes' },
+        { name: t.equipments.closetAndHangers, icon: 'Cintres' },
+        { name: t.equipments.hairDryer, icon: 'cheveux' },
+        { name: t.equipments.hotWater, icon: 'EauChaude' },
+        { name: t.equipments.showerGelAndShampoo, icon: 'ShampooGelDouche' },
+        { name: t.equipments.babyBedOnDemand, icon: 'babybed' },
+        { name: t.equipments.fans, icon: 'Ventilateurs' },
+        { name: t.equipments.heating, icon: 'ThermometerSun', isLucide: true },
+        { name: t.equipments.wifi, icon: 'Wifi', isLucide: true },
+        { name: t.equipments.television, icon: 'TvMinimal', isLucide: true },
+        { name: t.equipments.gardenView, icon: 'VueSurLeJardin' },
+        { name: t.equipments.separateToilet, icon: 'Toilet', isLucide: true },
+        { name: t.equipments.dressingRoom, icon: 'Shirt', isLucide: true },
+        { name: t.equipments.dedicatedWorkspace, icon: 'LampDesk', isLucide: true }
       ]
     }
   };
@@ -234,15 +203,15 @@ Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambia
   // 构建面包屑导航数据
   const breadcrumbItems = fromMaison 
     ? [
-        { label: "Accueil", path: "/" },
-        { label: "La maison", path: "/rooms" },
-        { label: "Chambres", path: "/rooms/chambres?from=maison" },
+        { label: t.chambreDetail.breadcrumbHome, path: "/" },
+        { label: t.chambreDetail.breadcrumbHouse, path: "/rooms" },
+        { label: t.chambreDetail.breadcrumbChambers, path: "/rooms/chambres?from=maison" },
         { label: currentChambre.name, path: null } // 当前页面不可点击
       ]
     : [
-        { label: "Accueil", path: "/" },
-        { label: "Pièces", path: "/rooms" },
-        { label: "Chambres", path: "/rooms/chambres" },
+        { label: t.chambreDetail.breadcrumbHome, path: "/" },
+        { label: t.chambreDetail.breadcrumbRooms, path: "/rooms" },
+        { label: t.chambreDetail.breadcrumbChambers, path: "/rooms/chambres" },
         { label: currentChambre.name, path: null } // 当前页面不可点击
       ];
 
@@ -322,7 +291,7 @@ Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambia
       <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 py-2.5 flex flex-col justify-start items-start gap-6 overflow-hidden">
         <div className="self-stretch h-12 py-5 inline-flex justify-start items-center gap-2.5 overflow-hidden">
           <div className="justify-start text-black text-xl sm:text-2xl md:text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
-            Description
+            {t.chambreDetail.description}
           </div>
         </div>
         <div className="self-stretch inline-flex justify-start items-start gap-2.5 overflow-hidden">
@@ -341,7 +310,7 @@ Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambia
       <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 flex flex-col justify-start items-start gap-11 overflow-hidden">
         <div className="w-full relative overflow-hidden">
           <div className="justify-start text-black text-xl sm:text-2xl md:text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
-            Équipements
+            {t.chambreDetail.equipment}
           </div>
         </div>
         <div className="w-full self-stretch grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-10 px-4 md:px-8">
@@ -388,7 +357,7 @@ Amazon Fun est une bulle joyeuse et cosy, idéale pour se reposer dans une ambia
       <div className="w-full px-4 sm:px-8 md:px-16 lg:px-24 py-7 inline-flex flex-col justify-start items-start gap-8 overflow-hidden">
         <div className="w-full relative overflow-hidden">
           <div className="justify-start text-black text-xl sm:text-2xl md:text-3xl font-bold font-['Playfair_Display_SC'] leading-9">
-            Autres pièces de la maison
+            {t.chambreDetail.otherRooms}
           </div>
         </div>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 justify-items-center">

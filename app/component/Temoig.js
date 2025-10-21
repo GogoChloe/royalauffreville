@@ -2,6 +2,8 @@
 
 import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 // 客户评价数据 - 来自真实Airbnb评论
 const testimonials = [
@@ -125,7 +127,7 @@ function StarRating({ rating }) {
 }
 
 // 单个评价卡片组件
-function TestimonialCard({ testimonial }) {
+function TestimonialCard({ testimonial, t }) {
   return (
     <div className="w-full max-w-sm md:w-96 h-auto md:h-72 px-4 py-6 md:py-8 relative bg-white/40 shadow-[0px_4px_4px_0px_rgba(139,94,60,0.10)] border border-[#8B5E3C]/10 flex flex-col justify-start items-start gap-2 overflow-hidden rounded-lg">
       {/* 用户信息 */}
@@ -170,7 +172,7 @@ function TestimonialCard({ testimonial }) {
               rel="noopener noreferrer"
               className="flex items-center gap-1 text-[#8B5E3C] text-xs md:text-sm font-normal font-playfair leading-tight tracking-tight cursor-pointer hover:text-[#D4AF37] transition-colors group"
             >
-              <span>Lire la suite sur Airbnb</span>
+              <span>{t.testimonialComp.readMore}</span>
               <svg 
                 className="w-3 h-3 transition-transform group-hover:translate-x-0.5" 
                 fill="none" 
@@ -196,6 +198,8 @@ function TestimonialCard({ testimonial }) {
 }
 
 export function Temoig() {
+  const { language } = useLanguage();
+  const t = translations[language];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
 
@@ -248,7 +252,7 @@ export function Temoig() {
     <div className="w-full py-24 px-4 md:px-7 bg-[#F5F0E6] shadow-[0px_4px_16px_0px_rgba(0,0,0,0.01)] flex flex-col justify-start items-center gap-12 md:gap-20 overflow-hidden">
       {/* 标题 */}
       <div className="w-full text-center text-[#8B5E3C] text-3xl md:text-5xl font-black font-playfair leading-tight md:leading-[56px]">
-        Ce que disent nos clients
+        {t.testimonialComp.title}
       </div>
       
       {/* 评价卡片容器 */}
@@ -273,7 +277,7 @@ export function Temoig() {
         {/* 评价卡片 */}
         <div className="px-4 md:px-8 lg:px-12 py-6 md:py-10 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 overflow-hidden">
           {visibleTestimonials.map((testimonial) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+            <TestimonialCard key={testimonial.id} testimonial={testimonial} t={t} />
           ))}
         </div>
 

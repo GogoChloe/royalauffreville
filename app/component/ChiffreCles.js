@@ -1,5 +1,7 @@
 "use client"
 import { useState, useEffect, useRef } from "react";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 // 数字滚动组件
 function CountUp({ end, duration = 2000, shouldStart }) {
@@ -31,6 +33,8 @@ function CountUp({ end, duration = 2000, shouldStart }) {
 export function ChiffreCles() {
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef(null);
+  const { language } = useLanguage();
+  const t = translations[language];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -64,12 +68,12 @@ export function ChiffreCles() {
     >
       {/* 标题 */}
       <div className="w-full text-center text-[#D4AF37] text-3xl md:text-5xl font-black font-playfair leading-tight md:leading-[56px]">
-        Royal Auffreville, une expérience unique
+        {t.stats.title}
       </div>
       
       {/* 描述 */}
       <div className="w-full max-w-[1058px] text-center text-[#3E3E3E] text-base md:text-lg font-normal font-playfair leading-6 md:leading-7">
-        Nichée dans la campagne vallonnée des Yvelines, notre demeure d'exception vous invite à une parenthèse élégante, entre nature, patrimoine et confort haut de gamme.
+        {t.stats.description}
       </div>
       
       {/* 统计数据 */}
@@ -82,7 +86,7 @@ export function ChiffreCles() {
             </span>
           </div>
           <div className="text-2xl md:text-6xl font-black font-playfair text-[#3E3E3E]">
-            m²
+            {t.stats.area}
           </div>
         </div>
 
@@ -92,7 +96,7 @@ export function ChiffreCles() {
             <CountUp end={6} duration={2000} shouldStart={isVisible} />
           </div>
           <div className="text-xl md:text-4xl font-black font-playfair text-[#3E3E3E]">
-            chambres
+            {t.stats.bedrooms}
           </div>
         </div>
 
@@ -102,7 +106,7 @@ export function ChiffreCles() {
             <CountUp end={12} duration={2200} shouldStart={isVisible} />
           </div>
           <div className="text-xl md:text-4xl font-black font-playfair text-[#3E3E3E]">
-            Invités
+            {t.stats.guests}
           </div>
         </div>
       </div>

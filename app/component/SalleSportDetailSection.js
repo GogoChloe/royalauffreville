@@ -6,40 +6,42 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, Dumbbell, Users, Clock, Thermometer, TvMinimal, LampDesk, Speaker, Bike } from "lucide-react";
 import { CustomIcon } from "@/app/component/icons";
 import { Breadcrumb } from "./Breadcrumb";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 export function SalleSportDetailSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const router = useRouter();
 
   // Salle de Sport 数据
   const salleSportData = {
-    name: 'Salle de Sport',
+    name: t.pieces.gym.name,
     subtitle: 'Espace fitness moderne pour votre bien-être',
     images: ['/salleDeSport.jpg'], // 唯一的照片
-    description: `Moderne et spacieux, cet espace dédié au sport allie équipement complet et atmosphère chaleureuse grâce à un tapis moelleux qui invite à la détente.
-Que vous souhaitiez soulever des poids, faire des abdominaux, ou pratiquer le yoga et le pilates en groupe, la salle peut accueillir plusieurs personnes simultanément grâce à ses nombreux tapis.
-Un grand sac de frappe est disponible pour les amateurs de boxe, tandis qu’un vélo d’intérieur et une corde à sauter complètent l’équipement pour un entraînement complet.
-Pour ceux qui aiment danser, cet espace peut aussi se transformer en piste de danse, offrant une polyvalence rare pour des moments de plaisir et de bien-être.`,
+    description: t.pieces.gym.description,
     equipments: [
-      { name: 'Appareils de fitness', icon: 'Dumbbell', isLucide: true },
-      { name: 'Vélo elliptique', icon: 'Bike', isLucide: true },
-      { name: 'Système audio Bluetooth', icon: 'Speaker', isLucide: true },
-      { name: 'Tapis de yoga', icon: 'yoga' },
-      { name: 'Yoga', icon: 'yoga' },
-      { name: 'Boxe', icon: 'boxe' },
-      { name: 'Corde à sauter', icon: 'Corde' },
+      { name: t.equipments.fitnessEquipment, icon: 'Dumbbell', isLucide: true },
+      { name: t.equipments.ellipticalBike, icon: 'Bike', isLucide: true },
+      { name: t.equipments.bluetoothAudio, icon: 'Speaker', isLucide: true },
+      { name: t.equipments.yogaMat, icon: 'yoga' },
+      { name: t.equipments.yoga, icon: 'yoga' },
+      { name: t.equipments.boxing, icon: 'boxe' },
+      { name: t.equipments.jumpRope, icon: 'Corde' },
 
     ]
   };
 
   // 其他房间
   const otherRooms = [
-    { id: 'cuisine', name: 'Cuisine', image: '/cuisine.JPG' },
-    { id: 'chambres', name: 'Chambres', image: '/ChRose.JPG' },
-    { id: 'salon', name: 'Salon', image: '/salon1.JPG' },
-    { id: 'piscine', name: 'Piscine', image: '/piscine.JPG' },
-    { id: 'sous-sol', name: 'Sous-sol', image: '/sousSol.jpeg' },
-    { id: 'espace-jeux', name: 'Espace jeux', image: '/espaceJeux.JPG' }
+    { id: 'cuisine', name: t.pieces.cuisine.name, image: '/cuisine.JPG' },
+    { id: 'chambres', name: t.pieces.chambres.name, image: '/ChRose.JPG' },
+    { id: 'salon', name: t.pieces.salon.name, image: '/salon1.JPG' },
+    { id: 'piscine', name: t.pieces.piscine.name, image: '/piscine.JPG' },
+    { id: 'sous-sol', name: t.pieces.basement.name, image: '/sousSol.jpeg' },
+    { id: 'espace-jeux', name: t.pieces.gameRoom.name, image: '/espaceJeux.JPG' }
   ];
 
   const handleRoomClick = (roomId) => {
@@ -52,8 +54,8 @@ Pour ceux qui aiment danser, cet espace peut aussi se transformer en piste de da
 
   // 构建面包屑导航数据
   const breadcrumbItems = [
-    { label: "Accueil", path: "/" },
-    { label: "La maison", path: "/rooms" },
+    { label: t.roomDetail.breadcrumbHome, path: "/" },
+    { label: t.roomDetail.breadcrumbHouse, path: "/rooms" },
     { label: salleSportData.name, path: null } // 当前页面不可点击
   ];
 

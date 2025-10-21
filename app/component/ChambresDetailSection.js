@@ -4,11 +4,17 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Breadcrumb } from "./Breadcrumb";
+import { useLanguage } from '../context/LanguageContext';
 
 export function ChambresDetailSection() {
+  const { t } = useLanguage();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [fromMaison, setFromMaison] = useState(false);
+
+  // 调试：打印翻译对象
+  console.log('ChambresDetailSection - t:', t);
+  console.log('ChambresDetailSection - t.chambresSection:', t?.chambresSection);
 
   useEffect(() => {
     // 检查是否从 La maison 页面来的
@@ -22,44 +28,44 @@ export function ChambresDetailSection() {
   const chambres = [
     { 
       id: 'princess-rose', 
-      name: 'Princess Rose', 
+      name: t.chambresSection?.princessRose || 'Princess Rose', 
       image: '/ChRose.JPG',
-      description: 'Chambre romantique aux tons rosés',
+      description: t.chambresSection?.princessRoseDesc || 'Chambre romantique aux tons rosés',
       capacity: 2
     },
     { 
       id: 'strong-marble', 
-      name: 'Strong Marble', 
+      name: t.chambresSection?.strongMarble || 'Strong Marble', 
       image: '/ChGN.JPG',
-      description: 'Élégance du marbre et modernité',
+      description: t.chambresSection?.strongMarbleDesc || 'Élégance du marbre et modernité',
       capacity: 2
     },
     { 
       id: 'bird-vintage', 
-      name: 'Bird Vintage', 
+      name: t.chambresSection?.birdVintage || 'Bird Vintage', 
       image: '/Chvint1.JPG',
-      description: 'Charme rétro et authenticité',
+      description: t.chambresSection?.birdVintageDesc || 'Charme rétro et authenticité',
       capacity: 2
     },
     { 
       id: 'royal-auffreville', 
-      name: 'Royal Auffreville', 
+      name: t.chambresSection?.royalAuffreville || 'Royal Auffreville', 
       image: '/ChRose2.JPG',
-      description: 'Suite royale avec vue panoramique',
+      description: t.chambresSection?.royalAuffrevilleDesc || 'Suite royale avec vue panoramique',
       capacity: 2
     },
     { 
       id: 'good-night', 
-      name: 'Good Night', 
+      name: t.chambresSection?.goodNight || 'Good Night', 
       image: '/Chvint2.JPG',
-      description: 'Repos optimal et confort absolu',
+      description: t.chambresSection?.goodNightDesc || 'Repos optimal et confort absolu',
       capacity: 2
     },
     { 
       id: 'amazon-fun', 
-      name: 'Amazon Fun', 
+      name: t.chambresSection?.amazonFun || 'Amazon Fun', 
       image: '/Chvint3.JPG',
-      description: 'Aventure et détente tropicale',
+      description: t.chambresSection?.amazonFunDesc || 'Aventure et détente tropicale',
       capacity: 2
     }
   ];
@@ -75,13 +81,13 @@ export function ChambresDetailSection() {
   // 构建面包屑导航数据
   const breadcrumbItems = fromMaison 
     ? [
-        { label: "Accueil", path: "/" },
-        { label: "La maison", path: "/rooms" },
-        { label: "Chambres", path: null } // 当前页面不可点击
+        { label: t.chambreDetail?.breadcrumbHome || "Accueil", path: "/" },
+        { label: t.chambreDetail?.breadcrumbHouse || "La maison", path: "/rooms" },
+        { label: t.chambreDetail?.breadcrumbChambers || "Chambres", path: null } // 当前页面不可点击
       ]
     : [
-        { label: "Accueil", path: "/" },
-        { label: "Chambres", path: null } // 当前页面不可点击
+        { label: t.chambreDetail?.breadcrumbHome || "Accueil", path: "/" },
+        { label: t.chambreDetail?.breadcrumbChambers || "Chambres", path: null } // 当前页面不可点击
       ];
 
   return (
@@ -89,8 +95,8 @@ export function ChambresDetailSection() {
       <Breadcrumb items={breadcrumbItems} />
       
       <div className="self-stretch py-3 flex flex-col justify-center items-start gap-5 overflow-hidden">
-        <div className="justify-start text-[#8B5E3C] text-3xl font-bold font-['Playfair_Display'] leading-9">Les Chambres</div>
-        <div className="justify-start text-neutral-700 text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">Découvrez nos chambres élégantes et confortables</div>
+        <div className="justify-start text-[#8B5E3C] text-3xl font-bold font-['Playfair_Display'] leading-9">{t.chambresSection?.title || 'Les Chambres'}</div>
+        <div className="justify-start text-neutral-700 text-xs font-normal font-['Playfair_Display'] leading-none tracking-tight">{t.chambresSection?.subtitle || 'Découvrez nos chambres élégantes et confortables'}</div>
       </div>
 
       {/* Chambres Grid - 3 columns, 2 rows */}
@@ -114,7 +120,7 @@ export function ChambresDetailSection() {
       {/* Description Section */}
       <div className="w-full max-w-4xl mx-auto text-center">
         <p className="text-neutral-700 text-base font-normal font-['Playfair_Display'] leading-relaxed tracking-tight">
-          Nos chambres élégantes sont toutes équipées de literie haut de gamme, soigneusement sélectionnée pour offrir un soutien optimal et une douceur enveloppante. Chaque chambre révèle une atmosphère singulière : du charme rétro à l'élégance contemporaine, du raffinement du marbre à l'authenticité de l'industriel. Tout a été pensé avec soin par la propriétaire, jusque dans les moindres détails — rideaux occultants, matières nobles, éclairages tamisés. Une décoration harmonieuse et une ambiance apaisante vous invitent à un repos profond, que ce soit pour une nuit ou pour un long séjour.
+          {t.chambresSection?.description || 'Nos chambres élégantes sont toutes équipées de literie haut de gamme, soigneusement sélectionnée pour offrir un soutien optimal et une douceur enveloppante. Chaque chambre révèle une atmosphère singulière : du charme rétro à l\'élégance contemporaine, du raffinement du marbre à l\'authenticité de l\'industriel. Tout a été pensé avec soin par la propriétaire, jusque dans les moindres détails — rideaux occultants, matières nobles, éclairages tamisés. Une décoration harmonieuse et une ambiance apaisante vous invitent à un repos profond, que ce soit pour une nuit ou pour un long séjour.'}
         </p>
       </div>
     </div>

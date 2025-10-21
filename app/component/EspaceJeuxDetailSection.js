@@ -6,43 +6,40 @@ import { useRouter } from "next/navigation";
 import { Users, BookOpen, Smile, Table2, TvMinimal } from "lucide-react";
 import { CustomIcon } from "@/app/component/icons";
 import { Breadcrumb } from "./Breadcrumb";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 export function EspaceJeuxDetailSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const router = useRouter();
 
   // Espace Jeux 数据
   const espaceJeuxData = {
-    name: 'Espace jeux',
+    name: t.pieces.gameRoom.name,
     subtitle: 'Le royaume du jeu et du partage',
     images: ['/espaceJeux.JPG', '/espaceJeux1.JPG'],
-    description: `La maison offre plusieurs espaces de jeu, pensés pour le plaisir et la convivialité.
-
-À l’étage, une grande table de billard américain attire les amateurs comme les curieux. Son format généreux s’inspire des standards internationaux, et son bois noble fait écho à celui des rambardes anciennes qui bordent l’étage. Juste à côté, un coin cosy permet de savourer un thé, de jouer aux échecs ou simplement de se détendre pendant que d'autres jouent.
-
-Au rez-de-chaussée, un piano invite à improviser quelques notes, accompagné d’une bibliothèque bien garnie pour les moments de calme, ainsi que de jeux de société à partager en famille ou entre amis.
-
-Au sous-sol, une table de ping-pong attend les joueurs les plus dynamiques. Par beau temps, elle peut même être déplacée à l’extérieur pour profiter de l’air frais en jouant.
-
-Enfin, au sommet du terrain, un espace de pétanque vous attend, niché dans un coin paisible avec vue dégagée – un lieu parfait pour partager un moment de détente à la provençale. Un peu plus loin, un hamac vous tend les bras pour une sieste au soleil ou une lecture suspendue.`,
+    description: t.pieces.gameRoom.description,
     equipments: [
-      { name: 'Jeux de société', icon: 'JeuxSociété' },
-      { name: 'Table de ping-pong', icon: 'pingPong' },
-      { name: 'Billard', icon: 'Billard' },
-      { name: 'Échecs', icon: 'Échecs' },
-      { name: 'Piano', icon: 'Piano' },
-      { name: 'Espace lecture', icon: 'BookOpen', isLucide: true },
-      { name: 'Télévision', icon: 'TvMinimal', isLucide: true },
+      { name: t.equipments.boardGames, icon: 'JeuxSociété' },
+      { name: t.equipments.pingPong, icon: 'pingPong' },
+      { name: t.equipments.billiards, icon: 'Billard' },
+      { name: t.equipments.chess, icon: 'Échecs' },
+      { name: t.equipments.piano, icon: 'Piano' },
+      { name: t.equipments.readingArea, icon: 'BookOpen', isLucide: true },
+      { name: t.equipments.tv, icon: 'TvMinimal', isLucide: true },
     ]
   };
 
   // 其他房间
   const otherRooms = [
-    { id: 'cuisine', name: 'Cuisine', image: '/cuisine.JPG' },
-    { id: 'chambres', name: 'Chambres', image: '/ChRose.JPG' },
-    { id: 'salon', name: 'Salon', image: '/salon1.JPG' },
-    { id: 'salle-sport', name: 'Salle de Sport', image: '/salleDeSport.jpg' },
-    { id: 'sous-sol', name: 'Sous-sol', image: '/sousSol.jpeg' }
+    { id: 'cuisine', name: t.pieces.cuisine.name, image: '/cuisine.JPG' },
+    { id: 'chambres', name: t.pieces.chambres.name, image: '/ChRose.JPG' },
+    { id: 'salon', name: t.pieces.salon.name, image: '/salon1.JPG' },
+    { id: 'salle-sport', name: t.pieces.gym.name, image: '/salleDeSport.jpg' },
+    { id: 'sous-sol', name: t.pieces.basement.name, image: '/sousSol.jpeg' }
   ];
 
   const handleRoomClick = (roomId) => {
@@ -55,8 +52,8 @@ Enfin, au sommet du terrain, un espace de pétanque vous attend, niché dans un 
 
   // 构建面包屑导航数据
   const breadcrumbItems = [
-    { label: "Accueil", path: "/" },
-    { label: "La maison", path: "/rooms" },
+    { label: t.roomDetail.breadcrumbHome, path: "/" },
+    { label: t.roomDetail.breadcrumbHouse, path: "/rooms" },
     { label: espaceJeuxData.name, path: null }
   ];
 
