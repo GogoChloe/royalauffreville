@@ -3,21 +3,112 @@
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
-import { Calendar, Users, Baby, User, CreditCard, Shield } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Calendar, Users, Baby, User, CreditCard, Shield, AlertCircle } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
+import { useRouter } from "next/navigation";
+
+// French public holidays for 2025-2026
+const FRENCH_HOLIDAYS = [
+  '2025-01-01', '2025-04-21', '2025-05-01', '2025-05-08', '2025-05-29',
+  '2025-06-09', '2025-07-14', '2025-08-15', '2025-11-01', '2025-11-11',
+  '2025-12-25', '2026-01-01', '2026-04-06', '2026-05-01', '2026-05-08',
+  '2026-05-14', '2026-05-25', '2026-07-14', '2026-08-15', '2026-11-01',
+  '2026-11-11', '2026-12-25'
+];
+
+const WEEKDAY_PRICE = 700; // 周中价格
+const WEEKEND_PRICE = 850; // 周末和假期价格
+const CLEANING_FEE = 200;
+const SERVICE_FEE = 150;
+const TAX_RATE = 0.055; // 5.5% 法国旅游税
 
 export function ReservationFormSection() {
   const { language, t } = useLanguage();
+  const router = useRouter();
   const [formData, setFormData] = useState({
     checkIn: '',
     checkOut: '',
     adults: '1',
-    children: '1',
-    infants: '1',
+    children: '0',
+    infants: '0',
     paymentMethod: 'card',
     acceptTerms: false
   });
+  
+  const [pricing, setPricing] = useState({
+    nights: 0,
+    weekdayNights: 0,
+    weekendNights: 0,
+    basePrice: 0,
+    cleaningFee: 0,
+    serviceFee: 0,
+    taxes: 0,
+    total: 0
+  });
+
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Calculate if a date is weekend or holiday
+  const isWeekendOrHoliday = (date) => {
+    const dayOfWeek = date.getDay();
+    const dateString = date.toISOString().split('T')[0];
+    
+    // Friday (5), Saturday (6), Sunday (0) or holiday
+    return dayOfWeek === 0 || dayOfWeek === 5 || dayOfWeek === 6 || FRENCH_HOLIDAYS.includes(dateString);
+  };
+
+  // Calculate pricing based on dates
+  useEffect(() => {
+    if (formData.checkIn && formData.checkOut) {
+      const checkIn = new Date(formData.checkIn);
+      const checkOut = new Date(formData.checkOut);
+      
+      if (checkOut <= checkIn) {
+        setErrors(prev => ({ ...prev, dates: t.reservationPage.errors?.invalidDates || 'Invalid dates' }));
+        return;
+      }
+      
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors.dates;
+        return newErrors;
+      });
+
+      let weekdayCount = 0;
+      let weekendCount = 0;
+      let currentDate = new Date(checkIn);
+
+      while (currentDate < checkOut) {
+        if (isWeekendOrHoliday(currentDate)) {
+          weekendCount++;
+        } else {
+          weekdayCount++;
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+
+      const basePrice = (weekdayCount * WEEKDAY_PRICE) + (weekendCount * WEEKEND_PRICE);
+      const totalNights = weekdayCount + weekendCount;
+      const cleaningFee = CLEANING_FEE;
+      const serviceFee = SERVICE_FEE;
+      const subtotal = basePrice + cleaningFee + serviceFee;
+      const taxes = Math.round(subtotal * TAX_RATE);
+      const total = subtotal + taxes;
+
+      setPricing({
+        nights: totalNights,
+        weekdayNights: weekdayCount,
+        weekendNights: weekendCount,
+        basePrice,
+        cleaningFee,
+        serviceFee,
+        taxes,
+        total
+      });
+    }
+  }, [formData.checkIn, formData.checkOut]);
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
@@ -26,10 +117,84 @@ export function ReservationFormSection() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.checkIn) {
+      newErrors.checkIn = t.reservationPage.errors?.checkInRequired || 'Check-in date is required';
+    }
+    
+    if (!formData.checkOut) {
+      newErrors.checkOut = t.reservationPage.errors?.checkOutRequired || 'Check-out date is required';
+    }
+    
+    if (!formData.acceptTerms) {
+      newErrors.terms = t.reservationPage.errors?.acceptTerms || 'You must accept the terms';
+    }
+    
+    if (pricing.nights < 1) {
+      newErrors.dates = t.reservationPage.errors?.minStay || 'Minimum 1 night stay required';
+    }
+
+    const totalGuests = parseInt(formData.adults) + parseInt(formData.children);
+    if (totalGuests > 12) {
+      newErrors.guests = t.reservationPage.errors?.maxGuests || 'Maximum 12 guests allowed';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Reservation data:', formData);
-    // 这里可以添加提交逻辑
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const reservationData = {
+        ...formData,
+        pricing,
+        createdAt: new Date().toISOString(),
+        status: 'pending'
+      };
+
+      const response = await fetch('/api/reservations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reservationData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        // Redirect to confirmation page
+        router.push(`/reservation/confirmation?id=${result.id}`);
+      } else {
+        const error = await response.json();
+        setErrors({ submit: error.message || 'Reservation failed' });
+      }
+    } catch (error) {
+      console.error('Reservation error:', error);
+      setErrors({ submit: t.reservationPage.errors?.serverError || 'Server error. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
+
+  const getTomorrowDate = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toISOString().split('T')[0];
   };
 
   return (
@@ -39,6 +204,18 @@ export function ReservationFormSection() {
           {t.reservationPage.breadcrumbHome} &gt; {t.reservationPage.breadcrumbReservation}
         </div>
       </div>
+      
+      {/* Error Messages */}
+      {Object.keys(errors).length > 0 && (
+        <div className="self-stretch p-4 bg-red-50 border border-red-200 rounded-lg flex flex-col gap-2">
+          {Object.values(errors).map((error, index) => (
+            <div key={index} className="flex items-center gap-2 text-red-600">
+              <AlertCircle className="w-4 h-4" />
+              <span className="text-sm font-['Playfair_Display']">{error}</span>
+            </div>
+          ))}
+        </div>
+      )}
       
       <div className="self-stretch py-3 flex flex-col justify-center items-start gap-5 overflow-hidden">
         <div className="justify-start text-[#8B5E3C] text-3xl font-bold font-['Playfair_Display'] leading-9">
@@ -66,6 +243,7 @@ export function ReservationFormSection() {
                       type="date"
                       value={formData.checkIn}
                       onChange={(e) => handleInputChange('checkIn', e.target.value)}
+                      min={getTodayDate()}
                       className="bg-transparent border-none outline-none flex-1 text-black font-['Playfair_Display']"
                     />
                   </div>
@@ -82,6 +260,7 @@ export function ReservationFormSection() {
                       type="date"
                       value={formData.checkOut}
                       onChange={(e) => handleInputChange('checkOut', e.target.value)}
+                      min={formData.checkIn || getTomorrowDate()}
                       className="bg-transparent border-none outline-none flex-1 text-black font-['Playfair_Display']"
                     />
                   </div>
@@ -239,31 +418,49 @@ export function ReservationFormSection() {
             </div>
           </div>
           
+          {pricing.nights > 0 && (
+            <div className="self-stretch px-2 py-1 bg-[#D4AF37]/10 rounded-lg">
+              <p className="text-sm font-['Playfair_Display'] text-[#8B5E3C]">
+                {pricing.nights} {pricing.nights === 1 ? (t.reservationPage.night || 'night') : (t.reservationPage.nights || 'nights')}
+                {pricing.weekdayNights > 0 && ` (${pricing.weekdayNights} ${t.reservationPage.weekday || 'weekday'} × ${WEEKDAY_PRICE}€)`}
+                {pricing.weekendNights > 0 && ` (${pricing.weekendNights} ${t.reservationPage.weekend || 'weekend'} × ${WEEKEND_PRICE}€)`}
+              </p>
+            </div>
+          )}
+          
           <div className="self-stretch px-2.5 py-2 flex flex-col justify-center items-center gap-4 overflow-hidden">
-            <div className="self-stretch h-32 flex flex-col justify-start items-center gap-5 overflow-hidden">
+            <div className="self-stretch flex flex-col justify-start items-center gap-5 overflow-hidden">
               <div className="self-stretch h-7 inline-flex justify-between items-center overflow-hidden">
                 <div className="w-56 h-8 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">
                   {t.reservationPage.houseRental}
                 </div>
-                <div className="w-12 h-8 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">6000€</div>
+                <div className="h-8 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">
+                  {pricing.basePrice > 0 ? `${pricing.basePrice}€` : '-'}
+                </div>
               </div>
               <div className="self-stretch h-7 inline-flex justify-between items-center overflow-hidden">
                 <div className="w-32 h-8 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">
                   {t.reservationPage.cleaningFees}
                 </div>
-                <div className="w-10 h-8 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">200€ </div>
+                <div className="h-8 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">
+                  {pricing.nights > 0 ? `${pricing.cleaningFee}€` : '-'}
+                </div>
               </div>
               <div className="self-stretch h-7 inline-flex justify-between items-center overflow-hidden">
                 <div className="w-32 h-8 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">
                   {t.reservationPage.serviceFees}
                 </div>
-                <div className="w-10 h-8 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">200€</div>
+                <div className="h-8 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">
+                  {pricing.nights > 0 ? `${pricing.serviceFee}€` : '-'}
+                </div>
               </div>
               <div className="self-stretch h-7 inline-flex justify-between items-center overflow-hidden">
                 <div className="w-20 h-8 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">
                   {t.reservationPage.taxes}
                 </div>
-                <div className="w-10 h-8 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">200€</div>
+                <div className="h-8 justify-start text-black text-base font-normal font-['Playfair_Display'] leading-normal">
+                  {pricing.nights > 0 ? `${pricing.taxes}€` : '-'}
+                </div>
               </div>
             </div>
             
@@ -273,7 +470,9 @@ export function ReservationFormSection() {
               <div className="w-11 h-8 justify-start text-black text-xl font-bold font-['Playfair_Display'] leading-7">
                 {t.reservationPage.total}
               </div>
-              <div className="w-16 h-8 justify-start text-black text-xl font-bold font-['Playfair_Display'] leading-7">6600€</div>
+              <div className="h-8 justify-start text-black text-xl font-bold font-['Playfair_Display'] leading-7">
+                {pricing.total > 0 ? `${pricing.total}€` : '-'}
+              </div>
             </div>
           </div>
           
@@ -291,11 +490,11 @@ export function ReservationFormSection() {
             
             <Button
               onClick={handleSubmit}
-              disabled={!formData.acceptTerms}
+              disabled={!formData.acceptTerms || isSubmitting || pricing.nights < 1}
               className="self-stretch px-6 py-4 bg-[#D4AF37] rounded-lg inline-flex justify-center items-center gap-2.5 overflow-hidden disabled:opacity-50 hover:bg-[#B8941F] font-['Playfair_Display']"
             >
               <div className="justify-start text-white text-base font-normal leading-normal">
-                {t.reservationPage.bookNow}
+                {isSubmitting ? (t.reservationPage.processing || 'Processing...') : t.reservationPage.bookNow}
               </div>
             </Button>
             
