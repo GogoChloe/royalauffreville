@@ -1479,7 +1479,6 @@ export const translations = {
         "serverError": "Server error. Please try again."
       }
     },
-    },
     "authModal": {
       "loginOrCreateAccount": "Log in or create your account",
       "keepReservationSafe": "Because every moment counts, keep your reservation safe in your space.",
